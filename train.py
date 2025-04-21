@@ -78,7 +78,7 @@ test_dataloader = DataLoader(
     test_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
 )
 
-model = CNN(in_dim=768, conv1_c=25, conv2_c=50, out_dim=10)
+model = CNN(in_dim=1, conv1_c=25, conv2_c=50, out_dim=10)
 
 # Print model summary
 total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
