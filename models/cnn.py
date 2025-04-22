@@ -1,23 +1,50 @@
+import torch
 import torch.nn as nn
 
-class CNN(nn.module):
+class CNN(nn.Module): # Corrected: Inherit from nn.Module
     """
-    input: 1*28*28
+    A simple CNN model for 1x28x28 input.
+    Allows easier modification by potentially adding layers to self.features.
     """
-    def __init(self, conv1_c, conv2_c, in_c=1, out_dim=10):
-        super().__init()
-        self.conv1 = nn.Conv2d(in_c, conv1_c,kernel_size=7)
-        self.conv2 = nn.Conv2d(in_channels=conv1_c, out_channels=conv2_c,kernel_size=3)
-        self.head = nn.Linear(out_dim, out_dim)
-        self.bn = nn.BatchNorm2d()
-        self.act = nn.GELU()
+    def __init__(self, in_c=1,conv1_c=20, conv2_c=15, out_dim=10, input_size=28): # Corrected: __init__ method name
+        super().__init__() # Corrected: Call super().__init__()
+
+        self.features = nn.Sequential(
+            # Block 1
+            nn.Conv2d(in_channels=in_c, out_channels=conv1_c, kernel_size=7, padding=0), # 28x28 -> 22x22
+            nn.BatchNorm2d(conv1_c),
+            nn.GELU(),
+            # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 22x22 -> 11x11)
+
+            # Block 2
+            nn.Conv2d(in_channels=conv1_c, out_channels=conv2_c, kernel_size=3, padding=0), # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
+            nn.BatchNorm2d(conv2_c),
+            nn.GELU(),
+            # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 20x20 -> 10x10)
+
+            # Add more Conv/BN/Act/Pool blocks here to increase depth
+        )
+
+        # Calculate the flattened size dynamically
+        # Create a dummy input with the expected size
+        with torch.no_grad(): # No need to track gradients for this calculation
+            dummy_input = torch.zeros(1, in_c, input_size, input_size)
+            dummy_output = self.features(dummy_input)
+            # calculate automatically the size of the output after the feature extraction and 
+            self._flattened_size = dummy_output.numel() # Get total number of elements
+
+        self.flatten = nn.Flatten()
+        self.head = nn.Linear(self._flattened_size, out_dim) # Use calculated size
 
     def forward(self, x):
-        x = self.bn(x)
-        x = self.conv1(x)
-        x = self.act(x)
-        x = self.bn(x)
-        x = self.conv2(x)
-        x = self.act(x)
+        x = self.features(x)
+        x = self.flatten(x) # Flatten the output of features
         x = self.head(x)
+        return x # Added return statement
 
+# Example Usage (Optional):
+# model = CNN(conv1_c=25, conv2_c=50)
+# print(model)
+# test_input = torch.randn(64, 1, 28, 28) # Batch of 64 images
+# output = model(test_input)
+# print(output.shape) # Should be torch.Size([64, 10])
