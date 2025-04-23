@@ -3,3 +3,8 @@
 - train.py 的代码结构做了调整
 - 下载了MINST
 - 建立models，balance_data, 从MNIST中抽出子数据集；并把接口接入了train.py
+
+### 4/23 13:31
+- 增添了一下必要的注释与后续修改的建议
+- 对函数test_loop做了调整，使其能够记录错误分类样本
+  

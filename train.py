@@ -23,7 +23,8 @@ import multiprocessing
 
 from models.cnn import CNN
 from models.balance_data import PartOfData
-
+import os
+import shutil
 
 def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, epoch):
     base_model.train() # Set base model to train mode
@@ -56,7 +57,7 @@ def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler,
     scheduler.step()
 
 
-def test_loop(dataloader, model_ema, loss_fn):
+def test_loop(dataloader, model_ema, loss_fn, log_wrong_type=False):
     model_ema.eval() # Ensure EMA model is in eval mode
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
@@ -70,19 +71,51 @@ def test_loop(dataloader, model_ema, loss_fn):
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 
+            if log_wrong_type:
+                wrong_mask = (pred.argmax(1) != y)
+                misclassified_samples = []  # 新增：用于存储错误分类的样本
+                if wrong_mask.any():
+                    # 记录错误分类的样本：(输入, 真实标签, 预测标签)
+                    misclassified_samples.extend(
+                        list(zip(X[wrong_mask].cpu(), y[wrong_mask].cpu(), pred.argmax(1)[wrong_mask].cpu()))
+                    )
+
+
+                
+            
+
     test_loss /= num_batches
     correct /= size
 
     # Record test metrics
     test_losses.append(test_loss)
     test_accuracies.append(100 * correct)
+    
 
     print(
         f"Test Error: \n Accuracy: {(100 * correct):>0.1f}%, Avg loss: {test_loss:>8f} \n"
     )
+    if log_wrong_type and misclassified_samples:
+        # 清空并重新创建 wrong_results 文件夹
+        if os.path.exists('wrong_results'):
+            shutil.rmtree('wrong_results')
+        os.makedirs('wrong_results', exist_ok=True)
+    # 保存错误分类的样本到文件
+    if log_wrong_type and misclassified_samples:
+        with open('misclassified_samples.txt', 'w') as f:
+            f.write("真实标签,预测标签\n")
+            for sample in misclassified_samples:
+                true_label = sample[1].item()
+                pred_label = sample[2].item()
+                f.write(f"{true_label},{pred_label}\n")
+        
+        # 保存错误分类的图像
+        for i, sample in enumerate(misclassified_samples):
+            image = sample[0].squeeze().numpy()
+            plt.imsave(f'wrong_results/misclassified_{i}_true{sample[1].item()}_pred{sample[2].item()}.png', image, cmap='gray')
 
 def plot_metrics(
-    train_losses, learning_rates, step_count, test_losses, test_accuracies
+    train_losses, learning_rates, step_count, test_losses, test_accuracies, title
 ):
     """Plot training metrics"""
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 15))
@@ -121,123 +154,128 @@ def plot_metrics(
 
 
 if __name__=='__main__':
+    for loop in range(1):
+        '''
+        建立模型、数据的列表，每次试验选择不同组合。
 
-    task = "3.3"
+        '''
+        task = "3.3"
 
-    torch.manual_seed(114514)#?
-    num_workers = multiprocessing.cpu_count()  # on my laptop, this is 20
-    print(f"Number of workers: {num_workers}")
-
-
-    # in task 3.3 there is no need to enhence the data
-    # for minist, i don't think cutmix is necessary, so i only use geometric augmentations
-    # train_transform = Compose(
-    #     [
-    #         RandomRotation(degrees=10),  # randomly rotate the image by 10 degrees
-    #         RandomAffine(
-    #             degrees=20, translate=(0.1, 0.1), scale=(0.9, 1.1)
-    #         ),  # randomly translate and scale the image
-    #         ToImage(),
-    #         ToDtype(torch.float32, scale=True),
-    #     ]
-    # )
-
-    # test_transform = Compose([ToImage(), ToDtype(torch.float32, scale=True)])
-
-    # training_data = datasets.MNIST(
-    #     root="data",
-    #     train=True,
-    #     download=False,
-    #     transform=train_transform if task=="3.3" else None,
-    # )
-
-    # test_data = datasets.MNIST(
-    #     root="data",
-    #     train=False,
-    #     download=False,
-    #     transform=test_transform if task=="3.3" else None,
-    # )
-
-    batch_size = 100
-    learning_rate = 1e-1
-    epochs = 5
-    decay = 1e-6
-    momentum = 0.9
-
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    print(f"Using device: {device}")
-
-    # Lists to record metrics
-    train_losses = []
-    learning_rates = []
-    step_count = []
-    test_losses = []
-    test_accuracies = []
-
-    data = PartOfData()
-    training_data = data.get_training_data()
-    test_data = data.get_testing_data()
-    
-    # seed?  
-    train_dataloader = DataLoader(
-        training_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
-    )
-    test_dataloader = DataLoader(
-        test_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
-    )
-    # 1. Instantiate the base model and move to device
-    base_model = CNN(in_c=1, conv1_c=20, conv2_c=15, out_dim=10).to(device)
-
-    # Print model summary using the base model
-    total_params = sum(p.numel() for p in base_model.parameters() if p.requires_grad)
-    print(f"Number of parameters: {total_params}")
-    if flopanalysis:
-        # Pass base_model to FlopCountAnalysis
-        flops_analysis = FlopCountAnalysis(base_model, torch.randn(8, 1, 28, 28).to(device))
-        print(f"FLOPs: {flops_analysis.total() / 1e6} M")
-
-    # 2. Instantiate the AveragedModel using the base model
-    model_ema = AveragedModel(
-        base_model, multi_avg_fn=torch.optim.swa_utils.get_ema_multi_avg_fn(decay)
-    ).to(device) # EMA model also needs to be on device
+        torch.manual_seed(114514)#?
+        num_workers = multiprocessing.cpu_count()  # on my laptop, this is 20
+        print(f"Number of workers: {num_workers}")
 
 
-    # Pass both base_model and model_ema
+        # in task 3.3 there is no need to enhence the data
+        # for minist, i don't think cutmix is necessary, so i only use geometric augmentations
+        # train_transform = Compose(
+        #     [
+        #         RandomRotation(degrees=10),  # randomly rotate the image by 10 degrees
+        #         RandomAffine(
+        #             degrees=20, translate=(0.1, 0.1), scale=(0.9, 1.1)
+        #         ),  # randomly translate and scale the image
+        #         ToImage(),
+        #         ToDtype(torch.float32, scale=True),
+        #     ]
+        # )
+
+        # test_transform = Compose([ToImage(), ToDtype(torch.float32, scale=True)])
+
+        # training_data = datasets.MNIST(
+        #     root="data",
+        #     train=True,
+        #     download=False,
+        #     transform=train_transform if task=="3.3" else None,
+        # )
+
+        # test_data = datasets.MNIST(
+        #     root="data",
+        #     train=False,
+        #     download=False,
+        #     transform=test_transform if task=="3.3" else None,
+        # )
+
+        # hyper parameter
+        batch_size = 100
+        learning_rate = 1e-1
+        epochs = 5
+        decay = 1e-6
+        momentum = 0.9
+
+        device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        print(f"Using device: {device}")
+
+        # Lists to record metrics
+        train_losses = []
+        learning_rates = []
+        step_count = []
+        test_losses = []
+        test_accuracies = []
+
+        data = PartOfData() # Initialize the data class, and define the number of training and test samples
+        training_data = data.get_training_data()
+        test_data = data.get_testing_data()
+        
+        # seed?  
+        train_dataloader = DataLoader(
+            training_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
+        )
+        test_dataloader = DataLoader(
+            test_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
+        )
+        # 1. Instantiate the base model and move to device
+        base_model = CNN(in_c=1, conv1_c=20, conv2_c=15, out_dim=10).to(device)
+
+        # Print model summary using the base model
+        total_params = sum(p.numel() for p in base_model.parameters() if p.requires_grad)
+        print(f"Number of parameters: {total_params}")
+        if flopanalysis:
+            # Pass base_model to FlopCountAnalysis
+            flops_analysis = FlopCountAnalysis(base_model, torch.randn(8, 1, 28, 28).to(device))
+            print(f"FLOPs: {flops_analysis.total() / 1e6} M")
+
+        # 2. Instantiate the AveragedModel using the base model
+        model_ema = AveragedModel(
+            base_model, multi_avg_fn=torch.optim.swa_utils.get_ema_multi_avg_fn(decay)
+        ).to(device) # EMA model also needs to be on device
+
+
+        # Pass both base_model and model_ema
 
 
 
 
 
 
-    loss_fn = nn.CrossEntropyLoss()
-    # 3. Optimizer targets the base_model's parameters
-    optimizer = torch.optim.SGD(
-        base_model.parameters(), lr=learning_rate, weight_decay=decay, momentum=momentum
-    )
-    steps = len(train_dataloader)
-    scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
+        loss_fn = nn.CrossEntropyLoss()
+        # 3. Optimizer targets the base_model's parameters
+        optimizer = torch.optim.SGD(
+            base_model.parameters(), lr=learning_rate, weight_decay=decay, momentum=momentum
+        )
+        steps = len(train_dataloader)
+        scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
 
-    for t in range(epochs):
-        print(f"Epoch {t + 1}/{epochs}")
-        # Pass both models to train_loop
-        train_loop(train_dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, t)
-        # Pass the EMA model to test_loop
-        test_loop(test_dataloader, model_ema, loss_fn)
+        for t in range(epochs):
+            print(f"Epoch {t + 1}/{epochs}")
+            # Pass both models to train_loop
+            train_loop(train_dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, t)
+            # Pass the EMA model to test_loop
+            test_loop(test_dataloader, model_ema, loss_fn,t==epochs-1) # Log wrong type only on the last epoch
 
-    # 4. Save the EMA model state dict
-    torch.save(model_ema.state_dict(), "model.pth")
-    print("Saved EMA model state to model_ema.pth")
+        # 4. Save the EMA model state dict
+        torch.save(model_ema.state_dict(), "model.pth")
+        print("Saved EMA model state to model_ema.pth")
 
-    # Plot metrics after training
-    max_acc = max(test_accuracies) if test_accuracies else 0 # Handle empty list
-    print(f"Max EMA accuracy: {max_acc:>0.1f}%")
-    if test_accuracies:
-        print(f"Final EMA accuracy: {test_accuracies[-1]:>0.1f}%, Final EMA test loss: {test_losses[-1]:>8f} \n")
-    else:
-        print("No test results recorded.")
+        # Plot metrics after training
+        max_acc = max(test_accuracies) if test_accuracies else 0 # Handle empty list
+        print(f"Max EMA accuracy: {max_acc:>0.1f}%")
+        if test_accuracies:
+            print(f"Final EMA accuracy: {test_accuracies[-1]:>0.1f}%, Final EMA test loss: {test_losses[-1]:>8f} \n")
+        else:
+            print("No test results recorded.")
 
-    # Call plot_metrics if lists are not empty
-    if train_losses and learning_rates and step_count and test_losses and test_accuracies:
-        plot_metrics(train_losses, learning_rates, step_count, test_losses, test_accuracies)
-    else:
-        print("Metrics lists are empty, skipping plotting.")
+        # Call plot_metrics if lists are not empty
+        if train_losses and learning_rates and step_count and test_losses and test_accuracies:
+            plot_metrics(train_losses, learning_rates, step_count, test_losses, test_accuracies, title="MNIST Classification Training Results")#可以在此处声明超参数、数据集、模型等
+        else:
+            print("Metrics lists are empty, skipping plotting.")

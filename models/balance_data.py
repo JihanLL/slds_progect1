@@ -2,6 +2,12 @@ import torch
 from torchvision import datasets
 from torchvision.transforms.v2 import Compose, ToImage, ToDtype # 导入必要的 transform
 import random
+
+'''
+    该类用于从 MNIST 数据集中随机选择指定数量的训练和测试样本。
+    后续: 添加不同数据集的选项
+    
+'''
 class PartOfData:
     _transformer = Compose([ToImage(), ToDtype(torch.float32, scale=True)])
     _full_training_data = datasets.MNIST(
