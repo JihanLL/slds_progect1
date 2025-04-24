@@ -25,8 +25,10 @@ from models.cnn import CNN
 from models.balance_data import PartOfData
 import os
 import shutil
+from sklearn.metrics import recall_score, precision_score, f1_score
 
-def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, epoch):
+
+def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, epoch,l1_lambda):
     base_model.train() # Set base model to train mode
     # model_ema usually stays in eval mode or its state is managed internally by update_parameters
 
@@ -38,7 +40,9 @@ def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler,
         # Use base_model for prediction and loss calculation for backprop
         pred = base_model(X)
         loss = loss_fn(pred, y)
-
+        l1_norm = sum(p.abs().sum() for p in base_model.parameters())
+        loss = loss + l1_lambda * l1_norm
+        
         optimizer.zero_grad() # Zero gradients before backward pass
         loss.backward()
         optimizer.step() # Update base_model parameters
@@ -57,51 +61,59 @@ def train_loop(dataloader, base_model, model_ema, loss_fn, optimizer, scheduler,
     scheduler.step()
 
 
+
 def test_loop(dataloader, model_ema, loss_fn, log_wrong_type=False):
     model_ema.eval() # Ensure EMA model is in eval mode
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     test_loss, correct = 0, 0
+    
+    # 用于存储所有预测和真实标签
+    all_preds = []
+    all_labels = []
 
     with torch.no_grad():
         for X, y in dataloader:
             X, y = X.to(device), y.to(device)
-            # Use model_ema for prediction during testing
             pred = model_ema(X)
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+            
+            # 收集预测和真实标签
+            all_preds.extend(pred.argmax(1).cpu().numpy())
+            all_labels.extend(y.cpu().numpy())
 
             if log_wrong_type:
                 wrong_mask = (pred.argmax(1) != y)
-                misclassified_samples = []  # 新增：用于存储错误分类的样本
+                misclassified_samples = []
                 if wrong_mask.any():
-                    # 记录错误分类的样本：(输入, 真实标签, 预测标签)
                     misclassified_samples.extend(
                         list(zip(X[wrong_mask].cpu(), y[wrong_mask].cpu(), pred.argmax(1)[wrong_mask].cpu()))
                     )
 
-
-                
-            
-
     test_loss /= num_batches
     correct /= size
 
-    # Record test metrics
+    # 计算各项指标
+    recall = recall_score(all_labels, all_preds, average='macro', zero_division=0)
+    precision = precision_score(all_labels, all_preds, average='macro', zero_division=0)
+    f1 = f1_score(all_labels, all_preds, average='macro', zero_division=0)
+
+    # 记录测试指标
     test_losses.append(test_loss)
     test_accuracies.append(100 * correct)
-    
+    test_recalls.append(100 * recall)
+    test_precisions.append(100 * precision)
+    test_f1_scores.append(100 * f1)
 
-    print(
-        f"Test Error: \n Accuracy: {(100 * correct):>0.1f}%, Avg loss: {test_loss:>8f} \n"
-    )
+
+
+    # 保存错误分类样本的代码保持不变
     if log_wrong_type and misclassified_samples:
-        # 清空并重新创建 wrong_results 文件夹
         if os.path.exists('wrong_results'):
             shutil.rmtree('wrong_results')
         os.makedirs('wrong_results', exist_ok=True)
-    # 保存错误分类的样本到文件
-    if log_wrong_type and misclassified_samples:
+        
         with open('misclassified_samples.txt', 'w') as f:
             f.write("真实标签,预测标签\n")
             for sample in misclassified_samples:
@@ -109,16 +121,17 @@ def test_loop(dataloader, model_ema, loss_fn, log_wrong_type=False):
                 pred_label = sample[2].item()
                 f.write(f"{true_label},{pred_label}\n")
         
-        # 保存错误分类的图像
         for i, sample in enumerate(misclassified_samples):
             image = sample[0].squeeze().numpy()
             plt.imsave(f'wrong_results/misclassified_{i}_true{sample[1].item()}_pred{sample[2].item()}.png', image, cmap='gray')
-
 def plot_metrics(
-    train_losses, learning_rates, step_count, test_losses, test_accuracies, title
+    train_losses, learning_rates, step_count, test_losses, test_accuracies, test_recalls,test_precisions, test_f1_scores,title
 ):
     """Plot training metrics"""
-    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 15))
+    fig, axs = plt.subplots(3, 2, figsize=(15, 15))
+    
+    # 展开子图数组
+    ax1, ax2, ax3, ax4, ax5, ax6 = axs.ravel()
 
     # Plot training loss
     ax1.plot(step_count, train_losses)
@@ -141,16 +154,46 @@ def plot_metrics(
     ax3_twin = ax3.twinx()
     ax3_twin.plot(epochs_x, test_accuracies, "r-", label="Accuracy")
     ax3_twin.set_ylabel("Accuracy (%)")
+    
+    ax4.plot(epochs_x, test_recalls, "g-", label="Recall")
+    ax4.set_xlabel("Epochs")
+    ax4.set_ylabel("Recall")
+
+    ax5.plot(epochs_x, test_precisions, "m-", label="Precision")
+    ax5.set_xlabel("Epochs")
+    ax5.set_ylabel("Precision")
+
+    ax6.plot(epochs_x, test_f1_scores, "c-", label="F1 Score")
+    ax6.set_xlabel("Epochs")
+    ax6.set_ylabel("F1 Score")
 
     # Combine the legends
     lines1, labels1 = ax3.get_legend_handles_labels()
     lines2, labels2 = ax3_twin.get_legend_handles_labels()
     ax3.legend(lines1 + lines2, labels1 + labels2, loc="best")
 
-    ax3.set_title("Test Metrics vs Epochs")
+    # 添加图例到其他子图
+    ax4.legend(loc="best")
+    ax5.legend(loc="best")
+    ax6.legend(loc="best")
+
+    # 设置总标题
+    fig.suptitle(title, fontsize=16, y=1.02)
 
     plt.tight_layout()
     plt.show()
+def set_seed(seed):
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
+
+
 
 
 if __name__=='__main__':
@@ -159,9 +202,8 @@ if __name__=='__main__':
         建立模型、数据的列表，每次试验选择不同组合。
 
         '''
-        task = "3.3"
-
-        torch.manual_seed(114514)#?
+        
+        set_seed(114514) # Set random seed for reproducibility
         num_workers = multiprocessing.cpu_count()  # on my laptop, this is 20
         print(f"Number of workers: {num_workers}")
 
@@ -199,7 +241,7 @@ if __name__=='__main__':
         batch_size = 100
         learning_rate = 1e-1
         epochs = 5
-        decay = 1e-6
+        L2_parameter = 1e-6
         momentum = 0.9
 
         device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -211,6 +253,9 @@ if __name__=='__main__':
         step_count = []
         test_losses = []
         test_accuracies = []
+        test_recalls = []
+        test_f1_scores = []
+        test_precisions = []
 
         data = PartOfData() # Initialize the data class, and define the number of training and test samples
         training_data = data.get_training_data()
@@ -236,21 +281,19 @@ if __name__=='__main__':
 
         # 2. Instantiate the AveragedModel using the base model
         model_ema = AveragedModel(
-            base_model, multi_avg_fn=torch.optim.swa_utils.get_ema_multi_avg_fn(decay)
+            base_model, multi_avg_fn=torch.optim.swa_utils.get_ema_multi_avg_fn(L2_parameter)
         ).to(device) # EMA model also needs to be on device
 
 
         # Pass both base_model and model_ema
 
-
-
-
+        L1_parameter = 0
 
 
         loss_fn = nn.CrossEntropyLoss()
         # 3. Optimizer targets the base_model's parameters
         optimizer = torch.optim.SGD(
-            base_model.parameters(), lr=learning_rate, weight_decay=decay, momentum=momentum
+            base_model.parameters(), lr=learning_rate, weight_decay=L2_parameter, momentum=momentum
         )
         steps = len(train_dataloader)
         scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
@@ -258,7 +301,7 @@ if __name__=='__main__':
         for t in range(epochs):
             print(f"Epoch {t + 1}/{epochs}")
             # Pass both models to train_loop
-            train_loop(train_dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, t)
+            train_loop(train_dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, t, L1_parameter)
             # Pass the EMA model to test_loop
             test_loop(test_dataloader, model_ema, loss_fn,t==epochs-1) # Log wrong type only on the last epoch
 
@@ -276,6 +319,6 @@ if __name__=='__main__':
 
         # Call plot_metrics if lists are not empty
         if train_losses and learning_rates and step_count and test_losses and test_accuracies:
-            plot_metrics(train_losses, learning_rates, step_count, test_losses, test_accuracies, title="MNIST Classification Training Results")#可以在此处声明超参数、数据集、模型等
+            plot_metrics(train_losses, learning_rates, step_count, test_losses, test_accuracies,test_recalls,test_precisions,test_f1_scores, title="MNIST Classification Training Results")#可以在此处声明超参数、数据集、模型等
         else:
             print("Metrics lists are empty, skipping plotting.")

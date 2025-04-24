@@ -9,7 +9,7 @@ import random
     
 '''
 class PartOfData:
-    _transformer = Compose([ToImage(), ToDtype(torch.float32, scale=True)])
+    _transformer = Compose([ToImage(), ToDtype(torch.float32, scale=True)]) # transformer used to convert data to torch type
     _full_training_data = datasets.MNIST(
         root="data",
         train=True,
