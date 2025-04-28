@@ -1,6 +1,6 @@
 import torch
 from torchvision import datasets
-from torchvision.transforms.v2 import Compose, ToImage, ToDtype # 导入必要的 transform
+from torchvision.transforms.v2 import Compose, ToImage, ToDtype
 import random
 
 '''

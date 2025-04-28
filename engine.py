@@ -1,30 +1,42 @@
+import numpy as np
 import torch
 from sklearn.metrics import recall_score, precision_score, f1_score
+import os
+import shutil
+import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 
 def train_loop(
-    dataloader, base_model, model_ema, loss_fn, optimizer, scheduler, epoch, l1_lambda, device
+    dataloader,
+    model,
+    loss_fn=None,
+    optimizer=None,
+    scheduler=None,
+    epoch=100,
+    l1_lambda=0,
+    device=None,
 ):
-    base_model.train()  # Set base model to train mode
-    # model_ema usually stays in eval mode or its state is managed internally by update_parameters
+    model.train()  # Set base model to train mode
 
-    for batch, (X, y) in enumerate(dataloader):
+    for batch, (X, y) in tqdm(enumerate(dataloader)):
         # Current step count (global)
         step = epoch * len(dataloader) + batch
         X, y = X.to(device), y.to(device)
 
         # Use base_model for prediction and loss calculation for backprop
-        pred = base_model(X)
+        pred = model(X)
         loss = loss_fn(pred, y)
-        l1_norm = sum(p.abs().sum() for p in base_model.parameters())
+        l1_norm = sum(p.abs().sum() for p in model.parameters())
         loss = loss + l1_lambda * l1_norm
 
         optimizer.zero_grad()  # Zero gradients before backward pass
         loss.backward()
         optimizer.step()  # Update base_model parameters
 
-        # Update EMA model parameters based on the base_model
-        model_ema.update_parameters(base_model)
+        train_losses = []
+        learning_rates = []
+        step_count = []
 
         # Record loss and learning rate at each step
         current_lr = scheduler.get_last_lr()[0]
@@ -35,10 +47,11 @@ def train_loop(
             step_count.append(step)
 
     scheduler.step()
+    return train_losses, learning_rates, step_count
 
 
-def test_loop(dataloader, model_ema, loss_fn, device,log_wrong_type=False):
-    model_ema.eval()  # Ensure EMA model is in eval mode
+def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False):
+    model.eval()  # Ensure EMA model is in eval mode
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     test_loss, correct = 0, 0
@@ -46,11 +59,16 @@ def test_loop(dataloader, model_ema, loss_fn, device,log_wrong_type=False):
     # 用于存储所有预测和真实标签
     all_preds = []
     all_labels = []
+    test_losses = []
+    test_accuracies = []
+    test_recalls = []
+    test_precisions = []
+    test_f1_scores = []
 
     with torch.no_grad():
-        for X, y in dataloader:
+        for X, y in tqdm(dataloader):
             X, y = X.to(device), y.to(device)
-            pred = model_ema(X)
+            pred = model(X)
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 
@@ -107,3 +125,78 @@ def test_loop(dataloader, model_ema, loss_fn, device,log_wrong_type=False):
                 image,
                 cmap="gray",
             )
+    return (
+        test_losses,
+        test_accuracies,
+        test_recalls,
+        test_precisions,
+        test_f1_scores,
+    )
+
+
+def plot_metrics(
+    train_losses,
+    learning_rates,
+    step_count,
+    test_losses,
+    test_accuracies,
+    test_recalls,
+    test_precisions,
+    test_f1_scores,
+    title,
+):
+    """Plot training metrics"""
+    fig, axs = plt.subplots(3, 2, figsize=(15, 15))
+
+    # 展开子图数组
+    ax1, ax2, ax3, ax4, ax5, ax6 = axs.ravel()
+
+    # Plot training loss
+    ax1.plot(step_count, train_losses)
+    ax1.set_xlabel("Steps")
+    ax1.set_ylabel("Training Loss")
+    ax1.set_title("Training Loss vs Steps")
+
+    # Plot learning rate
+    ax2.plot(step_count, learning_rates)
+    ax2.set_xlabel("Steps")
+    ax2.set_ylabel("Learning Rate")
+    ax2.set_title("Learning Rate vs Steps")
+
+    # Plot test metrics
+    epochs_x = np.arange(1, len(test_losses) + 1)
+    ax3.plot(epochs_x, test_losses, "b-", label="Test Loss")
+    ax3.set_xlabel("Epochs")
+    ax3.set_ylabel("Test Loss")
+
+    ax3_twin = ax3.twinx()
+    ax3_twin.plot(epochs_x, test_accuracies, "r-", label="Accuracy")
+    ax3_twin.set_ylabel("Accuracy (%)")
+
+    ax4.plot(epochs_x, test_recalls, "g-", label="Recall")
+    ax4.set_xlabel("Epochs")
+    ax4.set_ylabel("Recall")
+
+    ax5.plot(epochs_x, test_precisions, "m-", label="Precision")
+    ax5.set_xlabel("Epochs")
+    ax5.set_ylabel("Precision")
+
+    ax6.plot(epochs_x, test_f1_scores, "c-", label="F1 Score")
+    ax6.set_xlabel("Epochs")
+    ax6.set_ylabel("F1 Score")
+
+    # Combine the legends
+    lines1, labels1 = ax3.get_legend_handles_labels()
+    lines2, labels2 = ax3_twin.get_legend_handles_labels()
+    ax3.legend(lines1 + lines2, labels1 + labels2, loc="best")
+
+    # 添加图例到其他子图
+    ax4.legend(loc="best")
+    ax5.legend(loc="best")
+    ax6.legend(loc="best")
+
+    # 设置总标题
+    fig.suptitle(title, fontsize=16, y=1.02)
+
+    plt.tight_layout()
+    plt.show()
