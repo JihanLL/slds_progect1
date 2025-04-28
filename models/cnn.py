@@ -42,12 +42,16 @@ class CNN(nn.Module):
 
         self.flatten = nn.Flatten()
         self.head = nn.Sequential(
-            nn.Dropout(p=0.5),  # 在全连接层前添加Dropout
+            nn.Dropout(p=0.35),  # 在全连接层前添加Dropout
             nn.Linear(self._flattened_size, out_dim),
         )
 
-    def forward(self, x):
+    def forward_features(self, x):
         x = self.features(x)
+        return x
+
+    def forward(self, x):
+        x = self.forward_features(x)
         x = self.flatten(x)  # Flatten the output of features
         x = self.head(x)
-        return x  # Added return statement
+        return x
