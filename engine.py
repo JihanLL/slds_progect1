@@ -143,7 +143,7 @@ def plot_metrics(
     test_recalls,
     test_precisions,
     test_f1_scores,
-    title,
+    title=None,
 ):
     """Plot training metrics"""
     fig, axs = plt.subplots(3, 2, figsize=(15, 15))

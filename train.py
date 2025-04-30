@@ -36,6 +36,12 @@ def get_args_parser():
         help="Number of epochs to train",
     )
     parser.add_argument(
+        "full_dataset",
+        type=bool,
+        default=True,
+        help="Use full dataset or not",
+    )
+    parser.add_argument(
         "--learning_rate",
         type=float,
         default=1e-3,
@@ -155,6 +161,9 @@ def main(args):
     scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
     epochs = args.epochs
     L1_parameter = args.L1_parameter
+
+
+    # --- Training loop
     for t in range(epochs):
         print(f"Epoch {t + 1}/{epochs}")
         # Pass both models to train_loop
@@ -178,7 +187,7 @@ def main(args):
             test_dataloader, model, loss_fn, device=device, log_wrong_type=args.log_wrong_type
         )  # Log wrong type only on the last epoch
 
-        # 4. Save the EMA model state dict
+        # Save the EMA model state dict
         torch.save(model_ema.state_dict(), "model.pth")
         print("Saved model state to model.pth")
 
