@@ -200,4 +200,5 @@ def plot_metrics(
 
 
     plt.tight_layout()
-    plt.show()
+    # save the figure
+    plt.savefig("training_metrics.png")
