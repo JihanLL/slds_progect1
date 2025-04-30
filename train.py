@@ -212,7 +212,7 @@ def main(args):
 
         # Save the EMA model state dict
         if t % 10 == 0:
-            torch.save(model_ema.state_dict(), "model.pth")
+            torch.save(model_ema.state_dict(), "checkpoints/model.pth")
             print("Saved model state to model.pth")
 
         # Plot metrics after training
@@ -220,7 +220,7 @@ def main(args):
         print(f"Max accuracy: {max_acc:>0.1f}%")
         if test_accuracies:
             print(
-                f"Final accuracy: {test_accuracies[-1]:>0.1f}%, Final test loss: {test_losses[-1]:>8f} \n"
+                f"top1 accuracy: {test_accuracies[-1]:>0.1f}%, val loss: {test_losses[-1]:>8f} \n"
             )
         else:
             print("No test results recorded.")
