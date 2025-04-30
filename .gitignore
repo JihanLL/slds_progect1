@@ -10,3 +10,6 @@ wheels/
 .venv
 
 *.pth
+
+results/
+wrong_results/
