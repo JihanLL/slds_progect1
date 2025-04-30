@@ -105,7 +105,8 @@ def get_args_parser():
     )
     parser.add_argument(
         "--log_wrong_type",
-        action="store_true",
+        type=bool,
+        default=False,
         help="Log wrong type predictions",
     )
     return parser
