@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
+import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
+
 try:
     from fvcore.nn import FlopCountAnalysis
 
@@ -110,11 +113,26 @@ def get_args_parser():
         default=False,
         help="Log wrong type predictions",
     )
+    # parser.add_argument(
+    #     "--ditributed",
+    #     type=bool,
+    #     default=False,
+    #     help="Use distributed training",
+    # )
     parser.add_argument(
-        "--ditributed",
-        type=bool,
+        "--dist-eval",
+        action="store_true",
         default=False,
-        help="Use distributed training",
+        help="Enabling distributed evaluation",
+    )
+    parser.add_argument(
+        "--world_size", default=1, type=int, help="number of distributed processes"
+    )
+    parser.add_argument(
+        "--local_rank",
+        type=int,
+        default=-1,
+        help="Automatically set by torch.distributed.launch",
     )
     return parser
 
@@ -128,6 +146,14 @@ def set_seed(seed):
     cudnn.deterministic = True
     cudnn.benchmark = False
 
+def setup_ddp(local_rank):
+    # pick GPU and init process group
+    torch.cuda.set_device(local_rank)
+    dist.init_process_group(backend="nccl", init_method="env://")
+    world_size = dist.get_world_size()
+    rank = dist.get_rank()
+    return world_size, rank
+
 
 def main(args):
     print("Starting training script...")
@@ -137,20 +163,50 @@ def main(args):
 
     # Initialize the data class, and define
     # the number of training and test samples
+    # If launched with torch.distributed.launch / torchrun:
+    if args.local_rank != -1:
+        world_size, rank = setup_ddp(args.local_rank)
+        distributed = True
+    else:
+        distributed = False
+
+    # seed and device
+    set_seed(args.seed + (rank if distributed else 0))
+    device = torch.device(
+        f"cuda:{args.local_rank}"
+        if torch.cuda.is_available() and distributed
+        else "cuda"
+        if torch.cuda.is_available()
+        else "cpu"
+    )
+
+    # data
     data = PartOfData(args.full_dataset)
-    training_data = data.get_training_data()
-    test_data = data.get_testing_data()
-    # Initialize DataLoader
-    batch_size = args.batch_size
-    num_workers = max(multiprocessing.cpu_count(), args.num_workers)
+    train_dataset = data.get_training_data()
+    test_dataset = data.get_testing_data()
+
+    if distributed:
+        train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
+        test_sampler = torch.utils.data.distributed.DistributedSampler(
+            test_dataset, shuffle=False
+        )
+    else:
+        train_sampler = None
+        test_sampler = None
+
     train_dataloader = DataLoader(
-        training_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
+        train_dataset,
+        batch_size=args.batch_size,
+        sampler=train_sampler,
+        shuffle=(train_sampler is None),
+        num_workers=args.num_workers,
     )
     test_dataloader = DataLoader(
-        test_data,
-        batch_size=int(1.5 * batch_size),
-        shuffle=True,
-        num_workers=num_workers,
+        test_dataset,
+        batch_size=args.batch_size,
+        sampler=test_sampler,
+        shuffle=False,
+        num_workers=args.num_workers,
     )
     # Initialize the model
     if torch.backends.mps.is_available():
@@ -161,6 +217,8 @@ def main(args):
         device = torch.device("cpu")
     print(f"Using device: {device}")
     model = CNN(in_c=1, conv1_c=20, conv2_c=15, out_dim=10).to(device)
+    if distributed:
+        model = DDP(model, device_ids=[args.local_rank], output_device=args.local_rank)
     # Print model summary using the base model
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"Number of parameters: {total_params}")
@@ -203,6 +261,9 @@ def main(args):
 
     start_time = time.time()
     for t in range(epochs):
+        if distributed:
+            # shuffle data differently every epoch
+            train_sampler.set_epoch(t)
         print(f"Epoch {t + 1}/{epochs}")
         # Pass both models to train_loop
         epoch_training_start_time = time.time()
@@ -247,9 +308,14 @@ def main(args):
         test_f1_scores.append(test_f1)
 
         # Save the EMA model state dict
-        if t % 10 == 0:
-            torch.save(model_ema.state_dict(), "checkpoints/model.pth")
-            print("Saved model state to model.pth")
+        if rank == 0 or not distributed:
+            if t % 10 == 0:
+                # scheduler.step(), checkpointing, logging...
+                torch.save(
+                    model.module.state_dict() if distributed else model.state_dict(),
+                    f"checkpoints/model_rank{rank}_epoch{t}.pth",
+                )
+            
 
         # Plot metrics after training
         max_acc = max(test_accuracies) if test_accuracies else 0  # Handle empty list
@@ -317,6 +383,8 @@ def main(args):
     except Exception as e:
         print(f"Error saving metrics: {e}")
 
+    if distributed:
+        dist.destroy_process_group()
 
 if __name__ == "__main__":
     parser = get_args_parser()
