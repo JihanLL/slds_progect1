@@ -137,6 +137,7 @@ def plot_metrics(
     test_recalls,
     test_precisions,
     test_f1_scores,
+    img_path=None,
     title=None,
 ):
     """Plot training metrics"""
@@ -204,4 +205,4 @@ def plot_metrics(
 
     plt.tight_layout()
     # save the figure
-    plt.savefig("result/training_metrics.png")
+    plt.savefig(img_path + "/metrics.png")
