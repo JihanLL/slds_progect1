@@ -19,6 +19,9 @@ from models.cnn import CNN
 from dataset.balance_data import PartOfData
 import argparse
 from engine import train_loop, test_loop, plot_metrics
+import os
+import json
+from datetime import datetime
 
 
 def get_args_parser():
@@ -82,6 +85,12 @@ def get_args_parser():
         type=str,
         default="MNIST",
         help="Dataset to use (e.g., MNIST)",
+    )
+    parser.add_argument(
+        "--milestones",
+        type=list,
+        default=[20, 28],
+        help="Milestones for learning rate scheduler",
     )
     parser.add_argument(
         "--model",
@@ -256,6 +265,51 @@ def main(args):
     )
     # Save the model state dict
     torch.save(model.state_dict(), "model.pth")
+    # Save metrics to a file
+
+    # Create results directory if it doesn't exist
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
+    results_dir = os.path.join("results", dt_string)
+    os.makedirs(results_dir, exist_ok=True)
+
+    metrics_data = {
+        "train_losses": train_losses,
+        "train_recalls": train_recalls,
+        "train_precisions": train_precisions,
+        "train_f1_scores": train_f1_scores,
+        "training_accuracy": training_accuracy,
+        "learning_rates": learning_rates,
+        "test_losses": test_losses,
+        "test_accuracies": test_accuracies,
+        "test_recalls": test_recalls,
+        "test_precisions": test_precisions,
+        "test_f1_scores": test_f1_scores,
+        "args": vars(args),  # Save arguments as well
+        "total_training_time_seconds": end_time - start_time,
+        "average_epoch_time_seconds": (end_time - start_time) / epochs,
+        "max_test_accuracy": max_acc,
+        "final_test_accuracy": test_accuracies[-1] if test_accuracies else None,
+        "final_test_loss": test_losses[-1] if test_losses else None,
+    }
+
+    metrics_file_path = os.path.join(results_dir, "metrics.json")
+    try:
+        with open(metrics_file_path, "w") as f:
+            json.dump(metrics_data, f, indent=4)
+        print(f"Saved metrics to {metrics_file_path}")
+    except Exception as e:
+        print(f"Error saving metrics: {e}")
+
+    # Save the final model state dict in the results directory as well
+    final_model_path = os.path.join(results_dir, "final_model.pth")
+    torch.save(model.state_dict(), final_model_path)
+    print(f"Saved final model state to {final_model_path}")
+
+    # Save the final EMA model state dict
+    final_ema_model_path = os.path.join(results_dir, "final_model_ema.pth")
+    torch.save(model_ema.state_dict(), final_ema_model_path)
+    print(f"Saved final EMA model state to {final_ema_model_path}")
     print("Saved model state to model.pth")
 
 
