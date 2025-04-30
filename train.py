@@ -157,7 +157,7 @@ def main(args):
         weight_decay=args.L2_parameter,
         momentum=args.momentum,
     )
-    scheduler = MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
+    scheduler = MultiStepLR(optimizer, milestones=[20, 28], gamma=0.1)
     epochs = args.epochs
     L1_parameter = args.L1_parameter
 
