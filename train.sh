@@ -8,4 +8,5 @@ python train.py \
     --model "CNN" \
     --L1_parameter 0.00001 \
     --L2_parameter 0.00001 \
-    --momentum 0.9
+    --momentum 0.9 \
+    --full_dataset True

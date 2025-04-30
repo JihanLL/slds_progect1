@@ -24,9 +24,9 @@ class PartOfData:
         transform=_transformer, # Apply the transformation
     )
 
-    def __init__(self, full = False,num_training_samples=1000, num_test_samples=100, random_seed=321): # 添加 random_seed 参数
+    def __init__(self, full = True,num_training_samples=1000, num_test_samples=100, random_seed=321): # 添加 random_seed 参数
         # 设置随机种子以保证可复现性（如果提供了）
-        if full==True:
+        if full:
             self.training_data = self._full_training_data
             self.test_data = self._full_test_data
             return  
