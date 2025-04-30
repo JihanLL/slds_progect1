@@ -184,10 +184,10 @@ def main(args):
 
         # Plot metrics after training
         max_acc = max(test_accuracies) if test_accuracies else 0  # Handle empty list
-        print(f"Max EMA accuracy: {max_acc:>0.1f}%")
+        print(f"Max accuracy: {max_acc:>0.1f}%")
         if test_accuracies:
             print(
-                f"Final EMA accuracy: {test_accuracies[-1]:>0.1f}%, Final EMA test loss: {test_losses[-1]:>8f} \n"
+                f"Final accuracy: {test_accuracies[-1]:>0.1f}%, Final test loss: {test_losses[-1]:>8f} \n"
             )
         else:
             print("No test results recorded.")
