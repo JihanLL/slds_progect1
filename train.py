@@ -32,7 +32,7 @@ def get_args_parser():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=5,
+        default=100,
         help="Number of epochs to train",
     )
     parser.add_argument(
