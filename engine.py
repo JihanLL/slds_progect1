@@ -13,42 +13,52 @@ def train_loop(
     loss_fn=None,
     optimizer=None,
     scheduler=None,
-    epoch=100,
     l1_lambda=0,
     device=None,
 ):
     model.train()  # Set base model to train mode
+    total_loss = 0
+    total_correct = 0
+    total_samples = 0
+    learning_rates = []
 
+    preds = []
+    labels = []
     for batch, (X, y) in tqdm(enumerate(dataloader)):
-        # Current step count (global)
-        step = epoch * len(dataloader) + batch
         X, y = X.to(device), y.to(device)
 
         # Use base_model for prediction and loss calculation for backprop
         pred = model(X)
         loss = loss_fn(pred, y)
+        preds.extend(pred.argmax(1).cpu().numpy())
+        labels.extend(y.cpu().numpy())
         l1_norm = sum(p.abs().sum() for p in model.parameters())
-        loss = loss + l1_lambda * l1_norm
+        regularized_loss = loss + l1_lambda * l1_norm
 
         optimizer.zero_grad()  # Zero gradients before backward pass
-        loss.backward()
+        regularized_loss.backward()
         optimizer.step()  # Update base_model parameters
 
-        train_losses = []
-        learning_rates = []
-        step_count = []
+        # Record metrics for the batch
+        total_loss += loss.item()  # Use original loss for reporting
+        total_correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+        total_samples += y.size(0)
 
-        # Record loss and learning rate at each step
+        # Record learning rate at each step if scheduler updates per step
+        # If scheduler updates per epoch, this will be the same value throughout
         current_lr = scheduler.get_last_lr()[0]
-        if batch % 100 == 0:
-            # Record loss from base_model's computation
-            train_losses.append(loss.item())
-            learning_rates.append(current_lr)
-            step_count.append(step)
-            training_accuracy = (pred.argmax(1) == y).type(torch.float).sum().item() / len(y)
+        learning_rates.append(current_lr)
 
-    scheduler.step()
-    return train_losses, learning_rates, step_count,training_accuracy
+    avg_loss = total_loss / len(dataloader)
+    accuracy = total_correct / total_samples
+    recall = recall_score(labels, preds, average="macro", zero_division=0)
+    precision = precision_score(labels, preds, average="macro", zero_division=0)
+    f1 = f1_score(labels, preds, average="macro", zero_division=0)
+    # Return the average learning rate or the list of LRs used
+    # Here we return the last one, assuming it might be most relevant if updated per epoch
+    last_lr = learning_rates[-1] if learning_rates else None
+
+    return avg_loss, accuracy, recall, precision, f1, last_lr
 
 
 def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False):
@@ -57,17 +67,10 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
     num_batches = len(dataloader)
     test_loss, correct = 0, 0
 
-    # 用于存储所有预测和真实标签
     all_preds = []
     all_labels = []
-    test_losses = []
-    test_accuracies = []
-    test_recalls = []
-    test_precisions = []
-    test_f1_scores = []
-
     with torch.no_grad():
-        for X, y in tqdm(dataloader):
+        for batch, (X, y) in tqdm(enumerate(dataloader)):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
@@ -92,19 +95,12 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
                     )
 
     test_loss /= num_batches
-    correct /= size
+    accuracy = correct / size
 
     # 计算各项指标
     recall = recall_score(all_labels, all_preds, average="macro", zero_division=0)
     precision = precision_score(all_labels, all_preds, average="macro", zero_division=0)
     f1 = f1_score(all_labels, all_preds, average="macro", zero_division=0)
-
-    # 记录测试指标
-    test_losses.append(test_loss)
-    test_accuracies.append(100 * correct)
-    test_recalls.append(100 * recall)
-    test_precisions.append(100 * precision)
-    test_f1_scores.append(100 * f1)
 
     # 保存错误分类样本的代码保持不变
     if log_wrong_type and misclassified_samples:
@@ -126,13 +122,7 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
                 image,
                 cmap="gray",
             )
-    return (
-        test_losses,
-        test_accuracies,
-        test_recalls,
-        test_precisions,
-        test_f1_scores,
-    )
+    return test_loss, accuracy, recall, precision, f1
 
 
 def plot_metrics(
@@ -151,7 +141,7 @@ def plot_metrics(
     fig, axs = plt.subplots(3, 2, figsize=(15, 15))
 
     # 展开子图数组
-    ax1, ax2, ax3, ax4, ax5, ax6,ax7 = axs.ravel()
+    ax1, ax2, ax3, ax4, ax5, ax6, ax7 = axs.ravel()
 
     # Plot training loss
     ax1.plot(step_count, train_losses)
@@ -191,7 +181,6 @@ def plot_metrics(
     ax7.set_xlabel("Epochs")
     ax7.set_ylabel("Training Accuracy")
 
-    
     # Combine the legends
     lines1, labels1 = ax3.get_legend_handles_labels()
     lines2, labels2 = ax3_twin.get_legend_handles_labels()

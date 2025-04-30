@@ -36,7 +36,7 @@ def get_args_parser():
         help="Number of epochs to train",
     )
     parser.add_argument(
-        "full_dataset",
+        "--full_dataset",
         type=bool,
         default=True,
         help="Use full dataset or not",
@@ -68,7 +68,7 @@ def get_args_parser():
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=100,
+        default=64,
         help="Batch size for training and testing",
     )
     parser.add_argument(
@@ -162,34 +162,59 @@ def main(args):
     epochs = args.epochs
     L1_parameter = args.L1_parameter
 
+    # --- Training loop ---
+    train_losses = []
+    train_recalls = []
+    train_precisions = []
+    train_f1_scores = []
+    training_accuracy = []
+    learning_rates = []
+    training_accuracy = []
+    test_losses = []
+    test_accuracies = []
+    test_recalls = []
+    test_precisions = []
+    test_f1_scores = []
 
-    # --- Training loop
     for t in range(epochs):
         print(f"Epoch {t + 1}/{epochs}")
         # Pass both models to train_loop
-        train_losses, learning_rates, step_count,training_accuracy = train_loop(
-            train_dataloader,
-            model,
-            loss_fn=loss_fn,
-            optimizer=optimizer,
-            scheduler=scheduler,
-            epoch=t,
-            l1_lambda=L1_parameter,
-            device=device,
+        train_loss, train_accuracy, train_recall, train_precision, train_f1, last_lr = (
+            train_loop(
+                train_dataloader,
+                model,
+                loss_fn=loss_fn,
+                optimizer=optimizer,
+                scheduler=scheduler,
+                l1_lambda=L1_parameter,
+                device=device,
+            )
         )
-        (
-            test_losses,
-            test_accuracies,
-            test_recalls,
-            test_precisions,
-            test_f1_scores,
-        ) = test_loop(
-            test_dataloader, model, loss_fn, device=device, log_wrong_type=args.log_wrong_type
+        train_losses.append(train_loss)
+        learning_rates.append(last_lr)
+        training_accuracy.append(train_accuracy)
+        train_recalls.append(train_recall)
+        train_precisions.append(train_precision)
+        train_f1_scores.append(train_f1)
+
+        test_loss, test_accuracy, test_recall, test_precision, test_f1 = test_loop(
+            test_dataloader,
+            model,
+            loss_fn,
+            device=device,
+            log_wrong_type=args.log_wrong_type,
         )  # Log wrong type only on the last epoch
 
+        test_losses.append(test_loss)
+        test_accuracies.append(test_accuracy)
+        test_recalls.append(test_recall)
+        test_precisions.append(test_precision)
+        test_f1_scores.append(test_f1)
+
         # Save the EMA model state dict
-        torch.save(model_ema.state_dict(), "model.pth")
-        print("Saved model state to model.pth")
+        if t % 10 == 0:
+            torch.save(model_ema.state_dict(), "model.pth")
+            print("Saved model state to model.pth")
 
         # Plot metrics after training
         max_acc = max(test_accuracies) if test_accuracies else 0  # Handle empty list
@@ -201,28 +226,23 @@ def main(args):
         else:
             print("No test results recorded.")
 
-        # Call plot_metrics if lists are not empty
-        if (
-            train_losses
-            and learning_rates
-            and step_count
-            and test_losses
-            and test_accuracies
-        ):
-            plot_metrics(
-                train_losses,
-                learning_rates,
-                step_count,
-                training_accuracy,
-                test_losses,
-                test_accuracies,
-                test_recalls,
-                test_precisions,
-                test_f1_scores,
-                title="MNIST Classification Training Results",
-            )
-        else:
-            print("Metrics lists are empty, skipping plotting.")
+    # Plot metrics
+    plot_metrics(
+        train_losses,
+        train_recalls,
+        train_precisions,
+        train_f1_scores,
+        training_accuracy,
+        learning_rates,
+        test_losses,
+        test_accuracies,
+        test_recalls,
+        test_precisions,
+        test_f1_scores,
+    )
+    # Save the model state dict
+    torch.save(model.state_dict(), "model.pth")
+    print("Saved model state to model.pth")
 
 
 if __name__ == "__main__":
