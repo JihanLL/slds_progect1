@@ -6,6 +6,7 @@ from torch.optim.swa_utils import AveragedModel
 import torch.backends.cudnn as cudnn
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 try:
     from fvcore.nn import FlopCountAnalysis
@@ -173,10 +174,12 @@ def main(args):
     test_recalls = []
     test_precisions = []
     test_f1_scores = []
-
+    
+    start_time = time.time()
     for t in range(epochs):
         print(f"Epoch {t + 1}/{epochs}")
         # Pass both models to train_loop
+        epoch_training_start_time = time.time()
         train_loss, train_accuracy, train_recall, train_precision, train_f1, last_lr = (
             train_loop(
                 train_dataloader,
@@ -188,6 +191,10 @@ def main(args):
                 device=device,
             )
         )
+        epoch_training_end_time = time.time()
+        print(
+            f"Epoch {t + 1} training time: {epoch_training_end_time - epoch_training_start_time:.2f} seconds"
+        )
         train_losses.append(train_loss)
         learning_rates.append(last_lr)
         training_accuracy.append(train_accuracy)
@@ -195,6 +202,7 @@ def main(args):
         train_precisions.append(train_precision)
         train_f1_scores.append(train_f1)
 
+        evaluation_start_time = time.time()
         test_loss, test_accuracy, test_recall, test_precision, test_f1 = test_loop(
             test_dataloader,
             model,
@@ -202,7 +210,10 @@ def main(args):
             device=device,
             log_wrong_type=args.log_wrong_type,
         )  # Log wrong type only on the last epoch
-
+        evaluation_end_time = time.time()
+        print(
+            f"Epoch {t + 1} evaluation time: {evaluation_end_time - evaluation_start_time:.2f} seconds"
+        )
         test_losses.append(test_loss)
         test_accuracies.append(test_accuracy)
         test_recalls.append(test_recall)
@@ -224,6 +235,11 @@ def main(args):
         else:
             print("No test results recorded.")
 
+    end_time = time.time()
+    print(
+        f"Total training time: {end_time - start_time:.2f} seconds, "
+        f"Average time per epoch: {(end_time - start_time) / epochs:.2f} seconds"
+    )
     # Plot metrics
     plot_metrics(
         train_losses,
