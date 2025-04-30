@@ -205,5 +205,5 @@ def plot_metrics(
 
     plt.tight_layout()
     # save the figure
-    plt.savefig("results/training_metrics.png")
+    #plt.savefig("results/training_metrics.png")
     plt.savefig(img_path + "/metrics.png")
