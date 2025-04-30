@@ -9,7 +9,6 @@ import numpy as np
 
 try:
     from fvcore.nn import FlopCountAnalysis
-
     flopanalysis = True
 except ImportError:
     flopanalysis = False
