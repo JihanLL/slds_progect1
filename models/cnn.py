@@ -31,19 +31,19 @@ class CNN(nn.Module):
             # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 20x20 -> 10x10)
             # Add more Conv/BN/Act/Pool blocks here to increase depth
 
-            nn.Conv2d(
-                in_channels=conv2_c, out_channels=10, kernel_size=3, padding=0
-            ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
-            nn.BatchNorm2d(10),
-            nn.GELU(),
-            #nn.Dropout2d(p=0.25),
+            # nn.Conv2d(
+            #     in_channels=conv2_c, out_channels=10, kernel_size=3, padding=0
+            # ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
+            # nn.BatchNorm2d(10),
+            # nn.GELU(),
+            # #nn.Dropout2d(p=0.25),
             
-            nn.Conv2d(
-                in_channels=10, out_channels=8, kernel_size=3, padding=0
-            ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
-            nn.BatchNorm2d(8),
-            nn.GELU(),
-            #nn.Dropout2d(p=0.25), 
+            # nn.Conv2d(
+            #     in_channels=10, out_channels=8, kernel_size=3, padding=0
+            # ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
+            # nn.BatchNorm2d(8),
+            # nn.GELU(),
+            # #nn.Dropout2d(p=0.25), 
         )
 
         # Calculate the flattened size dynamically

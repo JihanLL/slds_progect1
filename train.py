@@ -4,7 +4,7 @@ from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import MultiStepLR
 from torch.optim.swa_utils import AveragedModel
 import torch.backends.cudnn as cudnn
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 import time
 
@@ -48,7 +48,7 @@ def get_args_parser():
     parser.add_argument(
         "--learning_rate",
         type=float,
-        default=1e-3,
+        default=5e-4,
         help="Learning rate for the optimizer",
     )
     parser.add_argument(
