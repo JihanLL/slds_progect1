@@ -127,7 +127,6 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
 
 def plot_metrics(
     train_losses,
-    #step_count,
     train_recalls,
     train_precisions,
     train_f1_scores,
@@ -197,8 +196,12 @@ def plot_metrics(
 
     # 设置总标题
     fig.suptitle(title, fontsize=16, y=1.02)
-
+    # Add text annotation for the final accuracy value
+    final_epoch = len(test_accuracies)
+    final_accuracy = test_accuracies[-1]
+    ax3_twin.text(final_epoch, final_accuracy, f'{final_accuracy:.2f}%', 
+                  ha='right', va='bottom', color='red', fontsize=10)
 
     plt.tight_layout()
     # save the figure
-    plt.savefig("training_metrics.png")
+    plt.savefig("result/training_metrics.png")
