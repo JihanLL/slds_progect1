@@ -45,9 +45,10 @@ def train_loop(
             train_losses.append(loss.item())
             learning_rates.append(current_lr)
             step_count.append(step)
+            training_accuracy = (pred.argmax(1) == y).type(torch.float).sum().item() / len(y)
 
     scheduler.step()
-    return train_losses, learning_rates, step_count
+    return train_losses, learning_rates, step_count,training_accuracy
 
 
 def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False):
@@ -138,6 +139,7 @@ def plot_metrics(
     train_losses,
     learning_rates,
     step_count,
+    training_accuracy,
     test_losses,
     test_accuracies,
     test_recalls,
@@ -149,7 +151,7 @@ def plot_metrics(
     fig, axs = plt.subplots(3, 2, figsize=(15, 15))
 
     # 展开子图数组
-    ax1, ax2, ax3, ax4, ax5, ax6 = axs.ravel()
+    ax1, ax2, ax3, ax4, ax5, ax6,ax7 = axs.ravel()
 
     # Plot training loss
     ax1.plot(step_count, train_losses)
@@ -185,6 +187,11 @@ def plot_metrics(
     ax6.set_xlabel("Epochs")
     ax6.set_ylabel("F1 Score")
 
+    ax7.plot(epochs_x, training_accuracy, "y-", label="Training Accuracy")
+    ax7.set_xlabel("Epochs")
+    ax7.set_ylabel("Training Accuracy")
+
+    
     # Combine the legends
     lines1, labels1 = ax3.get_legend_handles_labels()
     lines2, labels2 = ax3_twin.get_legend_handles_labels()

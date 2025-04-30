@@ -167,7 +167,7 @@ def main(args):
     for t in range(epochs):
         print(f"Epoch {t + 1}/{epochs}")
         # Pass both models to train_loop
-        train_losses, learning_rates, step_count = train_loop(
+        train_losses, learning_rates, step_count,training_accuracy = train_loop(
             train_dataloader,
             model,
             loss_fn=loss_fn,
@@ -213,6 +213,7 @@ def main(args):
                 train_losses,
                 learning_rates,
                 step_count,
+                training_accuracy,
                 test_losses,
                 test_accuracies,
                 test_recalls,
