@@ -122,14 +122,17 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
                 image,
                 cmap="gray",
             )
-    return test_loss, accuracy, recall, precision, f1
+    return test_loss, accuracy*100, recall, precision, f1
 
 
 def plot_metrics(
     train_losses,
-    learning_rates,
-    step_count,
+    #step_count,
+    train_recalls,
+    train_precisions,
+    train_f1_scores,
     training_accuracy,
+    learning_rates,
     test_losses,
     test_accuracies,
     test_recalls,
@@ -138,17 +141,18 @@ def plot_metrics(
     title=None,
 ):
     """Plot training metrics"""
-    fig, axs = plt.subplots(3, 2, figsize=(15, 15))
-
+    fig, axs = plt.subplots(4, 2, figsize=(15, 15))
+    axs = axs.ravel()
     # 展开子图数组
-    ax1, ax2, ax3, ax4, ax5, ax6, ax7 = axs.ravel()
-
+    ax1, ax2, ax3, ax4, ax5, ax6, ax7 = axs[:7]#axs.ravel()
+    axs[7].set_visible(False)
     # Plot training loss
-    ax1.plot(step_count, train_losses)
+    step_count = np.arange(1, len(train_losses) + 1)
+    ax1.plot(step_count, train_losses)#ax1.plot(step_count, train_losses)
     ax1.set_xlabel("Steps")
     ax1.set_ylabel("Training Loss")
     ax1.set_title("Training Loss vs Steps")
-
+    axs[7].set_visible(False)
     # Plot learning rate
     ax2.plot(step_count, learning_rates)
     ax2.set_xlabel("Steps")
@@ -193,6 +197,7 @@ def plot_metrics(
 
     # 设置总标题
     fig.suptitle(title, fontsize=16, y=1.02)
+
 
     plt.tight_layout()
     plt.show()

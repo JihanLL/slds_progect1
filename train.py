@@ -31,7 +31,7 @@ def get_args_parser():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=100,
+        default=30,
         help="Number of epochs to train",
     )
     parser.add_argument(
@@ -47,7 +47,7 @@ def get_args_parser():
         help="Learning rate for the optimizer",
     )
     parser.add_argument(
-        "--L1_parameter",
+        "--L1_parameter", 
         type=float,
         default=1e-5,
         help="L1 regularization parameter",
@@ -73,7 +73,7 @@ def get_args_parser():
     parser.add_argument(
         "--num_workers",
         type=int,
-        default=0,
+        default=8,
         help="Number of workers for DataLoader",
     )
     parser.add_argument(

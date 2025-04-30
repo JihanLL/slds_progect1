@@ -19,7 +19,7 @@ class CNN(nn.Module):
             ),  # 28x28 -> 22x22
             nn.BatchNorm2d(conv1_c),
             nn.GELU(),
-            nn.Dropout2d(p=0.25),  # 添加Dropout，使用Dropout2d因为输入是2D的
+            #nn.Dropout2d(p=0.25),  # 添加Dropout，使用Dropout2d因为输入是2D的
             # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 22x22 -> 11x11)
             # Block 2
             nn.Conv2d(
@@ -27,9 +27,16 @@ class CNN(nn.Module):
             ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
             nn.BatchNorm2d(conv2_c),
             nn.GELU(),
-            nn.Dropout2d(p=0.25),  # 添加Dropout
+            #nn.Dropout2d(p=0.25),  # 添加Dropout
             # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 20x20 -> 10x10)
             # Add more Conv/BN/Act/Pool blocks here to increase depth
+
+            nn.Conv2d(
+                in_channels=conv2_c, out_channels=10, kernel_size=3, padding=0
+            ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
+            nn.BatchNorm2d(10),
+            nn.GELU(),
+            #nn.Dropout2d(p=0.25), 
         )
 
         # Calculate the flattened size dynamically
