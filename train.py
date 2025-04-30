@@ -10,6 +10,7 @@ import time
 
 try:
     from fvcore.nn import FlopCountAnalysis
+
     flopanalysis = True
 except ImportError:
     flopanalysis = False
@@ -35,7 +36,7 @@ def get_args_parser():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=2,
+        default=30,
         help="Number of epochs to train",
     )
     parser.add_argument(
@@ -51,7 +52,7 @@ def get_args_parser():
         help="Learning rate for the optimizer",
     )
     parser.add_argument(
-        "--L1_parameter", 
+        "--L1_parameter",
         type=float,
         default=1e-5,
         help="L1 regularization parameter",
@@ -184,7 +185,7 @@ def main(args):
     test_recalls = []
     test_precisions = []
     test_f1_scores = []
-    
+
     start_time = time.time()
     for t in range(epochs):
         print(f"Epoch {t + 1}/{epochs}")

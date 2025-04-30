@@ -36,6 +36,13 @@ class CNN(nn.Module):
             ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
             nn.BatchNorm2d(10),
             nn.GELU(),
+            #nn.Dropout2d(p=0.25),
+            
+            nn.Conv2d(
+                in_channels=10, out_channels=8, kernel_size=3, padding=0
+            ),  # 22x22 -> 20x20 (or 11x11 -> 9x9 if pooling)
+            nn.BatchNorm2d(8),
+            nn.GELU(),
             #nn.Dropout2d(p=0.25), 
         )
 
