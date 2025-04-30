@@ -135,15 +135,24 @@ def main(args):
     training_data = data.get_training_data()
     test_data = data.get_testing_data()
     # Initialize DataLoader
-    num_workers = multiprocessing.cpu_count()
+    batch_size = args.batch_size
+    num_workers = max(multiprocessing.cpu_count(), args.num_workers)
     train_dataloader = DataLoader(
-        training_data, batch_size=100, shuffle=True, num_workers=num_workers
+        training_data, batch_size=batch_size, shuffle=True, num_workers=num_workers
     )
     test_dataloader = DataLoader(
-        test_data, batch_size=100, shuffle=True, num_workers=num_workers
+        test_data,
+        batch_size=int(1.5 * batch_size),
+        shuffle=True,
+        num_workers=num_workers,
     )
     # Initialize the model
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        device = torch.device("cpu")
     print(f"Using device: {device}")
     model = CNN(in_c=1, conv1_c=20, conv2_c=15, out_dim=10).to(device)
     # Print model summary using the base model
