@@ -249,6 +249,10 @@ def main(args):
         f"Total training time: {end_time - start_time:.2f} seconds, "
         f"Average time per epoch: {(end_time - start_time) / epochs:.2f} seconds"
     )
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
+    results_dir = os.path.join("results", dt_string)
+    os.makedirs(results_dir, exist_ok=True)
     # Plot metrics
     plot_metrics(
         train_losses,
@@ -262,16 +266,11 @@ def main(args):
         test_recalls,
         test_precisions,
         test_f1_scores,
+        img_path=results_dir,
     )
     # Save the model state dict
     torch.save(model.state_dict(), "model.pth")
     # Save metrics to a file
-
-    # Create results directory if it doesn't exist
-    now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
-    results_dir = os.path.join("results", dt_string)
-    os.makedirs(results_dir, exist_ok=True)
 
     metrics_data = {
         "train_losses": train_losses,
@@ -300,17 +299,6 @@ def main(args):
         print(f"Saved metrics to {metrics_file_path}")
     except Exception as e:
         print(f"Error saving metrics: {e}")
-
-    # Save the final model state dict in the results directory as well
-    final_model_path = os.path.join(results_dir, "final_model.pth")
-    torch.save(model.state_dict(), final_model_path)
-    print(f"Saved final model state to {final_model_path}")
-
-    # Save the final EMA model state dict
-    final_ema_model_path = os.path.join(results_dir, "final_model_ema.pth")
-    torch.save(model_ema.state_dict(), final_ema_model_path)
-    print(f"Saved final EMA model state to {final_ema_model_path}")
-    print("Saved model state to model.pth")
 
 
 if __name__ == "__main__":
