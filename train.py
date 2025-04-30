@@ -120,7 +120,7 @@ def main(args):
 
     # Initialize the data class, and define
     # the number of training and test samples
-    data = PartOfData()
+    data = PartOfData(args.full_dataset)
     training_data = data.get_training_data()
     test_data = data.get_testing_data()
     # Initialize DataLoader
