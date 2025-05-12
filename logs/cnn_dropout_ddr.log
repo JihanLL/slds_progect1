@@ -171,3 +171,357 @@ Epoch 6 - Test Acc: 53.1%, Test Loss: 1.698967
 
 [Rank 4] Epoch 7/35
 [Rank 0] Epoch 7/35 training time: 14.42 seconds
+[Rank 0] Epoch 7/35 evaluation time: 13.02 seconds
+Max accuracy so far: 56.8%
+Epoch 7 - Test Acc: 56.8%, Test Loss: 1.518545
+[Rank 0] Epoch 8/35
+[Rank 6] Epoch 8/35
+[Rank 3] Epoch 8/35[Rank 1] Epoch 8/35
+
+[Rank 2] Epoch 8/35[Rank 7] Epoch 8/35
+
+[Rank 5] Epoch 8/35[Rank 4] Epoch 8/35
+
+[Rank 0] Epoch 8/35 training time: 15.63 seconds
+[Rank 0] Epoch 8/35 evaluation time: 13.13 seconds
+Max accuracy so far: 56.8%
+Epoch 8 - Test Acc: 55.0%, Test Loss: 1.374123
+[Rank 0] Epoch 9/35
+[Rank 1] Epoch 9/35[Rank 4] Epoch 9/35[Rank 5] Epoch 9/35
+
+
+[Rank 2] Epoch 9/35[Rank 6] Epoch 9/35[Rank 7] Epoch 9/35
+
+
+[Rank 3] Epoch 9/35
+[Rank 0] Epoch 9/35 training time: 13.98 seconds
+[Rank 0] Epoch 9/35 evaluation time: 13.01 seconds
+Max accuracy so far: 56.8%
+Epoch 9 - Test Acc: 54.9%, Test Loss: 1.267122
+[Rank 0] Epoch 10/35
+[Rank 6] Epoch 10/35[Rank 3] Epoch 10/35
+
+[Rank 5] Epoch 10/35[Rank 4] Epoch 10/35
+
+[Rank 1] Epoch 10/35[Rank 2] Epoch 10/35
+[Rank 7] Epoch 10/35
+
+[Rank 0] Epoch 10/35 training time: 14.68 seconds
+[Rank 0] Epoch 10/35 evaluation time: 13.09 seconds
+Max accuracy so far: 56.8%
+Epoch 10 - Test Acc: 56.4%, Test Loss: 1.194971
+Saved checkpoint to checkpoints/model_epoch10.pth
+[Rank 0] Epoch 11/35
+[Rank 1] Epoch 11/35
+[Rank 4] Epoch 11/35
+[Rank 2] Epoch 11/35[Rank 5] Epoch 11/35
+
+[Rank 3] Epoch 11/35
+[Rank 6] Epoch 11/35[Rank 7] Epoch 11/35
+
+[Rank 0] Epoch 11/35 training time: 14.16 seconds
+[Rank 0] Epoch 11/35 evaluation time: 13.01 seconds
+Max accuracy so far: 57.4%
+Epoch 11 - Test Acc: 57.4%, Test Loss: 1.153344
+[Rank 0] Epoch 12/35
+[Rank 4] Epoch 12/35
+[Rank 7] Epoch 12/35[Rank 3] Epoch 12/35[Rank 6] Epoch 12/35
+
+
+[Rank 1] Epoch 12/35[Rank 2] Epoch 12/35
+
+[Rank 5] Epoch 12/35
+[Rank 0] Epoch 12/35 training time: 14.99 seconds
+[Rank 0] Epoch 12/35 evaluation time: 13.19 seconds
+Max accuracy so far: 59.1%
+Epoch 12 - Test Acc: 59.1%, Test Loss: 1.122910
+[Rank 0] Epoch 13/35
+[Rank 3] Epoch 13/35[Rank 4] Epoch 13/35
+
+[Rank 1] Epoch 13/35
+[Rank 5] Epoch 13/35[Rank 2] Epoch 13/35
+
+[Rank 6] Epoch 13/35[Rank 7] Epoch 13/35
+
+[Rank 0] Epoch 13/35 training time: 14.15 seconds
+[Rank 0] Epoch 13/35 evaluation time: 12.98 seconds
+Max accuracy so far: 59.4%
+Epoch 13 - Test Acc: 59.4%, Test Loss: 1.098496
+[Rank 0] Epoch 14/35
+[Rank 3] Epoch 14/35
+[Rank 4] Epoch 14/35[Rank 6] Epoch 14/35
+
+[Rank 7] Epoch 14/35
+[Rank 1] Epoch 14/35[Rank 5] Epoch 14/35
+
+[Rank 2] Epoch 14/35
+[Rank 0] Epoch 14/35 training time: 14.46 seconds
+[Rank 0] Epoch 14/35 evaluation time: 12.94 seconds
+Max accuracy so far: 59.5%
+Epoch 14 - Test Acc: 59.5%, Test Loss: 1.080294
+[Rank 0] Epoch 15/35
+[Rank 2] Epoch 15/35
+[Rank 3] Epoch 15/35[Rank 1] Epoch 15/35
+[Rank 5] Epoch 15/35
+[Rank 4] Epoch 15/35
+
+[Rank 7] Epoch 15/35
+[Rank 6] Epoch 15/35
+[Rank 0] Epoch 15/35 training time: 15.53 seconds
+[Rank 0] Epoch 15/35 evaluation time: 13.05 seconds
+Max accuracy so far: 59.9%
+Epoch 15 - Test Acc: 59.9%, Test Loss: 1.061733
+[Rank 0] Epoch 16/35
+[Rank 4] Epoch 16/35
+[Rank 6] Epoch 16/35
+[Rank 5] Epoch 16/35[Rank 3] Epoch 16/35[Rank 7] Epoch 16/35
+
+
+[Rank 1] Epoch 16/35
+[Rank 2] Epoch 16/35
+[Rank 0] Epoch 16/35 training time: 14.48 seconds
+[Rank 0] Epoch 16/35 evaluation time: 12.95 seconds
+Max accuracy so far: 60.0%
+Epoch 16 - Test Acc: 60.0%, Test Loss: 1.039849
+[Rank 0] Epoch 17/35
+[Rank 3] Epoch 17/35
+[Rank 2] Epoch 17/35[Rank 5] Epoch 17/35
+[Rank 6] Epoch 17/35[Rank 1] Epoch 17/35
+
+[Rank 4] Epoch 17/35
+
+[Rank 7] Epoch 17/35
+[Rank 0] Epoch 17/35 training time: 14.42 seconds
+[Rank 0] Epoch 17/35 evaluation time: 12.96 seconds
+Max accuracy so far: 60.2%
+Epoch 17 - Test Acc: 60.2%, Test Loss: 1.017425
+[Rank 0] Epoch 18/35
+[Rank 4] Epoch 18/35
+[Rank 3] Epoch 18/35[Rank 5] Epoch 18/35
+
+[Rank 1] Epoch 18/35
+[Rank 7] Epoch 18/35
+[Rank 6] Epoch 18/35
+[Rank 2] Epoch 18/35
+[Rank 0] Epoch 18/35 training time: 14.91 seconds
+[Rank 0] Epoch 18/35 evaluation time: 13.11 seconds
+Max accuracy so far: 60.5%
+Epoch 18 - Test Acc: 60.5%, Test Loss: 0.998626
+[Rank 0] Epoch 19/35
+[Rank 3] Epoch 19/35
+[Rank 1] Epoch 19/35[Rank 6] Epoch 19/35
+
+[Rank 4] Epoch 19/35
+[Rank 2] Epoch 19/35
+[Rank 7] Epoch 19/35
+[Rank 5] Epoch 19/35
+[Rank 0] Epoch 19/35 training time: 13.96 seconds
+[Rank 0] Epoch 19/35 evaluation time: 13.12 seconds
+Max accuracy so far: 60.8%
+Epoch 19 - Test Acc: 60.8%, Test Loss: 0.984687
+[Rank 0] Epoch 20/35
+[Rank 5] Epoch 20/35
+[Rank 3] Epoch 20/35[Rank 7] Epoch 20/35[Rank 1] Epoch 20/35
+[Rank 2] Epoch 20/35
+[Rank 4] Epoch 20/35
+
+
+[Rank 6] Epoch 20/35
+[Rank 0] Epoch 20/35 training time: 15.95 seconds
+[Rank 0] Epoch 20/35 evaluation time: 13.00 seconds
+Max accuracy so far: 61.6%
+Epoch 20 - Test Acc: 61.6%, Test Loss: 0.975275
+Saved checkpoint to checkpoints/model_epoch20.pth
+[Rank 0] Epoch 21/35
+[Rank 1] Epoch 21/35[Rank 2] Epoch 21/35[Rank 6] Epoch 21/35
+
+
+[Rank 3] Epoch 21/35
+[Rank 7] Epoch 21/35[Rank 5] Epoch 21/35
+
+[Rank 4] Epoch 21/35
+[Rank 0] Epoch 21/35 training time: 14.28 seconds
+[Rank 0] Epoch 21/35 evaluation time: 12.99 seconds
+Max accuracy so far: 61.6%
+Epoch 21 - Test Acc: 61.5%, Test Loss: 0.971157
+[Rank 0] Epoch 22/35
+[Rank 3] Epoch 22/35[Rank 5] Epoch 22/35
+
+[Rank 2] Epoch 22/35[Rank 4] Epoch 22/35
+
+[Rank 7] Epoch 22/35
+[Rank 6] Epoch 22/35[Rank 1] Epoch 22/35
+
+[Rank 0] Epoch 22/35 training time: 14.22 seconds
+[Rank 0] Epoch 22/35 evaluation time: 13.00 seconds
+Max accuracy so far: 61.6%
+Epoch 22 - Test Acc: 61.4%, Test Loss: 0.969596
+[Rank 0] Epoch 23/35
+[Rank 3] Epoch 23/35
+[Rank 7] Epoch 23/35[Rank 4] Epoch 23/35
+
+[Rank 1] Epoch 23/35[Rank 2] Epoch 23/35[Rank 6] Epoch 23/35
+[Rank 5] Epoch 23/35
+
+
+[Rank 0] Epoch 23/35 training time: 13.80 seconds
+[Rank 0] Epoch 23/35 evaluation time: 13.01 seconds
+Max accuracy so far: 62.1%
+Epoch 23 - Test Acc: 62.1%, Test Loss: 0.964984
+[Rank 0] Epoch 24/35
+[Rank 1] Epoch 24/35[Rank 2] Epoch 24/35[Rank 6] Epoch 24/35
+
+
+[Rank 3] Epoch 24/35
+[Rank 5] Epoch 24/35
+[Rank 4] Epoch 24/35[Rank 7] Epoch 24/35
+
+[Rank 0] Epoch 24/35 training time: 14.22 seconds
+[Rank 0] Epoch 24/35 evaluation time: 13.06 seconds
+Max accuracy so far: 62.4%
+Epoch 24 - Test Acc: 62.4%, Test Loss: 0.960555
+[Rank 0] Epoch 25/35
+[Rank 5] Epoch 25/35[Rank 4] Epoch 25/35
+
+[Rank 1] Epoch 25/35[Rank 6] Epoch 25/35
+[Rank 7] Epoch 25/35
+[Rank 2] Epoch 25/35
+
+[Rank 3] Epoch 25/35
+[Rank 0] Epoch 25/35 training time: 14.39 seconds
+[Rank 0] Epoch 25/35 evaluation time: 12.97 seconds
+Max accuracy so far: 62.7%
+Epoch 25 - Test Acc: 62.7%, Test Loss: 0.955881
+[Rank 0] Epoch 26/35
+[Rank 3] Epoch 26/35
+[Rank 5] Epoch 26/35[Rank 4] Epoch 26/35
+
+[Rank 1] Epoch 26/35[Rank 6] Epoch 26/35[Rank 2] Epoch 26/35
+
+
+[Rank 7] Epoch 26/35
+[Rank 0] Epoch 26/35 training time: 14.17 seconds
+[Rank 0] Epoch 26/35 evaluation time: 13.01 seconds
+Max accuracy so far: 62.7%
+Epoch 26 - Test Acc: 62.4%, Test Loss: 0.951804
+[Rank 0] Epoch 27/35
+[Rank 6] Epoch 27/35[Rank 1] Epoch 27/35[Rank 2] Epoch 27/35[Rank 7] Epoch 27/35
+
+
+
+[Rank 3] Epoch 27/35
+[Rank 4] Epoch 27/35
+[Rank 5] Epoch 27/35
+[Rank 0] Epoch 27/35 training time: 14.70 seconds
+[Rank 0] Epoch 27/35 evaluation time: 13.09 seconds
+Max accuracy so far: 62.7%
+Epoch 27 - Test Acc: 62.6%, Test Loss: 0.948606
+[Rank 0] Epoch 28/35
+[Rank 5] Epoch 28/35[Rank 4] Epoch 28/35
+[Rank 1] Epoch 28/35
+[Rank 6] Epoch 28/35[Rank 7] Epoch 28/35
+[Rank 2] Epoch 28/35
+
+
+[Rank 3] Epoch 28/35
+[Rank 0] Epoch 28/35 training time: 14.55 seconds
+[Rank 0] Epoch 28/35 evaluation time: 13.02 seconds
+Max accuracy so far: 63.2%
+Epoch 28 - Test Acc: 63.2%, Test Loss: 0.947103
+[Rank 0] Epoch 29/35
+[Rank 5] Epoch 29/35[Rank 1] Epoch 29/35
+[Rank 7] Epoch 29/35[Rank 4] Epoch 29/35[Rank 3] Epoch 29/35
+
+
+
+[Rank 2] Epoch 29/35[Rank 6] Epoch 29/35
+
+[Rank 0] Epoch 29/35 training time: 14.51 seconds
+[Rank 0] Epoch 29/35 evaluation time: 13.02 seconds
+Max accuracy so far: 63.2%
+Epoch 29 - Test Acc: 63.1%, Test Loss: 0.945548
+[Rank 0] Epoch 30/35
+[Rank 2] Epoch 30/35[Rank 7] Epoch 30/35
+
+[Rank 5] Epoch 30/35[Rank 4] Epoch 30/35[Rank 3] Epoch 30/35
+
+
+[Rank 1] Epoch 30/35
+[Rank 6] Epoch 30/35
+[Rank 0] Epoch 30/35 training time: 14.46 seconds
+[Rank 0] Epoch 30/35 evaluation time: 13.03 seconds
+Max accuracy so far: 63.2%
+Epoch 30 - Test Acc: 63.0%, Test Loss: 0.944771
+Saved checkpoint to checkpoints/model_epoch30.pth
+[Rank 0] Epoch 31/35
+[Rank 2] Epoch 31/35
+[Rank 7] Epoch 31/35[Rank 6] Epoch 31/35
+[Rank 1] Epoch 31/35
+
+[Rank 3] Epoch 31/35[Rank 5] Epoch 31/35
+
+[Rank 4] Epoch 31/35
+[Rank 0] Epoch 31/35 training time: 15.02 seconds
+[Rank 0] Epoch 31/35 evaluation time: 13.07 seconds
+Max accuracy so far: 63.2%
+Epoch 31 - Test Acc: 62.9%, Test Loss: 0.943098
+[Rank 0] Epoch 32/35
+[Rank 3] Epoch 32/35[Rank 5] Epoch 32/35
+
+[Rank 4] Epoch 32/35[Rank 7] Epoch 32/35[Rank 6] Epoch 32/35
+[Rank 1] Epoch 32/35
+
+[Rank 2] Epoch 32/35
+
+[Rank 0] Epoch 32/35 training time: 14.29 seconds
+[Rank 0] Epoch 32/35 evaluation time: 13.18 seconds
+Max accuracy so far: 63.3%
+Epoch 32 - Test Acc: 63.3%, Test Loss: 0.939252
+[Rank 0] Epoch 33/35
+[Rank 2] Epoch 33/35
+[Rank 3] Epoch 33/35
+[Rank 4] Epoch 33/35
+[Rank 5] Epoch 33/35[Rank 1] Epoch 33/35
+
+[Rank 7] Epoch 33/35[Rank 6] Epoch 33/35
+
+[Rank 0] Epoch 33/35 training time: 14.32 seconds
+[Rank 0] Epoch 33/35 evaluation time: 12.96 seconds
+Max accuracy so far: 63.4%
+Epoch 33 - Test Acc: 63.4%, Test Loss: 0.935722
+[Rank 0] Epoch 34/35
+[Rank 1] Epoch 34/35[Rank 7] Epoch 34/35
+
+[Rank 6] Epoch 34/35[Rank 2] Epoch 34/35
+
+[Rank 5] Epoch 34/35[Rank 4] Epoch 34/35
+
+[Rank 3] Epoch 34/35
+[Rank 0] Epoch 34/35 training time: 14.04 seconds
+[Rank 0] Epoch 34/35 evaluation time: 13.02 seconds
+Max accuracy so far: 63.5%
+Epoch 34 - Test Acc: 63.5%, Test Loss: 0.932461
+[Rank 0] Epoch 35/35
+[Rank 5] Epoch 35/35[Rank 3] Epoch 35/35
+
+[Rank 1] Epoch 35/35
+[Rank 4] Epoch 35/35[Rank 2] Epoch 35/35[Rank 6] Epoch 35/35
+
+
+[Rank 7] Epoch 35/35
+[Rank 0] Epoch 35/35 training time: 14.94 seconds
+[Rank 0] Epoch 35/35 evaluation time: 13.06 seconds
+Max accuracy so far: 64.1%
+Epoch 35 - Test Acc: 64.1%, Test Loss: 0.930838
+Saved checkpoint to checkpoints/model_epoch35.pth
+Total training time: 968.21 seconds, Average time per epoch: 27.66 seconds
+DDP: Rank 6 process group destroyed.
+DDP: Rank 7 process group destroyed.
+DDP: Rank 1 process group destroyed.
+DDP: Rank 3 process group destroyed.
+DDP: Rank 5 process group destroyed.
+DDP: Rank 4 process group destroyed.
+DDP: Rank 2 process group destroyed.
+Saved final model to results/2025-05-12_18-10-28/model_final.pth
+Saved metrics to results/2025-05-12_18-10-28/metrics.json
+DDP: Rank 0 process group destroyed.
