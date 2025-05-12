@@ -1,0 +1,173 @@
+W0512 17:54:09.448825 782169 torch/distributed/run.py:793] 
+W0512 17:54:09.448825 782169 torch/distributed/run.py:793] *****************************************
+W0512 17:54:09.448825 782169 torch/distributed/run.py:793] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0512 17:54:09.448825 782169 torch/distributed/run.py:793] *****************************************
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Fvcore is not installed. FLOP analysis will be skipped.
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...Starting training script...
+
+Starting training script...
+Starting training script...
+DDP: Rank 3/8 initialized. Using GPU: 3.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=3)
+Process Global Rank: 3, World Size: 8. Using device: cuda:3
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 4/8 initialized. Using GPU: 4.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=4)
+Process Global Rank: 4, World Size: 8. Using device: cuda:4
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 5/8 initialized. Using GPU: 5.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=5)
+Process Global Rank: 5, World Size: 8. Using device: cuda:5
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 2/8 initialized. Using GPU: 2.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=2)
+Process Global Rank: 2, World Size: 8. Using device: cuda:2
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 1/8 initialized. Using GPU: 1.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=1)
+Process Global Rank: 1, World Size: 8. Using device: cuda:1
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 7/8 initialized. Using GPU: 7.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=7)
+Process Global Rank: 7, World Size: 8. Using device: cuda:7
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 6/8 initialized. Using GPU: 6.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=6)
+Process Global Rank: 6, World Size: 8. Using device: cuda:6
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+DDP: Rank 0/8 initialized. Using GPU: 0.
+Script arguments: Namespace(seed=42, epochs=35, dataset='DDR', ddr_root_dir='/lab/haoq_lab/cse12212635/slds_progect1/data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=512, num_workers=16, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=0)
+Process Global Rank: 0, World Size: 8. Using device: cuda:0
+Loading dataset: Training
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/train_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/test_grading.csv
+Image directory: /lab/haoq_lab/cse12212635/slds_progect1/data/DDR/test/images
+[Rank 2] Epoch 1/35
+[Rank 1] Epoch 1/35
+[Rank 4] Epoch 1/35
+[Rank 7] Epoch 1/35
+[Rank 0] Epoch 1/35
+[Rank 5] Epoch 1/35
+[Rank 6] Epoch 1/35
+[Rank 3] Epoch 1/35
+[Rank 0] Epoch 1/35 training time: 16.28 seconds
+[Rank 0] Epoch 1/35 evaluation time: 14.41 seconds
+Max accuracy so far: 42.5%
+Epoch 1 - Test Acc: 42.5%, Test Loss: 2.274141
+[Rank 0] Epoch 2/35
+[Rank 6] Epoch 2/35
+[Rank 1] Epoch 2/35[Rank 5] Epoch 2/35
+[Rank 4] Epoch 2/35[Rank 3] Epoch 2/35
+[Rank 2] Epoch 2/35[Rank 7] Epoch 2/35
+
+
+
+[Rank 0] Epoch 2/35 training time: 13.94 seconds
+[Rank 0] Epoch 2/35 evaluation time: 13.24 seconds
+Max accuracy so far: 46.7%
+Epoch 2 - Test Acc: 46.7%, Test Loss: 2.235061
+[Rank 0] Epoch 3/35
+[Rank 5] Epoch 3/35[Rank 6] Epoch 3/35[Rank 7] Epoch 3/35[Rank 3] Epoch 3/35
+[Rank 2] Epoch 3/35[Rank 4] Epoch 3/35[Rank 1] Epoch 3/35
+
+
+
+
+
+[Rank 0] Epoch 3/35 training time: 15.06 seconds
+[Rank 0] Epoch 3/35 evaluation time: 13.28 seconds
+Max accuracy so far: 49.9%
+Epoch 3 - Test Acc: 49.9%, Test Loss: 2.157921
+[Rank 0] Epoch 4/35
+[Rank 6] Epoch 4/35[Rank 1] Epoch 4/35[Rank 7] Epoch 4/35[Rank 2] Epoch 4/35[Rank 3] Epoch 4/35[Rank 5] Epoch 4/35
+[Rank 4] Epoch 4/35
+
+
+
+
+
+[Rank 0] Epoch 4/35 training time: 14.14 seconds
+[Rank 0] Epoch 4/35 evaluation time: 13.11 seconds
+Max accuracy so far: 56.7%
+Epoch 4 - Test Acc: 56.7%, Test Loss: 2.035917
+[Rank 0] Epoch 5/35
+[Rank 5] Epoch 5/35
+[Rank 7] Epoch 5/35[Rank 1] Epoch 5/35[Rank 6] Epoch 5/35[Rank 2] Epoch 5/35
+[Rank 3] Epoch 5/35
+[Rank 4] Epoch 5/35
+
+
+
+[Rank 0] Epoch 5/35 training time: 14.33 seconds
+[Rank 0] Epoch 5/35 evaluation time: 13.19 seconds
+Max accuracy so far: 56.7%
+Epoch 5 - Test Acc: 47.6%, Test Loss: 1.879484
+[Rank 0] Epoch 6/35
+[Rank 7] Epoch 6/35
+[Rank 3] Epoch 6/35[Rank 5] Epoch 6/35
+
+[Rank 6] Epoch 6/35
+[Rank 1] Epoch 6/35[Rank 2] Epoch 6/35
+
+[Rank 4] Epoch 6/35
+[Rank 0] Epoch 6/35 training time: 14.49 seconds
+[Rank 0] Epoch 6/35 evaluation time: 12.99 seconds
+Max accuracy so far: 56.7%
+Epoch 6 - Test Acc: 53.1%, Test Loss: 1.698967
+[Rank 0] Epoch 7/35
+[Rank 3] Epoch 7/35
+[Rank 2] Epoch 7/35[Rank 7] Epoch 7/35[Rank 6] Epoch 7/35
+
+
+[Rank 5] Epoch 7/35[Rank 1] Epoch 7/35
+
+[Rank 4] Epoch 7/35
+[Rank 0] Epoch 7/35 training time: 14.42 seconds

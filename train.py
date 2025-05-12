@@ -3,7 +3,6 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import MultiStepLR
 
-# import matplotlib.pyplot as plt # Keep if plot_metrics uses it directly
 import numpy as np
 import time
 
@@ -17,16 +16,17 @@ except ImportError:
     print("Fvcore is not installed. FLOP analysis will be skipped.")
 
 from dataset.balance_data import PartOfData
+from dataset.build_ddr import build_DDR_dataset
 import argparse
 from engine import (
     train_loop,
     test_loop,
     plot_metrics,
-)  # Ensure these are correctly defined elsewhere
+)
 import os
 import json
 from datetime import datetime
-import torch.backends.cudnn as cudnn  # Moved to top with other torch imports
+import torch.backends.cudnn as cudnn
 
 from models.cnn import CNN
 
@@ -38,6 +38,18 @@ def get_args_parser():
     )
     parser.add_argument(
         "--epochs", type=int, default=30, help="Number of epochs to train"
+    )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default="MNIST",
+        help="Dataset to use",
+    )
+    parser.add_argument(
+        "--ddr_root_dir",
+        type=str,
+        default="",
+        help="Root directory for DDR dataset",
     )
     parser.add_argument(
         "--full_dataset", action="store_true", help="Use full dataset or not"
@@ -66,7 +78,6 @@ def get_args_parser():
     parser.add_argument(
         "--num_workers", type=int, default=8, help="Number of workers for DataLoader"
     )
-    parser.add_argument("--dataset", type=str, default="MNIST", help="Dataset to use")
     parser.add_argument(
         "--milestones",
         type=list,
@@ -88,11 +99,6 @@ def get_args_parser():
         default=False,
         help="Enabling distributed evaluation",
     )
-    # world_size is usually inferred from the environment in DDP
-    # parser.add_argument("--world_size", default=1, type=int, help="number of distributed processes")
-
-    # local_rank will be set from environment variable if using torch.distributed.run
-    # No default needed here, will be checked from os.environ
     parser.add_argument(
         "--local_rank",
         type=int,
@@ -180,9 +186,23 @@ def main(args):
     )
 
     # data
-    data = PartOfData(args.full_dataset)  # Ensure PartOfData is correctly defined
-    train_dataset = data.get_training_data()
-    test_dataset = data.get_testing_data()
+    if args.dataset == "MNIST":
+        data = PartOfData(args.full_dataset)
+        train_dataset = data.get_training_data()
+        test_dataset = data.get_testing_data()
+    elif args.dataset == "DDR":
+        train_dataset = build_DDR_dataset(
+            data_root_dir=args.ddr_root_dir,
+            is_train=True,
+            transform=None,
+        )
+        test_dataset = build_DDR_dataset(
+            data_root_dir=args.ddr_root_dir,
+            is_train=False,
+            transform=None,
+        )
+    else:
+        raise ValueError(f"Unsupported dataset: {args.dataset}")
 
     train_sampler = None
     test_sampler = None
@@ -209,7 +229,7 @@ def main(args):
     )
     test_dataloader = DataLoader(
         test_dataset,
-        batch_size=int(1.2*args.batch_size),
+        batch_size=int(1.2 * args.batch_size),
         sampler=test_sampler,  # Will be None if not distributed eval or not distributed at all
         shuffle=False,  # Test dataloader is rarely shuffled
         num_workers=args.num_workers,
@@ -217,19 +237,19 @@ def main(args):
     )
 
     # Initialize the model
-    model = CNN(in_c=1, conv1_c=20, conv2_c=15, out_dim=10).to(device)
+    if args.model == "CNN":
+        in_c = 1 if args.dataset == "MNIST" else 3
+        model = CNN(in_c=in_c, conv1_c=20, conv2_c=15, out_dim=10).to(device)
 
     if is_distributed:
         # args.local_rank is the integer GPU index for this process
         model = DDP(model, device_ids=[args.local_rank], output_device=args.local_rank)
 
     if args.flopanalysis and (
-        global_rank == 0 or not is_distributed
-    ):  # Run FLOP analysis only on one process
+        global_rank == 0 or not is_distributed and FlopCountAnalysis
+    ):
         try:
-            # Ensure model is not the DDP wrapped one for FlopCountAnalysis if it expects a plain nn.Module
             model_to_analyze = model.module if is_distributed else model
-            # The input tensor should match the model's expected input on the correct device
             dummy_input = torch.randn(
                 args.batch_size if args.batch_size > 1 else 8, 1, 28, 28
             ).to(device)
