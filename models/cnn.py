@@ -66,7 +66,7 @@ class CNN(nn.Module):
             ),  # 28x28 -> 22x22
             nn.BatchNorm2d(conv1_c),
             nn.GELU(),
-            # nn.Dropout2d(p=0.25),  # 添加Dropout，使用Dropout2d因为输入是2D的
+            nn.Dropout2d(p=0.25),  # 添加Dropout，使用Dropout2d因为输入是2D的
             # nn.MaxPool2d(kernel_size=2, stride=2), # Optional: Add pooling (e.g., 22x22 -> 11x11)
             # Block 2
             nn.Conv2d(

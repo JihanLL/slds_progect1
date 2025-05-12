@@ -1,4 +1,5 @@
 #!/bin/bash
+
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 torchrun \
     --standalone \
     --nnodes=1 \
@@ -9,7 +10,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 torchrun \
     --seed 42 \
     --epochs 35 \
     --learning_rate 0.001 \
-    --batch_size 256 \
+    --batch_size 512 \
     --num_workers 16 \
     --model "CNN" \
     --L1_parameter 0.00001 \

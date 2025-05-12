@@ -211,12 +211,11 @@ def main(args):
         except Exception as e:
             print(f"Error setting up DDP: {e}. Running in non-distributed mode.")
             distributed = False
-            args.local_rank = -1  # Ensure local_rank reflects non-distributed state
+            args.local_rank = -1
     else:
         print("Running in non-distributed mode.")
 
     # --- Seed and Device ---
-    # Ensure each process gets a unique seed in distributed training
     set_seed(args.seed + rank)
 
     if torch.cuda.is_available():

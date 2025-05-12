@@ -13,14 +13,14 @@ class PartOfData:
     _full_training_data = datasets.MNIST(
         root="data",
         train=True,
-        download=False, # It's safer to set download=True in case data is missing
+        download=False,
         transform=_transformer, # Apply the transformation
     )
 
     _full_test_data = datasets.MNIST(
         root="data",
         train=False,
-        download=False, # Safer to set download=True
+        download=False,
         transform=_transformer, # Apply the transformation
     )
 
