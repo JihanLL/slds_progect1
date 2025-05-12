@@ -24,16 +24,16 @@ def train_loop(
 
     preds = []
     labels = []
-    for batch, (X, y) in tqdm(enumerate(dataloader)):
+    for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
 
-        # Use base_model for prediction and loss calculation for backprop
-        pred = model(X)
-        loss = loss_fn(pred, y)
-        preds.extend(pred.argmax(1).cpu().numpy())
-        labels.extend(y.cpu().numpy())
-        l1_norm = sum(p.abs().sum() for p in model.parameters())
-        regularized_loss = loss + l1_lambda * l1_norm
+        with torch.amp.autocast('cuda'):
+            pred = model(X)
+            loss = loss_fn(pred, y)
+            preds.extend(pred.argmax(1).cpu().numpy())
+            labels.extend(y.cpu().numpy())
+            l1_norm = sum(p.abs().sum() for p in model.parameters())
+            regularized_loss = loss + l1_lambda * l1_norm
 
         optimizer.zero_grad()  # Zero gradients before backward pass
         regularized_loss.backward()
@@ -153,6 +153,21 @@ def plot_metrics(
     ax1.set_ylabel("Training Loss")
     ax1.set_title("Training Loss vs Steps")
     axs[7].set_visible(False)
+    # Plot training recall
+    ax4.plot(step_count, train_recalls)
+    ax4.set_xlabel("Steps")
+    ax4.set_ylabel("Training Recall")
+    ax4.set_title("Training Recall vs Steps")
+    # Plot training precision
+    ax5.plot(step_count, train_precisions)
+    ax5.set_xlabel("Steps")
+    ax5.set_ylabel("Training Precision")
+    ax5.set_title("Training Precision vs Steps")
+    # Plot training f1 score
+    ax6.plot(step_count, train_f1_scores)
+    ax6.set_xlabel("Steps")
+    ax6.set_ylabel("Training F1 Score")
+    ax6.set_title("Training F1 Score vs Steps")
     # Plot learning rate
     ax2.plot(step_count, learning_rates)
     ax2.set_xlabel("Steps")

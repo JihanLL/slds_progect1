@@ -1,5 +1,5 @@
 #!/bin/bash
-torchrun --nproc_per_node=4 train.py \
+torchrun --nproc_per_node=4 main.py \
     --seed 42 \
     --epochs 35 \
     --learning_rate 0.001 \
