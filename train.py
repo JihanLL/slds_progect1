@@ -10,8 +10,12 @@ import time
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-from fvcore.nn import FlopCountAnalysis  # Keep if used
-from models.cnn import CNN
+try:
+    from fvcore.nn import FlopCountAnalysis
+except ImportError:
+    fvcore = None
+    print("Fvcore is not installed. FLOP analysis will be skipped.")
+
 from dataset.balance_data import PartOfData
 import argparse
 from engine import (
@@ -24,8 +28,7 @@ import json
 from datetime import datetime
 import torch.backends.cudnn as cudnn  # Moved to top with other torch imports
 
-# Ensure os is imported if not already
-# import os
+from models.cnn import CNN
 
 
 def get_args_parser():
@@ -206,7 +209,7 @@ def main(args):
     )
     test_dataloader = DataLoader(
         test_dataset,
-        batch_size=args.batch_size,
+        batch_size=int(1.2*args.batch_size),
         sampler=test_sampler,  # Will be None if not distributed eval or not distributed at all
         shuffle=False,  # Test dataloader is rarely shuffled
         num_workers=args.num_workers,

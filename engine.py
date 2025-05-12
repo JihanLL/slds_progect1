@@ -70,7 +70,7 @@ def test_loop(dataloader, model, loss_fn=None, device=None, log_wrong_type=False
     all_preds = []
     all_labels = []
     with torch.no_grad():
-        for batch, (X, y) in tqdm(enumerate(dataloader)):
+        for batch, (X, y) in enumerate(dataloader):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
