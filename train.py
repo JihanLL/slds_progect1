@@ -8,6 +8,8 @@ import time
 
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.utils.tensorboard import SummaryWriter  # Create an instance of the object
+from tqdm import tqdm
 
 try:
     from fvcore.nn import FlopCountAnalysis
@@ -28,7 +30,7 @@ import json
 from datetime import datetime
 import torch.backends.cudnn as cudnn
 
-from models.cnn import CNN
+from models.cnn import CNN, CNNv2, CNNv3
 
 
 def get_args_parser():
@@ -53,6 +55,13 @@ def get_args_parser():
     )
     parser.add_argument(
         "--full_dataset", action="store_true", help="Use full dataset or not"
+    )
+    parser.add_argument(
+        "--optimizer",
+        type=str,
+        default="adam",
+        choices=["sgd", "adam"],
+        help="Optimizer to use",
     )
     parser.add_argument(
         "--learning_rate",
@@ -81,7 +90,7 @@ def get_args_parser():
     parser.add_argument(
         "--milestones",
         type=list,
-        default=[20, 28],
+        default=[10, 20, 30],
         help="Milestones for learning rate scheduler",
     )
     parser.add_argument(
@@ -138,12 +147,10 @@ def setup_ddp(local_rank_arg):
 
 
 def main(args):
-    print("Starting training script...")
-    # args.local_rank might be None if not passed and no default in argparse.
-    # torch.distributed.run sets LOCAL_RANK environment variable.
-
     local_rank_from_env = os.environ.get("LOCAL_RANK")
     is_distributed = local_rank_from_env is not None
+    writer = SummaryWriter()
+
 
     world_size = 1
     global_rank = 0  # This is the global rank of the process
@@ -165,7 +172,8 @@ def main(args):
             current_gpu_index = args.local_rank
         # Otherwise, current_gpu_index remains 0 for default device selection.
 
-    print(f"Script arguments: {args}")
+    if global_rank == 0 or not is_distributed:
+        print(f"Script arguments: {args}")
 
     # Set seed after determining global_rank for process-specific seeding
     set_seed(args.seed + global_rank)
@@ -186,7 +194,7 @@ def main(args):
     )
 
     # data
-    if args.dataset == "MNIST":
+    if args.dataset == "MINIST":
         data = PartOfData(args.full_dataset)
         train_dataset = data.get_training_data()
         test_dataset = data.get_testing_data()
@@ -239,7 +247,8 @@ def main(args):
     # Initialize the model
     if args.model == "CNN":
         in_c = 1 if args.dataset == "MNIST" else 3
-        model = CNN(in_c=in_c, conv1_c=20, conv2_c=15, out_dim=10).to(device)
+        # model = CNN(in_c=in_c, conv1_c=20, conv2_c=15, out_dim=10).to(device)
+        model = CNNv3().to(device)
 
     if is_distributed:
         # args.local_rank is the integer GPU index for this process
@@ -258,27 +267,20 @@ def main(args):
         except Exception as e:
             print(f"FLOP analysis failed: {e}")
 
-    # EMA model should wrap the underlying model (module if DDP)
-    # AveragedModel is usually updated on the CPU or a single device after training steps
-    # For DDP, you might want to average parameters from rank 0's model or average across all after sync
-    # For simplicity, let's assume EMA is managed on the current device, but be mindful of DDP implications
-    # model_ema = AveragedModel(
-    #     model.module if is_distributed else model, # Use the unwrapped model for EMA
-    #     multi_avg_fn=torch.optim.swa_utils.get_ema_multi_avg_fn(1e-6),
-    # ).to(device)
-    # Using EMA with DDP requires careful handling of synchronization. Often SWA is applied at the end.
-    # For now, commenting out EMA as it adds complexity with DDP unless specifically handled.
-
-    loss_fn = (
-        nn.CrossEntropyLoss()
-    )  # Add .to(device) if it has parameters, though CrossEntropyLoss usually doesn't.
-    optimizer = torch.optim.SGD(
-        model.parameters(),  # DDP model's parameters are fine
-        lr=args.learning_rate,
-        weight_decay=args.L2_parameter,
-        momentum=args.momentum,
-    )
-    scheduler = MultiStepLR(optimizer, milestones=args.milestones, gamma=0.1)
+    loss_fn = nn.CrossEntropyLoss()
+    if args.optimizer == "sgd":
+        optimizer = torch.optim.SGD(
+            model.parameters(),  # DDP model's parameters are fine
+            lr=args.learning_rate,
+            weight_decay=args.L2_parameter,
+            momentum=args.momentum,
+        )
+    elif args.optimizer == "adam":
+        optimizer = torch.optim.Adam(model.parameters(),lr=args.learning_rate, weight_decay=args.L2_parameter)
+    # scheduler = MultiStepLR(optimizer, milestones=args.milestones, gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.ExponentialLR(
+        optimizer, gamma=0.9
+    )  # Exponential decay for learning rate
     epochs = args.epochs
     L1_parameter = args.L1_parameter
 
@@ -307,7 +309,7 @@ def main(args):
         epoch_log_prefix = f"Epoch {t + 1}/{epochs}"
         if is_distributed:
             epoch_log_prefix = f"[Rank {global_rank}] " + epoch_log_prefix
-        print(epoch_log_prefix)
+        # print(epoch_log_prefix)
 
         epoch_training_start_time = time.time()
         # Pass the DDP model (or regular model if not distributed)
@@ -321,12 +323,11 @@ def main(args):
                 l1_lambda=L1_parameter,
                 device=device,
                 # Pass rank and world_size if train_loop needs to do DDP-aware operations (e.g. averaging metrics)
-                # rank=global_rank,
-                # world_size=world_size
+                rank=global_rank,
+                world_size=world_size
             )
         )
-        # scheduler.step() # Typically called once per epoch, after train_loop or inside it.
-        # Your current train_loop seems to handle scheduler stepping internally.
+        scheduler.step()
 
         epoch_training_end_time = time.time()
         if global_rank == 0 or not is_distributed:  # Log time from rank 0

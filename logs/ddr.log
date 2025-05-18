@@ -1,0 +1,517 @@
+W0517 20:34:56.585000 1480606 site-packages/torch/distributed/run.py:766] 
+W0517 20:34:56.585000 1480606 site-packages/torch/distributed/run.py:766] *****************************************
+W0517 20:34:56.585000 1480606 site-packages/torch/distributed/run.py:766] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0517 20:34:56.585000 1480606 site-packages/torch/distributed/run.py:766] *****************************************
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+Starting training script...
+DDP: Rank 0/14 initialized. Using GPU: 0.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=0)
+Process Global Rank: 0, World Size: 14. Using device: cuda:0
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 12/14 initialized. Using GPU: 12.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=12)
+Process Global Rank: 12, World Size: 14. Using device: cuda:12
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 1/14 initialized. Using GPU: 1.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=1)
+Process Global Rank: 1, World Size: 14. Using device: cuda:1
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 5/14 initialized. Using GPU: 5.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=5)
+Process Global Rank: 5, World Size: 14. Using device: cuda:5
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 9/14 initialized. Using GPU: 9.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=9)
+Process Global Rank: 9, World Size: 14. Using device: cuda:9
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 10/14 initialized. Using GPU: 10.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=10)
+Process Global Rank: 10, World Size: 14. Using device: cuda:10
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 11/14 initialized. Using GPU: 11.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=11)
+Process Global Rank: 11, World Size: 14. Using device: cuda:11
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 3/14 initialized. Using GPU: 3.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=3)
+Process Global Rank: 3, World Size: 14. Using device: cuda:3
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+DDP: Rank 2/14 initialized. Using GPU: 2.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=2)
+Process Global Rank: 2, World Size: 14. Using device: cuda:2
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+DDP: Rank 4/14 initialized. Using GPU: 4.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=4)
+Process Global Rank: 4, World Size: 14. Using device: cuda:4
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+DDP: Rank 6/14 initialized. Using GPU: 6.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=6)
+Process Global Rank: 6, World Size: 14. Using device: cuda:6
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+DDP: Rank 8/14 initialized. Using GPU: 8.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=8)
+Process Global Rank: 8, World Size: 14. Using device: cuda:8
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+DDP: Rank 13/14 initialized. Using GPU: 13.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=13)
+Process Global Rank: 13, World Size: 14. Using device: cuda:13
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+DDP: Rank 7/14 initialized. Using GPU: 7.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=1024, num_workers=24, milestones=[20, 28], model='CNN', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=7)
+Process Global Rank: 7, World Size: 14. Using device: cuda:7
+Loading dataset: Training
+CSV path: data/DDR/train/train_grading.csv
+Image directory: data/DDR/train/images
+Loading dataset: Validation/Test
+CSV path: data/DDR/test/test_grading.csv
+Image directory: data/DDR/test/images
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'librxe-rdmav34.so': librxe-rdmav34.so: cannot open shared object file: No such file or directory
+libibverbs: Warning: couldn't load driver 'libmlx4-rdmav34.so': libmlx4-rdmav34.so: cannot open shared object file: No such file or directory
+[Rank 0] Epoch 1/80 training time: 25.41 seconds
+[Rank 0] Epoch 1/80 evaluation time: 18.15 seconds
+Max accuracy so far: 25.0%
+Epoch 1 - Test Acc: 25.0%, Test Loss: 2.292399
+[Rank 0] Epoch 2/80 training time: 13.29 seconds
+[Rank 0] Epoch 2/80 evaluation time: 18.14 seconds
+Max accuracy so far: 50.0%
+Epoch 2 - Test Acc: 50.0%, Test Loss: 2.279964
+[Rank 0] Epoch 3/80 training time: 12.87 seconds
+[Rank 0] Epoch 3/80 evaluation time: 18.16 seconds
+Max accuracy so far: 50.0%
+Epoch 3 - Test Acc: 49.2%, Test Loss: 2.267287
+[Rank 0] Epoch 4/80 training time: 13.00 seconds
+[Rank 0] Epoch 4/80 evaluation time: 18.07 seconds
+Max accuracy so far: 50.0%
+Epoch 4 - Test Acc: 46.9%, Test Loss: 2.254040
+[Rank 0] Epoch 5/80 training time: 13.26 seconds
+[Rank 0] Epoch 5/80 evaluation time: 18.31 seconds
+Max accuracy so far: 50.0%
+Epoch 5 - Test Acc: 47.1%, Test Loss: 2.239537
+[Rank 0] Epoch 6/80 training time: 13.92 seconds
+[Rank 0] Epoch 6/80 evaluation time: 18.83 seconds
+Max accuracy so far: 50.0%
+Epoch 6 - Test Acc: 48.4%, Test Loss: 2.222687
+[Rank 0] Epoch 7/80 training time: 13.60 seconds
+[Rank 0] Epoch 7/80 evaluation time: 19.75 seconds
+Max accuracy so far: 50.0%
+Epoch 7 - Test Acc: 49.7%, Test Loss: 2.201982
+[Rank 0] Epoch 8/80 training time: 14.37 seconds
+[Rank 0] Epoch 8/80 evaluation time: 18.22 seconds
+Max accuracy so far: 50.1%
+Epoch 8 - Test Acc: 50.1%, Test Loss: 2.176773
+[Rank 0] Epoch 9/80 training time: 12.57 seconds
+[Rank 0] Epoch 9/80 evaluation time: 18.12 seconds
+Max accuracy so far: 50.3%
+Epoch 9 - Test Acc: 50.3%, Test Loss: 2.147488
+[Rank 0] Epoch 10/80 training time: 12.96 seconds
+[Rank 0] Epoch 10/80 evaluation time: 18.46 seconds
+Max accuracy so far: 51.9%
+Epoch 10 - Test Acc: 51.9%, Test Loss: 2.112067
+Saved checkpoint to checkpoints/model_epoch10.pth
+[Rank 0] Epoch 11/80 training time: 12.80 seconds
+[Rank 0] Epoch 11/80 evaluation time: 18.50 seconds
+Max accuracy so far: 53.5%
+Epoch 11 - Test Acc: 53.5%, Test Loss: 2.072818
+[Rank 0] Epoch 12/80 training time: 14.35 seconds
+[Rank 0] Epoch 12/80 evaluation time: 18.27 seconds
+Max accuracy so far: 53.5%
+Epoch 12 - Test Acc: 53.4%, Test Loss: 2.027921
+[Rank 0] Epoch 13/80 training time: 12.66 seconds
+[Rank 0] Epoch 13/80 evaluation time: 18.73 seconds
+Max accuracy so far: 53.5%
+Epoch 13 - Test Acc: 48.8%, Test Loss: 1.979505
+[Rank 0] Epoch 14/80 training time: 12.66 seconds
+[Rank 0] Epoch 14/80 evaluation time: 18.40 seconds
+Max accuracy so far: 53.5%
+Epoch 14 - Test Acc: 46.3%, Test Loss: 1.925546
+[Rank 0] Epoch 15/80 training time: 13.37 seconds
+[Rank 0] Epoch 15/80 evaluation time: 18.27 seconds
+Max accuracy so far: 53.5%
+Epoch 15 - Test Acc: 47.6%, Test Loss: 1.866863
+[Rank 0] Epoch 16/80 training time: 13.61 seconds
+[Rank 0] Epoch 16/80 evaluation time: 18.36 seconds
+Max accuracy so far: 53.5%
+Epoch 16 - Test Acc: 50.4%, Test Loss: 1.805367
+[Rank 0] Epoch 17/80 training time: 12.77 seconds
+[Rank 0] Epoch 17/80 evaluation time: 18.34 seconds
+Max accuracy so far: 54.2%
+Epoch 17 - Test Acc: 54.2%, Test Loss: 1.743181
+[Rank 0] Epoch 18/80 training time: 13.15 seconds
+[Rank 0] Epoch 18/80 evaluation time: 18.49 seconds
+Max accuracy so far: 56.2%
+Epoch 18 - Test Acc: 56.2%, Test Loss: 1.679719
+[Rank 0] Epoch 19/80 training time: 13.70 seconds
+[Rank 0] Epoch 19/80 evaluation time: 18.48 seconds
+Max accuracy so far: 56.2%
+Epoch 19 - Test Acc: 54.5%, Test Loss: 1.622142
+[Rank 0] Epoch 20/80 training time: 12.98 seconds
+[Rank 0] Epoch 20/80 evaluation time: 18.33 seconds
+Max accuracy so far: 56.2%
+Epoch 20 - Test Acc: 53.3%, Test Loss: 1.568813
+Saved checkpoint to checkpoints/model_epoch20.pth
+[Rank 0] Epoch 21/80 training time: 13.07 seconds
+[Rank 0] Epoch 21/80 evaluation time: 18.47 seconds
+Max accuracy so far: 56.2%
+Epoch 21 - Test Acc: 52.8%, Test Loss: 1.519065
+[Rank 0] Epoch 22/80 training time: 13.40 seconds
+[Rank 0] Epoch 22/80 evaluation time: 18.45 seconds
+Max accuracy so far: 56.2%
+Epoch 22 - Test Acc: 52.8%, Test Loss: 1.476337
+[Rank 0] Epoch 23/80 training time: 12.19 seconds
+[Rank 0] Epoch 23/80 evaluation time: 18.30 seconds
+Max accuracy so far: 56.2%
+Epoch 23 - Test Acc: 53.0%, Test Loss: 1.438550
+[Rank 0] Epoch 24/80 training time: 13.31 seconds
+[Rank 0] Epoch 24/80 evaluation time: 18.39 seconds
+Max accuracy so far: 56.2%
+Epoch 24 - Test Acc: 54.0%, Test Loss: 1.404586
+[Rank 0] Epoch 25/80 training time: 12.91 seconds
+[Rank 0] Epoch 25/80 evaluation time: 18.25 seconds
+Max accuracy so far: 56.2%
+Epoch 25 - Test Acc: 55.1%, Test Loss: 1.373913
+[Rank 0] Epoch 26/80 training time: 12.51 seconds
+[Rank 0] Epoch 26/80 evaluation time: 18.27 seconds
+Max accuracy so far: 56.2%
+Epoch 26 - Test Acc: 55.6%, Test Loss: 1.347537
+[Rank 0] Epoch 27/80 training time: 13.92 seconds
+[Rank 0] Epoch 27/80 evaluation time: 18.32 seconds
+Max accuracy so far: 56.2%
+Epoch 27 - Test Acc: 55.8%, Test Loss: 1.323547
+[Rank 0] Epoch 28/80 training time: 12.90 seconds
+[Rank 0] Epoch 28/80 evaluation time: 18.38 seconds
+Max accuracy so far: 56.8%
+Epoch 28 - Test Acc: 56.8%, Test Loss: 1.296614
+[Rank 0] Epoch 29/80 training time: 12.88 seconds
+[Rank 0] Epoch 29/80 evaluation time: 18.42 seconds
+Max accuracy so far: 57.4%
+Epoch 29 - Test Acc: 57.4%, Test Loss: 1.271896
+[Rank 0] Epoch 30/80 training time: 12.68 seconds
+[Rank 0] Epoch 30/80 evaluation time: 18.28 seconds
+Max accuracy so far: 57.9%
+Epoch 30 - Test Acc: 57.9%, Test Loss: 1.246435
+Saved checkpoint to checkpoints/model_epoch30.pth
+[Rank 0] Epoch 31/80 training time: 13.62 seconds
+[Rank 0] Epoch 31/80 evaluation time: 18.43 seconds
+Max accuracy so far: 58.0%
+Epoch 31 - Test Acc: 58.0%, Test Loss: 1.223106
+[Rank 0] Epoch 32/80 training time: 13.20 seconds
+[Rank 0] Epoch 32/80 evaluation time: 18.52 seconds
+Max accuracy so far: 58.2%
+Epoch 32 - Test Acc: 58.2%, Test Loss: 1.200683
+[Rank 0] Epoch 33/80 training time: 12.93 seconds
+[Rank 0] Epoch 33/80 evaluation time: 18.47 seconds
+Max accuracy so far: 58.2%
+Epoch 33 - Test Acc: 58.0%, Test Loss: 1.180109
+[Rank 0] Epoch 34/80 training time: 12.86 seconds
+[Rank 0] Epoch 34/80 evaluation time: 18.39 seconds
+Max accuracy so far: 58.2%
+Epoch 34 - Test Acc: 58.0%, Test Loss: 1.162844
+[Rank 0] Epoch 35/80 training time: 13.98 seconds
+[Rank 0] Epoch 35/80 evaluation time: 18.35 seconds
+Max accuracy so far: 58.2%
+Epoch 35 - Test Acc: 57.7%, Test Loss: 1.147184
+[Rank 0] Epoch 36/80 training time: 13.19 seconds
+[Rank 0] Epoch 36/80 evaluation time: 18.22 seconds
+Max accuracy so far: 58.2%
+Epoch 36 - Test Acc: 57.7%, Test Loss: 1.134806
+[Rank 0] Epoch 37/80 training time: 13.56 seconds
+[Rank 0] Epoch 37/80 evaluation time: 18.43 seconds
+Max accuracy so far: 58.2%
+Epoch 37 - Test Acc: 57.9%, Test Loss: 1.123836
+[Rank 0] Epoch 38/80 training time: 12.94 seconds
+[Rank 0] Epoch 38/80 evaluation time: 18.32 seconds
+Max accuracy so far: 58.3%
+Epoch 38 - Test Acc: 58.3%, Test Loss: 1.114280
+[Rank 0] Epoch 39/80 training time: 15.91 seconds
+[Rank 0] Epoch 39/80 evaluation time: 28.99 seconds
+Max accuracy so far: 58.3%
+Epoch 39 - Test Acc: 58.2%, Test Loss: 1.105818
+[Rank 0] Epoch 40/80 training time: 18.07 seconds
+[Rank 0] Epoch 40/80 evaluation time: 18.26 seconds
+Max accuracy so far: 58.3%
+Epoch 40 - Test Acc: 58.2%, Test Loss: 1.099634
+Saved checkpoint to checkpoints/model_epoch40.pth
+[Rank 0] Epoch 41/80 training time: 13.20 seconds
+[Rank 0] Epoch 41/80 evaluation time: 18.21 seconds
+Max accuracy so far: 58.9%
+Epoch 41 - Test Acc: 58.9%, Test Loss: 1.094540
+[Rank 0] Epoch 42/80 training time: 12.90 seconds
+[Rank 0] Epoch 42/80 evaluation time: 18.16 seconds
+Max accuracy so far: 59.5%
+Epoch 42 - Test Acc: 59.5%, Test Loss: 1.089996
+[Rank 0] Epoch 43/80 training time: 13.18 seconds
+[Rank 0] Epoch 43/80 evaluation time: 18.55 seconds
+Max accuracy so far: 60.1%
+Epoch 43 - Test Acc: 60.1%, Test Loss: 1.085053
+[Rank 0] Epoch 44/80 training time: 12.99 seconds
+[Rank 0] Epoch 44/80 evaluation time: 19.09 seconds
+Max accuracy so far: 60.5%
+Epoch 44 - Test Acc: 60.5%, Test Loss: 1.079052
+[Rank 0] Epoch 45/80 training time: 13.03 seconds
+[Rank 0] Epoch 45/80 evaluation time: 18.57 seconds
+Max accuracy so far: 60.6%
+Epoch 45 - Test Acc: 60.6%, Test Loss: 1.072834
+[Rank 0] Epoch 46/80 training time: 12.63 seconds
+[Rank 0] Epoch 46/80 evaluation time: 18.46 seconds
+Max accuracy so far: 60.6%
+Epoch 46 - Test Acc: 60.6%, Test Loss: 1.065356
+[Rank 0] Epoch 47/80 training time: 12.67 seconds
+[Rank 0] Epoch 47/80 evaluation time: 18.33 seconds
+Max accuracy so far: 60.6%
+Epoch 47 - Test Acc: 60.6%, Test Loss: 1.056567
+[Rank 0] Epoch 48/80 training time: 12.92 seconds
+[Rank 0] Epoch 48/80 evaluation time: 18.24 seconds
+Max accuracy so far: 60.6%
+Epoch 48 - Test Acc: 60.4%, Test Loss: 1.047753
+[Rank 0] Epoch 49/80 training time: 12.60 seconds
+[Rank 0] Epoch 49/80 evaluation time: 18.35 seconds
+Max accuracy so far: 60.6%
+Epoch 49 - Test Acc: 60.4%, Test Loss: 1.038195
+[Rank 0] Epoch 50/80 training time: 12.23 seconds
+[Rank 0] Epoch 50/80 evaluation time: 18.57 seconds
+Max accuracy so far: 60.6%
+Epoch 50 - Test Acc: 60.1%, Test Loss: 1.029432
+Saved checkpoint to checkpoints/model_epoch50.pth
+[Rank 0] Epoch 51/80 training time: 12.76 seconds
+[Rank 0] Epoch 51/80 evaluation time: 18.66 seconds
+Max accuracy so far: 60.6%
+Epoch 51 - Test Acc: 60.2%, Test Loss: 1.021117
+[Rank 0] Epoch 52/80 training time: 12.61 seconds
+[Rank 0] Epoch 52/80 evaluation time: 18.63 seconds
+Max accuracy so far: 60.6%
+Epoch 52 - Test Acc: 60.3%, Test Loss: 1.013882
+[Rank 0] Epoch 53/80 training time: 13.53 seconds
+[Rank 0] Epoch 53/80 evaluation time: 18.49 seconds
+Max accuracy so far: 60.6%
+Epoch 53 - Test Acc: 60.5%, Test Loss: 1.007551
+[Rank 0] Epoch 54/80 training time: 12.80 seconds
+[Rank 0] Epoch 54/80 evaluation time: 19.08 seconds
+Max accuracy so far: 60.6%
+Epoch 54 - Test Acc: 60.6%, Test Loss: 1.001518
+[Rank 0] Epoch 55/80 training time: 13.49 seconds
+[Rank 0] Epoch 55/80 evaluation time: 18.72 seconds
+Max accuracy so far: 60.7%
+Epoch 55 - Test Acc: 60.7%, Test Loss: 0.996426
+[Rank 0] Epoch 56/80 training time: 12.68 seconds
+[Rank 0] Epoch 56/80 evaluation time: 18.44 seconds
+Max accuracy so far: 61.1%
+Epoch 56 - Test Acc: 61.1%, Test Loss: 0.992170
+[Rank 0] Epoch 57/80 training time: 13.00 seconds
+[Rank 0] Epoch 57/80 evaluation time: 18.93 seconds
+Max accuracy so far: 61.3%
+Epoch 57 - Test Acc: 61.3%, Test Loss: 0.988313
+[Rank 0] Epoch 58/80 training time: 12.98 seconds
+[Rank 0] Epoch 58/80 evaluation time: 18.59 seconds
+Max accuracy so far: 61.3%
+Epoch 58 - Test Acc: 61.3%, Test Loss: 0.984799
+[Rank 0] Epoch 59/80 training time: 13.07 seconds
+[Rank 0] Epoch 59/80 evaluation time: 18.24 seconds
+Max accuracy so far: 61.4%
+Epoch 59 - Test Acc: 61.4%, Test Loss: 0.981302
+[Rank 0] Epoch 60/80 training time: 12.36 seconds
+[Rank 0] Epoch 60/80 evaluation time: 18.43 seconds
+Max accuracy so far: 61.6%
+Epoch 60 - Test Acc: 61.6%, Test Loss: 0.978213
+Saved checkpoint to checkpoints/model_epoch60.pth
+[Rank 0] Epoch 61/80 training time: 12.65 seconds
+[Rank 0] Epoch 61/80 evaluation time: 18.20 seconds
+Max accuracy so far: 61.8%
+Epoch 61 - Test Acc: 61.8%, Test Loss: 0.975793
+[Rank 0] Epoch 62/80 training time: 13.50 seconds
+[Rank 0] Epoch 62/80 evaluation time: 18.36 seconds
+Max accuracy so far: 62.1%
+Epoch 62 - Test Acc: 62.1%, Test Loss: 0.974028
+[Rank 0] Epoch 63/80 training time: 12.40 seconds
+[Rank 0] Epoch 63/80 evaluation time: 18.30 seconds
+Max accuracy so far: 62.2%
+Epoch 63 - Test Acc: 62.2%, Test Loss: 0.972664
+[Rank 0] Epoch 64/80 training time: 12.94 seconds
+[Rank 0] Epoch 64/80 evaluation time: 18.39 seconds
+Max accuracy so far: 62.6%
+Epoch 64 - Test Acc: 62.6%, Test Loss: 0.971460
+[Rank 0] Epoch 65/80 training time: 13.89 seconds
+[Rank 0] Epoch 65/80 evaluation time: 18.33 seconds
+Max accuracy so far: 62.6%
+Epoch 65 - Test Acc: 62.5%, Test Loss: 0.970397
+[Rank 0] Epoch 66/80 training time: 13.01 seconds
+[Rank 0] Epoch 66/80 evaluation time: 18.39 seconds
+Max accuracy so far: 62.6%
+Epoch 66 - Test Acc: 62.5%, Test Loss: 0.969984
+[Rank 0] Epoch 67/80 training time: 12.83 seconds
+[Rank 0] Epoch 67/80 evaluation time: 18.22 seconds
+Max accuracy so far: 62.6%
+Epoch 67 - Test Acc: 62.4%, Test Loss: 0.969086
+[Rank 0] Epoch 68/80 training time: 12.87 seconds
+[Rank 0] Epoch 68/80 evaluation time: 18.25 seconds
+Max accuracy so far: 62.6%
+Epoch 68 - Test Acc: 62.4%, Test Loss: 0.968113
+[Rank 0] Epoch 69/80 training time: 13.62 seconds
+[Rank 0] Epoch 69/80 evaluation time: 18.38 seconds
+Max accuracy so far: 62.6%
+Epoch 69 - Test Acc: 62.4%, Test Loss: 0.966437
+[Rank 0] Epoch 70/80 training time: 13.00 seconds
+[Rank 0] Epoch 70/80 evaluation time: 18.67 seconds
+Max accuracy so far: 62.6%
+Epoch 70 - Test Acc: 62.4%, Test Loss: 0.964009
+Saved checkpoint to checkpoints/model_epoch70.pth
+[Rank 0] Epoch 71/80 training time: 12.83 seconds
+[Rank 0] Epoch 71/80 evaluation time: 18.47 seconds
+Max accuracy so far: 62.6%
+Epoch 71 - Test Acc: 62.3%, Test Loss: 0.961405
+[Rank 0] Epoch 72/80 training time: 12.43 seconds
+[Rank 0] Epoch 72/80 evaluation time: 18.39 seconds
+Max accuracy so far: 62.6%
+Epoch 72 - Test Acc: 62.0%, Test Loss: 0.958714
+[Rank 0] Epoch 73/80 training time: 13.19 seconds
+[Rank 0] Epoch 73/80 evaluation time: 18.68 seconds
+Max accuracy so far: 62.6%
+Epoch 73 - Test Acc: 62.4%, Test Loss: 0.955428
+[Rank 0] Epoch 74/80 training time: 13.50 seconds
+[Rank 0] Epoch 74/80 evaluation time: 18.77 seconds
+Max accuracy so far: 62.6%
+Epoch 74 - Test Acc: 62.4%, Test Loss: 0.952953
+[Rank 0] Epoch 75/80 training time: 13.98 seconds
+[Rank 0] Epoch 75/80 evaluation time: 18.64 seconds
+Max accuracy so far: 62.6%
+Epoch 75 - Test Acc: 62.4%, Test Loss: 0.950483
+[Rank 0] Epoch 76/80 training time: 12.84 seconds
+[Rank 0] Epoch 76/80 evaluation time: 18.33 seconds
+Max accuracy so far: 62.6%
+Epoch 76 - Test Acc: 62.5%, Test Loss: 0.948067
+[Rank 0] Epoch 77/80 training time: 14.57 seconds
+[Rank 0] Epoch 77/80 evaluation time: 18.72 seconds
+Max accuracy so far: 62.7%
+Epoch 77 - Test Acc: 62.7%, Test Loss: 0.946045
+[Rank 0] Epoch 78/80 training time: 13.31 seconds
+[Rank 0] Epoch 78/80 evaluation time: 18.99 seconds
+Max accuracy so far: 62.7%
+Epoch 78 - Test Acc: 62.4%, Test Loss: 0.943955
+[Rank 0] Epoch 79/80 training time: 13.98 seconds
+[Rank 0] Epoch 79/80 evaluation time: 19.72 seconds
+Max accuracy so far: 62.7%
+Epoch 79 - Test Acc: 62.5%, Test Loss: 0.942394
+[Rank 0] Epoch 80/80 training time: 13.29 seconds
+[Rank 0] Epoch 80/80 evaluation time: 18.64 seconds
+Max accuracy so far: 62.7%
+Epoch 80 - Test Acc: 62.7%, Test Loss: 0.941327
+Saved checkpoint to checkpoints/model_epoch80.pth
+Total training time: 2557.70 seconds, Average time per epoch: 31.97 seconds
+DDP: Rank 12 process group destroyed.
+DDP: Rank 6 process group destroyed.
+DDP: Rank 10 process group destroyed.
+DDP: Rank 7 process group destroyed.
+DDP: Rank 11 process group destroyed.
+DDP: Rank 4 process group destroyed.
+DDP: Rank 9 process group destroyed.
+DDP: Rank 3 process group destroyed.
+DDP: Rank 8 process group destroyed.
+DDP: Rank 5 process group destroyed.
+DDP: Rank 2 process group destroyed.
+Saved final model to results/2025-05-17_21-18-54/model_final.pth
+Saved metrics to results/2025-05-17_21-18-54/metrics.json
+DDP: Rank 1 process group destroyed.
+DDP: Rank 0 process group destroyed.
+DDP: Rank 13 process group destroyed.

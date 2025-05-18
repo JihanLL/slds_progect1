@@ -14,6 +14,8 @@ def train_loop(
     optimizer=None,
     scheduler=None,
     l1_lambda=0,
+    rank=None,
+    world_size=None,
     device=None,
 ):
     model.train()  # Set base model to train mode
@@ -24,7 +26,7 @@ def train_loop(
 
     preds = []
     labels = []
-    for batch, (X, y) in enumerate(dataloader):
+    for batch, (X, y) in tqdm(enumerate(dataloader)):
         X, y = X.to(device), y.to(device)
 
         with torch.amp.autocast('cuda'):
@@ -44,8 +46,6 @@ def train_loop(
         total_correct += (pred.argmax(1) == y).type(torch.float).sum().item()
         total_samples += y.size(0)
 
-        # Record learning rate at each step if scheduler updates per step
-        # If scheduler updates per epoch, this will be the same value throughout
         current_lr = scheduler.get_last_lr()[0]
         learning_rates.append(current_lr)
 

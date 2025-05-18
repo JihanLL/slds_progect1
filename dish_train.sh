@@ -1,20 +1,21 @@
 #!/bin/bash
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 torchrun \
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 torchrun \
     --standalone \
     --nnodes=1 \
-    --nproc_per_node=8 \
+    --nproc_per_node=16 \
     --master_addr="localhost" \
     --master_port='12345' \
     train.py \
     --seed 42 \
-    --epochs 35 \
-    --dataset DDR \
-    --ddr_root_dir /lab/haoq_lab/cse12212635/slds_progect1/data/DDR \
+    --epochs 30 \
+    --dataset MINIST \
+    --ddr_root_dir data/DDR \
+    --optimizer sgd \
     --learning_rate 0.001 \
-    --batch_size 512 \
-    --num_workers 16 \
-    --model "CNN" \
+    --batch_size 128 \
+    --num_workers 24 \
+    --model CNN \
     --L1_parameter 0.00001 \
     --L2_parameter 0.00001 \
     --momentum 0.9 \
