@@ -272,7 +272,7 @@ def main_worker(rank, world_size, config, managed_results_list):
             )
         if rank == 0:
             # Save the model's state dict (weights)
-            save_path = f"checkpoints/double_descent/model_base_ch_{base_ch}.pt"
+            save_path = f"checkpoints/double_descent/model_base_ch_{base_ch}.pth"
             os.makedirs(os.path.dirname(save_path), exist_ok=True)
             # For DDP models, we need to save the module not the DDP wrapper
             torch.save(model.module.state_dict(), save_path)
@@ -316,7 +316,7 @@ if __name__ == "__main__":
         "mnist_mean": (0.1307,),
         "mnist_std": (0.3081,),
         "seed": 42,
-        "num_data_workers": 8,
+        "num_data_workers": 4,
     }
 
     # Determine world size (number of processes)

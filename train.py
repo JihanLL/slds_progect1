@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from torch.optim.lr_scheduler import MultiStepLR
+from torch.optim.lr_scheduler import MultiStepLR, ExponentialLR
 
 import numpy as np
 import time
@@ -9,12 +9,12 @@ import time
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from tqdm import tqdm
+# import mlflow
 
 try:
     from fvcore.nn import FlopCountAnalysis
 except ImportError:
     fvcore = None
-    print("Fvcore is not installed. FLOP analysis will be skipped.")
 
 from dataset.balance_data import PartOfData
 from dataset.build_ddr import build_DDR_dataset
@@ -29,7 +29,9 @@ import json
 from datetime import datetime
 import torch.backends.cudnn as cudnn
 
-from models.cnn import CNN, CNNv2, CNNv3
+from models.cnn import CNN, CNNv2, CNNv3, CNNv4, CNNBlock
+from models.mlp import MLP
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def get_args_parser():
@@ -92,9 +94,7 @@ def get_args_parser():
         default=[10, 20, 30],
         help="Milestones for learning rate scheduler",
     )
-    parser.add_argument(
-        "--model", type=str, default="CNN", help="Model architecture to use"
-    )
+    parser.add_argument("--model", type=str, default="CNNv4", help="Model to use")
     parser.add_argument(
         "--flopanalysis", action="store_true", help="Enable FLOP analysis"
     )
@@ -148,7 +148,6 @@ def setup_ddp(local_rank_arg):
 def main(args):
     local_rank_from_env = os.environ.get("LOCAL_RANK")
     is_distributed = local_rank_from_env is not None
-
 
     world_size = 1
     global_rank = 0  # This is the global rank of the process
@@ -243,10 +242,26 @@ def main(args):
     )
 
     # Initialize the model
-    if args.model == "CNN":
-        in_c = 1 if args.dataset == "MNIST" else 3
-        # model = CNN(in_c=in_c, conv1_c=20, conv2_c=15, out_dim=10).to(device)
-        model = CNNv3().to(device)
+    in_c = 1 if args.dataset == "MNIST" else 3
+    n_classes = 10 if args.dataset == "MNIST" else 5
+    if args.model == "CNNv1":
+        model = CNN(in_c=in_c, conv1_c=20, conv2_c=15, out_dim=n_classes).to(device)
+    elif args.model == "CNNv2":
+        model = CNNv2(in_c=in_c, num_classes=n_classes).to(device)
+    elif args.model == "CNNv3":
+        model = CNNv3(input_channels=in_c, num_classes=n_classes).to(device)
+    elif args.model == "CNNv4":
+        block_config = [6, 8, 4]
+        model = CNNv4(in_c=in_c, num_classes=n_classes, block_config=block_config).to(
+            device
+        )
+    elif args.model == "MLP":
+        model = MLP(in_c=in_c, out_dim=n_classes).to(device)
+    elif args.model == "KNN":
+        model = KNeighborsClassifier(n_neighbors=3)
+
+    else:
+        raise ValueError(f"Unsupported model: {args.model}")
 
     if is_distributed:
         # args.local_rank is the integer GPU index for this process
@@ -274,9 +289,11 @@ def main(args):
             momentum=args.momentum,
         )
     elif args.optimizer == "adam":
-        optimizer = torch.optim.Adam(model.parameters(),lr=args.learning_rate, weight_decay=args.L2_parameter)
+        optimizer = torch.optim.Adam(
+            model.parameters(), lr=args.learning_rate, weight_decay=args.L2_parameter
+        )
     # scheduler = MultiStepLR(optimizer, milestones=args.milestones, gamma=0.1)
-    scheduler = torch.optim.lr_scheduler.ExponentialLR(
+    scheduler = ExponentialLR(
         optimizer, gamma=0.9
     )  # Exponential decay for learning rate
     epochs = args.epochs
@@ -322,7 +339,7 @@ def main(args):
                 device=device,
                 # Pass rank and world_size if train_loop needs to do DDP-aware operations (e.g. averaging metrics)
                 rank=global_rank,
-                world_size=world_size
+                world_size=world_size,
             )
         )
         scheduler.step()

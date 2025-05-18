@@ -71,9 +71,9 @@ class CNN(nn.Module):
 
 
 class CNNv2(nn.Module):
-    def __init__(self):
+    def __init__(self, int_c=1):
         super().__init__()
-        self.conv1 = nn.Conv2d(1, 16, 5)
+        self.conv1 = nn.Conv2d(int_c, 16, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(16, 16, 5)
         self.fc1 = nn.Linear(16 * 9 * 9, 256)
@@ -174,12 +174,19 @@ class CNNBlock(nn.Module):
 
 class CNNv4(nn.Module):
     def __init__(
-        self, block=CNNBlock, block_config=[2, 2, 2], base_channels=16, num_classes=10
+        self,
+        block=CNNBlock,
+        block_config=[2, 2, 2],
+        in_c=1,
+        base_channels=16,
+        num_classes=10,
     ):
         super().__init__()
         self.in_channels = base_channels
 
-        self.conv1 = nn.Conv2d(1, base_channels, 3, 1, 1)  # 1 input channel for MNIST
+        self.conv1 = nn.Conv2d(
+            in_c, base_channels, 3, 1, 1
+        )  # 1 input channel for MNIST
         self.bn1 = nn.BatchNorm2d(base_channels)
         self.relu = nn.ReLU(inplace=True)
 
@@ -209,3 +216,99 @@ class CNNv4(nn.Module):
         x = self.avgpool(x)
         x = x.view(x.size(0), -1)
         return self.fc(x)
+    
+class CNNDDR(nn.Module):
+    """
+    A CNN architecture adapted for 224x224 input images.
+    It uses CNNBlocks and includes an initial MaxPool layer for early downsampling.
+    """
+
+    def __init__(
+        self,
+        block=CNNBlock,
+        block_config=[2, 2, 2],  # Number of blocks in each layer
+        in_c=3,  # Input channels (e.g., 3 for RGB)
+        base_channels=64,  # Base number of channels, often 64 for ImageNet-sized inputs
+        num_classes=5,
+    ):
+        super().__init__()
+        self.in_channels = (
+            base_channels  # Tracks current number of input channels for build_layer
+        )
+
+        # Initial feature extraction stem
+        # Conv -> BN -> ReLU -> MaxPool
+        self.conv1 = nn.Conv2d(
+            in_c,
+            base_channels,
+            kernel_size=3,
+            stride=1,
+            padding=1,
+            bias=False,
+            # Using kernel 3, stride 1, padding 1 to preserve dimensions before explicit pooling
+        )
+        self.bn1 = nn.BatchNorm2d(base_channels)
+        self.relu = nn.ReLU(inplace=True)
+        # Max pooling layer to reduce dimensions from 224x224 -> 112x112
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+
+        # Building the main layers of the network using CNNBlocks
+        # After maxpool, feature map is 112x112 if input is 224x224
+        # Layer 1: Stride 1, maintains dimensions (112x112), output channels = base_channels
+        self.layer1 = self.build_layer(block, base_channels, block_config[0], stride=1)
+
+        # Layer 2: Stride 2, halves dimensions (112x112 -> 56x56), output channels = base_channels * 2
+        self.layer2 = self.build_layer(
+            block, base_channels * 2, block_config[1], stride=2
+        )
+
+        # Layer 3: Stride 2, halves dimensions (56x56 -> 28x28), output channels = base_channels * 4
+        self.layer3 = self.build_layer(
+            block, base_channels * 4, block_config[2], stride=2
+        )
+
+        # Classifier head
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))  # Reduces spatial dimensions to 1x1
+        self.fc = nn.Linear(base_channels * 4, num_classes)  # Fully connected layer
+
+    def build_layer(self, block, out_channels, num_blocks, stride):
+        """
+        Constructs a layer made of multiple CNNBlocks.
+        Args:
+            block: The block type to use (CNNBlock).
+            out_channels: Number of output channels for this layer.
+            num_blocks: Number of blocks in this layer.
+            stride: Stride for the first block of this layer (for downsampling).
+        Returns:
+            nn.Sequential: A sequential container of blocks.
+        """
+        layers = []
+        # The first block in the layer handles the stride (downsampling) and channel changes.
+        layers.append(block(self.in_channels, out_channels, stride))
+        self.in_channels = out_channels  # Update in_channels for the next layer
+
+        # Subsequent blocks in the layer have stride 1 and same in/out channels.
+        for _ in range(1, num_blocks):
+            layers.append(block(self.in_channels, out_channels, stride=1))
+        return nn.Sequential(*layers)
+
+    def forward(self, x):
+        # Input x: (batch_size, in_c, 224, 224)
+
+        # Stem
+        x = self.conv1(x)  # (batch_size, base_channels, 224, 224)
+        x = self.bn1(x)
+        x = self.relu(x)
+        x = self.maxpool(x)  # (batch_size, base_channels, 112, 112)
+
+        # Main layers
+        x = self.layer1(x)  # (batch_size, base_channels, 112, 112)
+        x = self.layer2(x)  # (batch_size, base_channels * 2, 56, 56)
+        x = self.layer3(x)  # (batch_size, base_channels * 4, 28, 28)
+
+        # Classifier
+        x = self.avgpool(x)  # (batch_size, base_channels * 4, 1, 1)
+        x = x.view(x.size(0), -1)  # Flatten: (batch_size, base_channels * 4)
+        x = self.fc(x)  # (batch_size, num_classes)
+        return x
+

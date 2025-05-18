@@ -3,7 +3,16 @@ import pandas as pd
 from PIL import Image
 import torch
 from torch.utils.data import Dataset, DataLoader
-from torchvision.transforms.v2 import Compose, ToImage, ToDtype, Resize
+from torchvision.transforms.v2 import (
+    Compose,
+    ToImage,
+    ToDtype,
+    Resize,
+    RandomCrop,
+    RandomHorizontalFlip,
+    RandomRotation,
+    ColorJitter,
+)
 
 
 class DDRDataset(Dataset):
@@ -115,12 +124,26 @@ def build_DDR_dataset(data_root_dir, is_train=True, transform=None):
     # Path to the images directory for the specified split
     images_base_path = os.path.join(data_root_dir, split_name, "images")
 
+    image_size = 224
     t = []
-    t.append(Resize((28, 28), interpolation=Image.BICUBIC))
+    t.append(Resize((image_size, image_size), interpolation=Image.BICUBIC))
+    t.append(RandomCrop(image_size))
+    t.append(RandomHorizontalFlip(p=0.5))
+    t.append(RandomRotation(degrees=15))
+    t.append(ColorJitter(brightness=0.1, contrast=0.1, saturation=0.05, hue=0.0))
+    if transform:
+        t.append(transform)
     t.append(ToImage())
     t.append(ToDtype(torch.float32, scale=True))
 
-    transform = Compose(t)
+    train_transform = Compose(t)
+
+    t_test = []
+    t_test.append(Resize((image_size, image_size), interpolation=Image.BICUBIC))
+    t_test.append(ToImage())
+    t_test.append(ToDtype(torch.float32, scale=True))
+
+    test_transform = Compose(t_test)
 
     if not os.path.exists(csv_path):
         # Fallback for the original structure if train/test subdirs are not found (e.g. for initial testing)
@@ -142,11 +165,9 @@ def build_DDR_dataset(data_root_dir, is_train=True, transform=None):
             f"Image directory not found at {images_base_path}. Please check the path."
         )
 
-    print(f"Loading dataset: {'Training' if is_train else 'Validation/Test'}")
-    print(f"CSV path: {csv_path}")
-    print(f"Image directory: {images_base_path}")
-
     dataset = DDRDataset(
-        csv_file_path=csv_path, img_dir=images_base_path, transform=transform
+        csv_file_path=csv_path,
+        img_dir=images_base_path,
+        transform=train_transform if is_train else test_transform,
     )
     return dataset

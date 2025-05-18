@@ -1,2 +1,90 @@
 
 Launching training with 10 classes...
+[1] Train Acc: 0.8925, Test Acc: 0.9714
+[2] Train Acc: 0.9849, Test Acc: 0.9853
+[3] Train Acc: 0.9895, Test Acc: 0.9876
+[4] Train Acc: 0.9912, Test Acc: 0.9859
+[5] Train Acc: 0.9941, Test Acc: 0.9846
+[6] Train Acc: 0.9957, Test Acc: 0.9747
+[7] Train Acc: 0.9949, Test Acc: 0.9807
+[8] Train Acc: 0.9957, Test Acc: 0.9846
+[9] Train Acc: 0.9975, Test Acc: 0.9604
+[10] Train Acc: 0.9976, Test Acc: 0.9901
+Saved plot to results/class_10.png
+[PCA] Feature plot saved to results/features_pca_class_10.png
+[TSNE] Feature plot saved to results/features_tsne_class_10.png
+
+Launching training with 12 classes...
+[1] Train Acc: 0.8797, Test Acc: 0.9761
+[2] Train Acc: 0.9848, Test Acc: 0.9754
+[3] Train Acc: 0.9887, Test Acc: 0.9799
+[4] Train Acc: 0.9909, Test Acc: 0.9880
+[5] Train Acc: 0.9932, Test Acc: 0.9847
+[6] Train Acc: 0.9944, Test Acc: 0.9819
+[7] Train Acc: 0.9945, Test Acc: 0.9720
+[8] Train Acc: 0.9965, Test Acc: 0.9805
+[9] Train Acc: 0.9959, Test Acc: 0.9843
+[10] Train Acc: 0.9961, Test Acc: 0.9869
+Saved plot to results/class_12.png
+[PCA] Feature plot saved to results/features_pca_class_12.png
+[TSNE] Feature plot saved to results/features_tsne_class_12.png
+
+Launching training with 14 classes...
+[1] Train Acc: 0.8797, Test Acc: 0.9489
+[2] Train Acc: 0.9841, Test Acc: 0.9869
+[3] Train Acc: 0.9884, Test Acc: 0.9899
+[4] Train Acc: 0.9913, Test Acc: 0.9908
+[5] Train Acc: 0.9936, Test Acc: 0.9913
+[6] Train Acc: 0.9940, Test Acc: 0.9851
+[7] Train Acc: 0.9956, Test Acc: 0.9879
+[8] Train Acc: 0.9956, Test Acc: 0.9846
+[9] Train Acc: 0.9955, Test Acc: 0.9885
+[10] Train Acc: 0.9957, Test Acc: 0.9876
+Saved plot to results/class_14.png
+[PCA] Feature plot saved to results/features_pca_class_14.png
+[TSNE] Feature plot saved to results/features_tsne_class_14.png
+
+Launching training with 16 classes...
+[1] Train Acc: 0.8747, Test Acc: 0.9452
+[2] Train Acc: 0.9832, Test Acc: 0.9630
+[3] Train Acc: 0.9883, Test Acc: 0.9896
+[4] Train Acc: 0.9925, Test Acc: 0.9852
+[5] Train Acc: 0.9929, Test Acc: 0.9883
+[6] Train Acc: 0.9944, Test Acc: 0.9858
+[7] Train Acc: 0.9937, Test Acc: 0.9885
+[8] Train Acc: 0.9952, Test Acc: 0.9866
+[9] Train Acc: 0.9967, Test Acc: 0.9823
+[10] Train Acc: 0.9967, Test Acc: 0.9853
+Saved plot to results/class_16.png
+[PCA] Feature plot saved to results/features_pca_class_16.png
+[TSNE] Feature plot saved to results/features_tsne_class_16.png
+
+Launching training with 18 classes...
+[1] Train Acc: 0.8735, Test Acc: 0.9493
+[2] Train Acc: 0.9843, Test Acc: 0.9876
+[3] Train Acc: 0.9899, Test Acc: 0.9901
+[4] Train Acc: 0.9913, Test Acc: 0.9834
+[5] Train Acc: 0.9921, Test Acc: 0.9824
+[6] Train Acc: 0.9933, Test Acc: 0.9768
+[7] Train Acc: 0.9955, Test Acc: 0.9891
+[8] Train Acc: 0.9952, Test Acc: 0.9889
+[9] Train Acc: 0.9971, Test Acc: 0.9805
+[10] Train Acc: 0.9973, Test Acc: 0.9880
+Saved plot to results/class_18.png
+[PCA] Feature plot saved to results/features_pca_class_18.png
+[TSNE] Feature plot saved to results/features_tsne_class_18.png
+
+Launching training with 20 classes...
+[1] Train Acc: 0.8716, Test Acc: 0.9703
+[2] Train Acc: 0.9836, Test Acc: 0.9851
+[3] Train Acc: 0.9884, Test Acc: 0.9866
+[4] Train Acc: 0.9912, Test Acc: 0.9814
+[5] Train Acc: 0.9933, Test Acc: 0.9841
+[6] Train Acc: 0.9943, Test Acc: 0.9901
+[7] Train Acc: 0.9959, Test Acc: 0.9907
+[8] Train Acc: 0.9959, Test Acc: 0.9890
+[9] Train Acc: 0.9969, Test Acc: 0.9872
+[10] Train Acc: 0.9976, Test Acc: 0.9878
+Saved plot to results/class_20.png
+[PCA] Feature plot saved to results/features_pca_class_20.png
+[TSNE] Feature plot saved to results/features_tsne_class_20.png

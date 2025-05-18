@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 
 class MLP(nn.Module):
@@ -25,7 +24,7 @@ class MLP(nn.Module):
         )
 
     def forward(self, x):
-        x = self.flatten(x)  # Flatten the output of features
+        x = self.flatten(x)
         x = self.blk(x)
         x = self.head(x)
         return x

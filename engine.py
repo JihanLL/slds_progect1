@@ -26,7 +26,7 @@ def train_loop(
 
     preds = []
     labels = []
-    for batch, (X, y) in tqdm(enumerate(dataloader)):
+    for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
 
         with torch.amp.autocast('cuda'):
