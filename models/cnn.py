@@ -2,52 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class cnn_block(nn.Module):
-    """
-    A CNN block with Conv2d, BatchNorm2d, GELU activation,
-    and an optional residual connection.
-    """
-
-    def __init__(self, in_c, out_c, kernel_size=3, padding=1, use_residual=True):
-        super().__init__()
-        self.use_residual = use_residual
-        self.conv = nn.Conv2d(
-            in_c, out_c, kernel_size, padding=padding, bias=False
-        )  # Often bias is False if using BN
-        self.bn = nn.BatchNorm2d(out_c)
-        self.act = nn.GELU()
-
-        self.res_conv = None
-        # Setup residual connection projection only if needed and enabled
-        if self.use_residual:
-            # Check if a projection is needed for channels or potentially spatial size
-            # Simple check: only project if channels differ.
-            # Assumes conv layer preserves spatial dimensions for residual to work directly.
-            if in_c != out_c:
-                self.res_conv = nn.Conv2d(in_c, out_c, kernel_size=1, bias=False)
-            # More robust check could involve calculating output dims vs input dims
-
-    def forward(self, x):
-        res = x  # Store input for residual path
-
-        # Main path
-        out = self.conv(x)
-        out = self.bn(out)
-
-        # Residual path (if enabled)
-        if self.use_residual:
-            if self.res_conv:
-                res = self.res_conv(res)
-
-            # Check if shapes match before adding - crucial if conv changes spatial dims
-            if out.shape == res.shape:
-                out = out + res
-            # else: # Optional: handle cases where residual isn't added due to shape mismatch
-            #    print(f"Warning: Residual skipped due to shape mismatch: out={out.shape}, res={res.shape}")
-
-        out = self.act(out)  # Apply activation after potential addition
-        return out
-
 
 class CNN(nn.Module):
     """
@@ -114,7 +68,8 @@ class CNN(nn.Module):
         x = self.flatten(x)  # Flatten the output of features
         x = self.head(x)
         return x
-    
+
+
 class CNNv2(nn.Module):
     def __init__(self):
         super().__init__()
@@ -124,16 +79,17 @@ class CNNv2(nn.Module):
         self.fc1 = nn.Linear(16 * 9 * 9, 256)
         self.fc2 = nn.Linear(256, 256)
         self.fc3 = nn.Linear(256, 10)
+        self.act = nn.ReLU()
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 9 * 9)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
+        x = self.act(self.fc1(x))
+        x = self.act(self.fc2(x))
         x = self.fc3(x)
         return x
-    
+
 
 class CNNv3(nn.Module):
     def __init__(self, input_channels=1, num_classes=10):
@@ -190,3 +146,66 @@ class CNNv3(nn.Module):
         x = self.features(x)
         x = self.classifier(x)
         return x
+
+
+class CNNBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, stride=1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(in_channels, out_channels, 3, stride, 1)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = nn.Conv2d(out_channels, out_channels, 3, 1, 1)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+
+        self.downsample = nn.Sequential()
+        if stride != 1 or in_channels != out_channels:
+            self.downsample = nn.Sequential(
+                nn.Conv2d(in_channels, out_channels, 1, stride),
+                nn.BatchNorm2d(out_channels),
+            )
+
+    def forward(self, x):
+        identity = self.downsample(x)
+        out = self.relu(self.bn1(self.conv1(x)))
+        out = self.bn2(self.conv2(out))
+        out += identity
+        return self.relu(out)
+
+
+class CNNv4(nn.Module):
+    def __init__(
+        self, block=CNNBlock, block_config=[2, 2, 2], base_channels=16, num_classes=10
+    ):
+        super().__init__()
+        self.in_channels = base_channels
+
+        self.conv1 = nn.Conv2d(1, base_channels, 3, 1, 1)  # 1 input channel for MNIST
+        self.bn1 = nn.BatchNorm2d(base_channels)
+        self.relu = nn.ReLU(inplace=True)
+
+        self.layer1 = self.build_layer(block, base_channels, block_config[0], stride=1)
+        self.layer2 = self.build_layer(
+            block, base_channels * 2, block_config[1], stride=2
+        )
+        self.layer3 = self.build_layer(
+            block, base_channels * 4, block_config[2], stride=2
+        )
+
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(base_channels * 4, num_classes)
+
+    def build_layer(self, block, out_channels, blocks, stride):
+        layers = [block(self.in_channels, out_channels, stride)]
+        self.in_channels = out_channels
+        for _ in range(1, blocks):
+            layers.append(block(out_channels, out_channels))
+        return nn.Sequential(*layers)
+
+    def forward(self, x):
+        x = self.relu(self.bn1(self.conv1(x)))
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        return self.fc(x)

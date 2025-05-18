@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 torchrun \
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 torchrun \
     --standalone \
     --nnodes=1 \
-    --nproc_per_node=16 \
+    --nproc_per_node=8 \
     --master_addr="localhost" \
     --master_port='12345' \
     train.py \

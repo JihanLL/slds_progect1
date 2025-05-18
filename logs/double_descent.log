@@ -1,0 +1,215 @@
+Main: Using 8 CUDA GPU(s) for DDP.
+Main: Spawning 8 DDP processes...
+[rank7]:[W519 00:56:59.409119277 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 7]  using GPU 7 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank1]:[W519 00:57:00.484027213 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank4]:[W519 00:57:00.807924486 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 4]  using GPU 4 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank2]:[W519 00:57:00.034545769 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 2]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank5]:[W519 00:57:00.098761586 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 5]  using GPU 5 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank6]:[W519 00:57:00.129627405 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 6]  using GPU 6 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank3]:[W519 00:57:00.226774692 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 3]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank0]:[W519 00:57:00.247369747 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+DDP: Initializing process group for rank 0/8...
+Rank 0 using device: 0
+Rank 0: Downloading MNIST dataset...
+Rank 0: Download complete.
+
+--- Rank 0: Training model with base_channels = 2 ---
+Rank 0: Number of parameters: 3,022
+Rank 0: Epoch 1/10 | Train Loss: 2.0873 | Test Loss: 1.8136 | Test Acc: 33.45%
+Rank 0: Epoch 2/10 | Train Loss: 1.5569 | Test Loss: 1.3685 | Test Acc: 64.96%
+Rank 0: Epoch 3/10 | Train Loss: 1.1145 | Test Loss: 0.9842 | Test Acc: 76.05%
+Rank 0: Epoch 4/10 | Train Loss: 0.8123 | Test Loss: 0.7513 | Test Acc: 84.86%
+Rank 0: Epoch 5/10 | Train Loss: 0.6011 | Test Loss: 0.5508 | Test Acc: 90.31%
+Rank 0: Epoch 6/10 | Train Loss: 0.4540 | Test Loss: 0.3945 | Test Acc: 92.51%
+Rank 0: Epoch 7/10 | Train Loss: 0.3580 | Test Loss: 0.3511 | Test Acc: 92.81%
+Rank 0: Epoch 8/10 | Train Loss: 0.2985 | Test Loss: 0.2943 | Test Acc: 93.88%
+Rank 0: Epoch 9/10 | Train Loss: 0.2574 | Test Loss: 0.2295 | Test Acc: 95.06%
+Rank 0: Epoch 10/10 | Train Loss: 0.2274 | Test Loss: 0.1961 | Test Acc: 95.61%
+Rank 0: Training for base_channels=2 took 175.31 seconds.
+
+--- Rank 0: Training model with base_channels = 4 ---
+Rank 0: Number of parameters: 11,442
+Rank 0: Epoch 1/10 | Train Loss: 1.8320 | Test Loss: 1.4173 | Test Acc: 55.99%
+Rank 0: Epoch 2/10 | Train Loss: 0.9267 | Test Loss: 0.7890 | Test Acc: 85.66%
+Rank 0: Epoch 3/10 | Train Loss: 0.4594 | Test Loss: 0.4873 | Test Acc: 89.29%
+Rank 0: Epoch 4/10 | Train Loss: 0.2400 | Test Loss: 0.1820 | Test Acc: 96.85%
+Rank 0: Epoch 5/10 | Train Loss: 0.1595 | Test Loss: 0.1398 | Test Acc: 96.99%
+Rank 0: Epoch 6/10 | Train Loss: 0.1195 | Test Loss: 0.1053 | Test Acc: 97.80%
+Rank 0: Epoch 7/10 | Train Loss: 0.0959 | Test Loss: 0.0934 | Test Acc: 97.94%
+Rank 0: Epoch 8/10 | Train Loss: 0.0811 | Test Loss: 0.0792 | Test Acc: 98.26%
+Rank 0: Epoch 9/10 | Train Loss: 0.0716 | Test Loss: 0.0626 | Test Acc: 98.43%
+Rank 0: Epoch 10/10 | Train Loss: 0.0641 | Test Loss: 0.0600 | Test Acc: 98.47%
+Rank 0: Training for base_channels=4 took 174.39 seconds.
+
+--- Rank 0: Training model with base_channels = 6 ---
+Rank 0: Number of parameters: 25,270
+Rank 0: Epoch 1/10 | Train Loss: 1.5173 | Test Loss: 1.1066 | Test Acc: 71.55%
+Rank 0: Epoch 2/10 | Train Loss: 0.5075 | Test Loss: 0.3171 | Test Acc: 94.34%
+Rank 0: Epoch 3/10 | Train Loss: 0.1902 | Test Loss: 0.1410 | Test Acc: 97.26%
+Rank 0: Epoch 4/10 | Train Loss: 0.1141 | Test Loss: 0.1180 | Test Acc: 97.55%
+Rank 0: Epoch 5/10 | Train Loss: 0.0819 | Test Loss: 0.0737 | Test Acc: 98.42%
+Rank 0: Epoch 6/10 | Train Loss: 0.0667 | Test Loss: 0.0773 | Test Acc: 98.10%
+Rank 0: Epoch 7/10 | Train Loss: 0.0536 | Test Loss: 0.0898 | Test Acc: 97.50%
+Rank 0: Epoch 8/10 | Train Loss: 0.0462 | Test Loss: 0.0517 | Test Acc: 98.72%
+Rank 0: Epoch 9/10 | Train Loss: 0.0400 | Test Loss: 0.0532 | Test Acc: 98.50%
+Rank 0: Epoch 10/10 | Train Loss: 0.0368 | Test Loss: 0.0517 | Test Acc: 98.50%
+Rank 0: Training for base_channels=6 took 175.36 seconds.
+
+--- Rank 0: Training model with base_channels = 8 ---
+Rank 0: Number of parameters: 44,506
+Rank 0: Epoch 1/10 | Train Loss: 1.2675 | Test Loss: 0.7120 | Test Acc: 84.97%
+Rank 0: Epoch 2/10 | Train Loss: 0.2535 | Test Loss: 0.1863 | Test Acc: 96.91%
+Rank 0: Epoch 3/10 | Train Loss: 0.1107 | Test Loss: 0.0916 | Test Acc: 98.05%
+Rank 0: Epoch 4/10 | Train Loss: 0.0732 | Test Loss: 0.0905 | Test Acc: 97.67%
+Rank 0: Epoch 5/10 | Train Loss: 0.0557 | Test Loss: 0.0623 | Test Acc: 98.34%
+Rank 0: Epoch 6/10 | Train Loss: 0.0455 | Test Loss: 0.0465 | Test Acc: 98.85%
+Rank 0: Epoch 7/10 | Train Loss: 0.0380 | Test Loss: 0.0579 | Test Acc: 98.49%
+Rank 0: Epoch 8/10 | Train Loss: 0.0338 | Test Loss: 0.0513 | Test Acc: 98.67%
+Rank 0: Epoch 9/10 | Train Loss: 0.0291 | Test Loss: 0.0413 | Test Acc: 98.82%
+Rank 0: Epoch 10/10 | Train Loss: 0.0246 | Test Loss: 0.0397 | Test Acc: 98.86%
+Rank 0: Training for base_channels=8 took 174.18 seconds.
+
+--- Rank 0: Training model with base_channels = 10 ---
+Rank 0: Number of parameters: 69,150
+Rank 0: Epoch 1/10 | Train Loss: 0.9844 | Test Loss: 0.3209 | Test Acc: 94.08%
+Rank 0: Epoch 2/10 | Train Loss: 0.1556 | Test Loss: 0.1806 | Test Acc: 95.86%
+Rank 0: Epoch 3/10 | Train Loss: 0.0827 | Test Loss: 0.0858 | Test Acc: 97.84%
+Rank 0: Epoch 4/10 | Train Loss: 0.0583 | Test Loss: 0.0612 | Test Acc: 98.49%
+Rank 0: Epoch 5/10 | Train Loss: 0.0448 | Test Loss: 0.2077 | Test Acc: 94.51%
+Rank 0: Epoch 6/10 | Train Loss: 0.0377 | Test Loss: 0.0457 | Test Acc: 98.84%
+Rank 0: Epoch 7/10 | Train Loss: 0.0313 | Test Loss: 0.0425 | Test Acc: 98.86%
+Rank 0: Epoch 8/10 | Train Loss: 0.0270 | Test Loss: 0.0451 | Test Acc: 98.63%
+Rank 0: Epoch 9/10 | Train Loss: 0.0234 | Test Loss: 0.0376 | Test Acc: 98.83%
+Rank 0: Epoch 10/10 | Train Loss: 0.0207 | Test Loss: 0.0260 | Test Acc: 99.20%
+Rank 0: Training for base_channels=10 took 174.47 seconds.
+
+--- Rank 0: Training model with base_channels = 12 ---
+Rank 0: Number of parameters: 99,202
+Rank 0: Epoch 1/10 | Train Loss: 0.8407 | Test Loss: 0.3048 | Test Acc: 93.85%
+Rank 0: Epoch 2/10 | Train Loss: 0.1218 | Test Loss: 0.1319 | Test Acc: 96.84%
+Rank 0: Epoch 3/10 | Train Loss: 0.0682 | Test Loss: 0.0741 | Test Acc: 98.24%
+Rank 0: Epoch 4/10 | Train Loss: 0.0477 | Test Loss: 0.0526 | Test Acc: 98.63%
+Rank 0: Epoch 5/10 | Train Loss: 0.0397 | Test Loss: 0.0934 | Test Acc: 96.98%
+Rank 0: Epoch 6/10 | Train Loss: 0.0324 | Test Loss: 0.0362 | Test Acc: 98.95%
+Rank 0: Epoch 7/10 | Train Loss: 0.0268 | Test Loss: 0.0376 | Test Acc: 98.93%
+Rank 0: Epoch 8/10 | Train Loss: 0.0223 | Test Loss: 0.0603 | Test Acc: 98.14%
+Rank 0: Epoch 9/10 | Train Loss: 0.0188 | Test Loss: 0.0334 | Test Acc: 98.98%
+Rank 0: Epoch 10/10 | Train Loss: 0.0170 | Test Loss: 0.0447 | Test Acc: 98.66%
+Rank 0: Training for base_channels=12 took 175.77 seconds.
+
+--- Rank 0: Training model with base_channels = 14 ---
+Rank 0: Number of parameters: 134,662
+Rank 0: Epoch 1/10 | Train Loss: 0.7508 | Test Loss: 0.4065 | Test Acc: 89.53%
+Rank 0: Epoch 2/10 | Train Loss: 0.0976 | Test Loss: 0.0842 | Test Acc: 98.02%
+Rank 0: Epoch 3/10 | Train Loss: 0.0540 | Test Loss: 0.0703 | Test Acc: 98.24%
+Rank 0: Epoch 4/10 | Train Loss: 0.0375 | Test Loss: 0.0506 | Test Acc: 98.63%
+Rank 0: Epoch 5/10 | Train Loss: 0.0294 | Test Loss: 0.0405 | Test Acc: 98.92%
+Rank 0: Epoch 6/10 | Train Loss: 0.0238 | Test Loss: 0.0333 | Test Acc: 99.00%
+Rank 0: Epoch 7/10 | Train Loss: 0.0196 | Test Loss: 0.0340 | Test Acc: 99.05%
+Rank 0: Epoch 8/10 | Train Loss: 0.0171 | Test Loss: 0.0445 | Test Acc: 98.68%
+Rank 0: Epoch 9/10 | Train Loss: 0.0146 | Test Loss: 0.0341 | Test Acc: 99.03%
+Rank 0: Epoch 10/10 | Train Loss: 0.0126 | Test Loss: 0.0557 | Test Acc: 98.35%
+Rank 0: Training for base_channels=14 took 175.76 seconds.
+
+--- Rank 0: Training model with base_channels = 16 ---
+Rank 0: Number of parameters: 175,530
+Rank 0: Epoch 1/10 | Train Loss: 0.6458 | Test Loss: 0.2604 | Test Acc: 93.90%
+Rank 0: Epoch 2/10 | Train Loss: 0.0767 | Test Loss: 0.1407 | Test Acc: 96.11%
+Rank 0: Epoch 3/10 | Train Loss: 0.0480 | Test Loss: 0.0884 | Test Acc: 97.60%
+Rank 0: Epoch 4/10 | Train Loss: 0.0350 | Test Loss: 0.0573 | Test Acc: 98.25%
+Rank 0: Epoch 5/10 | Train Loss: 0.0292 | Test Loss: 0.0444 | Test Acc: 98.78%
+Rank 0: Epoch 6/10 | Train Loss: 0.0245 | Test Loss: 0.0355 | Test Acc: 98.92%
+Rank 0: Epoch 7/10 | Train Loss: 0.0189 | Test Loss: 0.1449 | Test Acc: 95.25%
+Rank 0: Epoch 8/10 | Train Loss: 0.0165 | Test Loss: 0.0550 | Test Acc: 98.24%
+Rank 0: Epoch 9/10 | Train Loss: 0.0154 | Test Loss: 0.0267 | Test Acc: 99.23%
+Rank 0: Epoch 10/10 | Train Loss: 0.0127 | Test Loss: 0.0375 | Test Acc: 98.86%
+Rank 0: Training for base_channels=16 took 174.09 seconds.
+
+--- Rank 0: Training model with base_channels = 18 ---
+Rank 0: Number of parameters: 221,806
+Rank 0: Epoch 1/10 | Train Loss: 0.6096 | Test Loss: 0.3142 | Test Acc: 91.67%
+Rank 0: Epoch 2/10 | Train Loss: 0.0743 | Test Loss: 0.0636 | Test Acc: 98.40%
+Rank 0: Epoch 3/10 | Train Loss: 0.0459 | Test Loss: 0.0557 | Test Acc: 98.33%
+Rank 0: Epoch 4/10 | Train Loss: 0.0320 | Test Loss: 0.0519 | Test Acc: 98.49%
+Rank 0: Epoch 5/10 | Train Loss: 0.0264 | Test Loss: 0.0414 | Test Acc: 98.92%
+Rank 0: Epoch 6/10 | Train Loss: 0.0210 | Test Loss: 0.0319 | Test Acc: 99.05%
+Rank 0: Epoch 7/10 | Train Loss: 0.0181 | Test Loss: 0.0368 | Test Acc: 98.89%
+Rank 0: Epoch 8/10 | Train Loss: 0.0154 | Test Loss: 0.0538 | Test Acc: 98.41%
+Rank 0: Epoch 9/10 | Train Loss: 0.0140 | Test Loss: 0.0357 | Test Acc: 98.91%
+Rank 0: Epoch 10/10 | Train Loss: 0.0103 | Test Loss: 0.0427 | Test Acc: 98.76%
+Rank 0: Training for base_channels=18 took 175.77 seconds.
+
+--- Rank 0: Training model with base_channels = 20 ---
+Rank 0: Number of parameters: 273,490
+Rank 0: Epoch 1/10 | Train Loss: 0.5436 | Test Loss: 0.2806 | Test Acc: 92.54%
+Rank 0: Epoch 2/10 | Train Loss: 0.0672 | Test Loss: 0.1258 | Test Acc: 96.36%
+Rank 0: Epoch 3/10 | Train Loss: 0.0415 | Test Loss: 0.0576 | Test Acc: 98.39%
+Rank 0: Epoch 4/10 | Train Loss: 0.0296 | Test Loss: 0.0360 | Test Acc: 98.92%
+Rank 0: Epoch 5/10 | Train Loss: 0.0244 | Test Loss: 0.0466 | Test Acc: 98.56%
+Rank 0: Epoch 6/10 | Train Loss: 0.0192 | Test Loss: 0.0514 | Test Acc: 98.53%
+Rank 0: Epoch 7/10 | Train Loss: 0.0161 | Test Loss: 0.0237 | Test Acc: 99.30%
+Rank 0: Epoch 8/10 | Train Loss: 0.0129 | Test Loss: 0.0301 | Test Acc: 99.04%
+Rank 0: Epoch 9/10 | Train Loss: 0.0115 | Test Loss: 0.0240 | Test Acc: 99.23%
+Rank 0: Epoch 10/10 | Train Loss: 0.0088 | Test Loss: 0.0269 | Test Acc: 99.19%
+Rank 0: Training for base_channels=20 took 176.03 seconds.
+
+--- Rank 0: Training model with base_channels = 24 ---
+Rank 0: Number of parameters: 393,082
+Rank 0: Epoch 1/10 | Train Loss: 0.4483 | Test Loss: 0.4865 | Test Acc: 85.38%
+Rank 0: Epoch 2/10 | Train Loss: 0.0531 | Test Loss: 0.0852 | Test Acc: 97.61%
+Rank 0: Epoch 3/10 | Train Loss: 0.0359 | Test Loss: 0.0413 | Test Acc: 98.80%
+Rank 0: Epoch 4/10 | Train Loss: 0.0266 | Test Loss: 0.0526 | Test Acc: 98.33%
+Rank 0: Epoch 5/10 | Train Loss: 0.0224 | Test Loss: 0.0527 | Test Acc: 98.60%
+Rank 0: Epoch 6/10 | Train Loss: 0.0170 | Test Loss: 0.0491 | Test Acc: 98.51%
+Rank 0: Epoch 7/10 | Train Loss: 0.0137 | Test Loss: 0.0366 | Test Acc: 98.88%
+Rank 0: Epoch 8/10 | Train Loss: 0.0133 | Test Loss: 0.0494 | Test Acc: 98.50%
+Rank 0: Epoch 9/10 | Train Loss: 0.0103 | Test Loss: 0.0232 | Test Acc: 99.36%
+Rank 0: Epoch 10/10 | Train Loss: 0.0092 | Test Loss: 0.0270 | Test Acc: 99.14%
+Rank 0: Training for base_channels=24 took 175.49 seconds.
+
+--- Rank 0: Training model with base_channels = 28 ---
+Rank 0: Number of parameters: 534,306
+Rank 0: Epoch 1/10 | Train Loss: 0.4143 | Test Loss: 0.6631 | Test Acc: 75.04%
+Rank 0: Epoch 2/10 | Train Loss: 0.0513 | Test Loss: 0.1009 | Test Acc: 96.97%
+Rank 0: Epoch 3/10 | Train Loss: 0.0348 | Test Loss: 0.0741 | Test Acc: 97.81%
+Rank 0: Epoch 4/10 | Train Loss: 0.0269 | Test Loss: 0.0954 | Test Acc: 96.99%
+Rank 0: Epoch 5/10 | Train Loss: 0.0206 | Test Loss: 0.0394 | Test Acc: 98.81%
+Rank 0: Epoch 6/10 | Train Loss: 0.0170 | Test Loss: 0.0236 | Test Acc: 99.28%
+Rank 0: Epoch 7/10 | Train Loss: 0.0156 | Test Loss: 0.0398 | Test Acc: 98.66%
+Rank 0: Epoch 8/10 | Train Loss: 0.0136 | Test Loss: 0.0488 | Test Acc: 98.46%
+Rank 0: Epoch 9/10 | Train Loss: 0.0094 | Test Loss: 0.0277 | Test Acc: 99.14%
+Rank 0: Epoch 10/10 | Train Loss: 0.0086 | Test Loss: 0.0211 | Test Acc: 99.36%
+Rank 0: Training for base_channels=28 took 175.67 seconds.
+
+--- Rank 0: Training model with base_channels = 32 ---
+Rank 0: Number of parameters: 697,162
+Rank 0: Epoch 1/10 | Train Loss: 0.3792 | Test Loss: 0.1496 | Test Acc: 95.96%
+Rank 0: Epoch 2/10 | Train Loss: 0.0471 | Test Loss: 0.1131 | Test Acc: 96.67%
+Rank 0: Epoch 3/10 | Train Loss: 0.0321 | Test Loss: 0.1135 | Test Acc: 96.17%
+Rank 0: Epoch 4/10 | Train Loss: 0.0251 | Test Loss: 0.1188 | Test Acc: 95.97%
+Rank 0: Epoch 5/10 | Train Loss: 0.0194 | Test Loss: 0.0664 | Test Acc: 97.84%
+Rank 0: Epoch 6/10 | Train Loss: 0.0158 | Test Loss: 0.0620 | Test Acc: 98.04%
+Rank 0: Epoch 7/10 | Train Loss: 0.0142 | Test Loss: 0.0434 | Test Acc: 98.54%
+Rank 0: Epoch 8/10 | Train Loss: 0.0129 | Test Loss: 0.0346 | Test Acc: 98.99%
+Rank 0: Epoch 9/10 | Train Loss: 0.0095 | Test Loss: 0.0283 | Test Acc: 99.21%
+Rank 0: Epoch 10/10 | Train Loss: 0.0089 | Test Loss: 0.0216 | Test Acc: 99.34%
+Rank 0: Training for base_channels=32 took 177.19 seconds.
+Rank 0 finished and cleaned up DDP.
+Main: Plotting results...
+Main: Plot saved as results/double_descent_ddp_plot.png
+
+Main: Experiment Complete. Check the plots.
+Main: Summary of results:
+  BaseChannels: 2, Params: 3,022, TrainLoss: 0.2274, TestLoss: 0.1961, TestAcc: 95.61%
+  BaseChannels: 4, Params: 11,442, TrainLoss: 0.0641, TestLoss: 0.0600, TestAcc: 98.47%
+  BaseChannels: 6, Params: 25,270, TrainLoss: 0.0368, TestLoss: 0.0517, TestAcc: 98.50%
+  BaseChannels: 8, Params: 44,506, TrainLoss: 0.0246, TestLoss: 0.0397, TestAcc: 98.86%
+  BaseChannels: 10, Params: 69,150, TrainLoss: 0.0207, TestLoss: 0.0260, TestAcc: 99.20%
+  BaseChannels: 12, Params: 99,202, TrainLoss: 0.0170, TestLoss: 0.0447, TestAcc: 98.66%
+  BaseChannels: 14, Params: 134,662, TrainLoss: 0.0126, TestLoss: 0.0557, TestAcc: 98.35%
+  BaseChannels: 16, Params: 175,530, TrainLoss: 0.0127, TestLoss: 0.0375, TestAcc: 98.86%
+  BaseChannels: 18, Params: 221,806, TrainLoss: 0.0103, TestLoss: 0.0427, TestAcc: 98.76%
+  BaseChannels: 20, Params: 273,490, TrainLoss: 0.0088, TestLoss: 0.0269, TestAcc: 99.19%
+  BaseChannels: 24, Params: 393,082, TrainLoss: 0.0092, TestLoss: 0.0270, TestAcc: 99.14%
+  BaseChannels: 28, Params: 534,306, TrainLoss: 0.0086, TestLoss: 0.0211, TestAcc: 99.36%
+  BaseChannels: 32, Params: 697,162, TrainLoss: 0.0089, TestLoss: 0.0216, TestAcc: 99.34%

@@ -1,0 +1,19 @@
+Main: Using 8 CUDA GPU(s) for DDP.
+Main: Spawning 8 DDP processes...
+[rank4]:[W519 02:12:40.456331109 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 4]  using GPU 4 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank7]:[W519 02:12:40.538233496 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 7]  using GPU 7 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank2]:[W519 02:12:40.595827445 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 2]  using GPU 2 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank3]:[W519 02:12:40.666696464 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 3]  using GPU 3 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank6]:[W519 02:12:40.847413725 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 6]  using GPU 6 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank1]:[W519 02:12:40.951946636 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 1]  using GPU 1 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank5]:[W519 02:12:40.056812983 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 5]  using GPU 5 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+[rank0]:[W519 02:12:40.071805441 ProcessGroupNCCL.cpp:4715] [PG ID 0 PG GUID 0 Rank 0]  using GPU 0 as device used by this process is currently unknown. This can potentially cause a hang if this rank to GPU mapping is incorrect. You can pecify device_id in init_process_group() to force use of a particular device.
+DDP: Initializing process group for rank 0/8...
+Rank 0 using device: 0
+Rank 0: Downloading MNIST dataset...
+Rank 0: Download complete.
+
+--- Rank 0: Training model with base_channels = 2 ---
+Rank 0: Number of parameters: 3,022
+Rank 0: Epoch 1/15 | Train Loss: 2.0875 | Test Loss: 1.8043 | Test Acc: 34.55%
+Rank 0: Epoch 2/15 | Train Loss: 1.5586 | Test Loss: 1.3819 | Test Acc: 63.83%

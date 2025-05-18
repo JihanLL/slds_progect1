@@ -8,7 +8,6 @@ import time
 
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.utils.tensorboard import SummaryWriter  # Create an instance of the object
 from tqdm import tqdm
 
 try:
@@ -149,7 +148,6 @@ def setup_ddp(local_rank_arg):
 def main(args):
     local_rank_from_env = os.environ.get("LOCAL_RANK")
     is_distributed = local_rank_from_env is not None
-    writer = SummaryWriter()
 
 
     world_size = 1
