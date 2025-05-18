@@ -8,7 +8,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 torchrun \
     --master_port='12945' \
     train.py \
     --seed 42 \
-    --epochs 80 \
+    --epochs 45 \
     --dataset DDR \
     --ddr_root_dir data/DDR \
     --optimizer adam \

@@ -1,0 +1,324 @@
+W0519 05:02:58.791536 3049418 torch/distributed/run.py:793] 
+W0519 05:02:58.791536 3049418 torch/distributed/run.py:793] *****************************************
+W0519 05:02:58.791536 3049418 torch/distributed/run.py:793] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0519 05:02:58.791536 3049418 torch/distributed/run.py:793] *****************************************
+DDP: Rank 3/8 initialized. Using GPU: 3.
+Process Global Rank: 3, World Size: 8. Using device: cuda:3
+DDP: Rank 7/8 initialized. Using GPU: 7.
+Process Global Rank: 7, World Size: 8. Using device: cuda:7
+DDP: Rank 4/8 initialized. Using GPU: 4.
+Process Global Rank: 4, World Size: 8. Using device: cuda:4
+DDP: Rank 0/8 initialized. Using GPU: 0.
+Script arguments: Namespace(seed=42, epochs=80, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, optimizer='adam', learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=128, num_workers=12, milestones=[10, 20, 30], model='CNNv4', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=0)
+Process Global Rank: 0, World Size: 8. Using device: cuda:0
+DDP: Rank 2/8 initialized. Using GPU: 2.
+Process Global Rank: 2, World Size: 8. Using device: cuda:2
+DDP: Rank 5/8 initialized. Using GPU: 5.
+Process Global Rank: 5, World Size: 8. Using device: cuda:5
+DDP: Rank 1/8 initialized. Using GPU: 1.
+Process Global Rank: 1, World Size: 8. Using device: cuda:1
+DDP: Rank 6/8 initialized. Using GPU: 6.
+Process Global Rank: 6, World Size: 8. Using device: cuda:6
+[Rank 0] Epoch 1/80 training time: 24.52 seconds
+[Rank 0] Epoch 1/80 evaluation time: 9.88 seconds
+Max accuracy so far: 36.6%
+Epoch 1 - Test Acc: 36.6%, Test Loss: 1.417642
+[Rank 0] Epoch 2/80 training time: 22.62 seconds
+[Rank 0] Epoch 2/80 evaluation time: 10.43 seconds
+Max accuracy so far: 36.6%
+Epoch 2 - Test Acc: 36.6%, Test Loss: 1.553551
+[Rank 0] Epoch 3/80 training time: 22.26 seconds
+[Rank 0] Epoch 3/80 evaluation time: 9.95 seconds
+Max accuracy so far: 36.6%
+Epoch 3 - Test Acc: 33.1%, Test Loss: 1.884854
+[Rank 0] Epoch 4/80 training time: 22.37 seconds
+[Rank 0] Epoch 4/80 evaluation time: 9.98 seconds
+Max accuracy so far: 37.4%
+Epoch 4 - Test Acc: 37.4%, Test Loss: 1.742810
+[Rank 0] Epoch 5/80 training time: 22.32 seconds
+[Rank 0] Epoch 5/80 evaluation time: 9.72 seconds
+Max accuracy so far: 44.8%
+Epoch 5 - Test Acc: 44.8%, Test Loss: 1.316978
+[Rank 0] Epoch 6/80 training time: 22.21 seconds
+[Rank 0] Epoch 6/80 evaluation time: 10.03 seconds
+Max accuracy so far: 55.9%
+Epoch 6 - Test Acc: 55.9%, Test Loss: 1.044436
+[Rank 0] Epoch 7/80 training time: 21.73 seconds
+[Rank 0] Epoch 7/80 evaluation time: 9.71 seconds
+Max accuracy so far: 55.9%
+Epoch 7 - Test Acc: 49.7%, Test Loss: 1.303487
+[Rank 0] Epoch 8/80 training time: 22.44 seconds
+[Rank 0] Epoch 8/80 evaluation time: 10.01 seconds
+Max accuracy so far: 55.9%
+Epoch 8 - Test Acc: 45.0%, Test Loss: 1.291555
+[Rank 0] Epoch 9/80 training time: 22.06 seconds
+[Rank 0] Epoch 9/80 evaluation time: 9.81 seconds
+Max accuracy so far: 55.9%
+Epoch 9 - Test Acc: 42.0%, Test Loss: 1.440170
+[Rank 0] Epoch 10/80 training time: 22.35 seconds
+[Rank 0] Epoch 10/80 evaluation time: 10.00 seconds
+Max accuracy so far: 55.9%
+Epoch 10 - Test Acc: 39.4%, Test Loss: 1.574627
+Saved checkpoint to checkpoints/model_epoch10.pth
+[Rank 0] Epoch 11/80 training time: 21.88 seconds
+[Rank 0] Epoch 11/80 evaluation time: 10.03 seconds
+Max accuracy so far: 55.9%
+Epoch 11 - Test Acc: 43.7%, Test Loss: 1.737851
+[Rank 0] Epoch 12/80 training time: 22.24 seconds
+[Rank 0] Epoch 12/80 evaluation time: 9.91 seconds
+Max accuracy so far: 55.9%
+Epoch 12 - Test Acc: 35.5%, Test Loss: 2.382278
+[Rank 0] Epoch 13/80 training time: 21.96 seconds
+[Rank 0] Epoch 13/80 evaluation time: 9.99 seconds
+Max accuracy so far: 55.9%
+Epoch 13 - Test Acc: 34.7%, Test Loss: 1.583772
+[Rank 0] Epoch 14/80 training time: 22.77 seconds
+[Rank 0] Epoch 14/80 evaluation time: 9.76 seconds
+Max accuracy so far: 55.9%
+Epoch 14 - Test Acc: 44.2%, Test Loss: 1.330869
+[Rank 0] Epoch 15/80 training time: 22.37 seconds
+[Rank 0] Epoch 15/80 evaluation time: 10.05 seconds
+Max accuracy so far: 62.1%
+Epoch 15 - Test Acc: 62.1%, Test Loss: 1.007731
+[Rank 0] Epoch 16/80 training time: 22.62 seconds
+[Rank 0] Epoch 16/80 evaluation time: 9.76 seconds
+Max accuracy so far: 63.4%
+Epoch 16 - Test Acc: 63.4%, Test Loss: 0.981668
+[Rank 0] Epoch 17/80 training time: 21.76 seconds
+[Rank 0] Epoch 17/80 evaluation time: 10.09 seconds
+Max accuracy so far: 63.4%
+Epoch 17 - Test Acc: 61.5%, Test Loss: 1.070453
+[Rank 0] Epoch 18/80 training time: 22.17 seconds
+[Rank 0] Epoch 18/80 evaluation time: 9.84 seconds
+Max accuracy so far: 63.4%
+Epoch 18 - Test Acc: 63.3%, Test Loss: 0.984772
+[Rank 0] Epoch 19/80 training time: 21.87 seconds
+[Rank 0] Epoch 19/80 evaluation time: 10.01 seconds
+Max accuracy so far: 65.1%
+Epoch 19 - Test Acc: 65.1%, Test Loss: 0.922231
+[Rank 0] Epoch 20/80 training time: 22.16 seconds
+[Rank 0] Epoch 20/80 evaluation time: 9.74 seconds
+Max accuracy so far: 65.4%
+Epoch 20 - Test Acc: 65.4%, Test Loss: 0.893989
+Saved checkpoint to checkpoints/model_epoch20.pth
+[Rank 0] Epoch 21/80 training time: 22.49 seconds
+[Rank 0] Epoch 21/80 evaluation time: 10.14 seconds
+Max accuracy so far: 65.6%
+Epoch 21 - Test Acc: 65.6%, Test Loss: 0.900353
+[Rank 0] Epoch 22/80 training time: 21.86 seconds
+[Rank 0] Epoch 22/80 evaluation time: 9.70 seconds
+Max accuracy so far: 65.6%
+Epoch 22 - Test Acc: 65.5%, Test Loss: 0.890380
+[Rank 0] Epoch 23/80 training time: 22.26 seconds
+[Rank 0] Epoch 23/80 evaluation time: 9.95 seconds
+Max accuracy so far: 65.6%
+Epoch 23 - Test Acc: 61.2%, Test Loss: 0.934622
+[Rank 0] Epoch 24/80 training time: 22.71 seconds
+[Rank 0] Epoch 24/80 evaluation time: 9.87 seconds
+Max accuracy so far: 65.6%
+Epoch 24 - Test Acc: 58.2%, Test Loss: 1.231838
+[Rank 0] Epoch 25/80 training time: 22.18 seconds
+[Rank 0] Epoch 25/80 evaluation time: 9.96 seconds
+Max accuracy so far: 65.6%
+Epoch 25 - Test Acc: 63.8%, Test Loss: 0.913527
+[Rank 0] Epoch 26/80 training time: 22.39 seconds
+[Rank 0] Epoch 26/80 evaluation time: 10.03 seconds
+Max accuracy so far: 65.6%
+Epoch 26 - Test Acc: 64.7%, Test Loss: 0.893983
+[Rank 0] Epoch 27/80 training time: 22.11 seconds
+[Rank 0] Epoch 27/80 evaluation time: 9.80 seconds
+Max accuracy so far: 66.5%
+Epoch 27 - Test Acc: 66.5%, Test Loss: 0.884515
+[Rank 0] Epoch 28/80 training time: 23.16 seconds
+[Rank 0] Epoch 28/80 evaluation time: 10.19 seconds
+Max accuracy so far: 66.5%
+Epoch 28 - Test Acc: 65.5%, Test Loss: 0.889978
+[Rank 0] Epoch 29/80 training time: 22.76 seconds
+[Rank 0] Epoch 29/80 evaluation time: 9.75 seconds
+Max accuracy so far: 66.5%
+Epoch 29 - Test Acc: 65.4%, Test Loss: 0.916647
+[Rank 0] Epoch 30/80 training time: 22.36 seconds
+[Rank 0] Epoch 30/80 evaluation time: 10.10 seconds
+Max accuracy so far: 66.5%
+Epoch 30 - Test Acc: 65.9%, Test Loss: 0.874689
+Saved checkpoint to checkpoints/model_epoch30.pth
+[Rank 0] Epoch 31/80 training time: 21.87 seconds
+[Rank 0] Epoch 31/80 evaluation time: 9.74 seconds
+Max accuracy so far: 66.6%
+Epoch 31 - Test Acc: 66.6%, Test Loss: 0.870583
+[Rank 0] Epoch 32/80 training time: 22.47 seconds
+[Rank 0] Epoch 32/80 evaluation time: 10.12 seconds
+Max accuracy so far: 66.9%
+Epoch 32 - Test Acc: 66.9%, Test Loss: 0.871947
+[Rank 0] Epoch 33/80 training time: 22.72 seconds
+[Rank 0] Epoch 33/80 evaluation time: 9.80 seconds
+Max accuracy so far: 67.3%
+Epoch 33 - Test Acc: 67.3%, Test Loss: 0.868575
+[Rank 0] Epoch 34/80 training time: 22.70 seconds
+[Rank 0] Epoch 34/80 evaluation time: 10.09 seconds
+Max accuracy so far: 67.3%
+Epoch 34 - Test Acc: 67.3%, Test Loss: 0.866677
+[Rank 0] Epoch 35/80 training time: 21.65 seconds
+[Rank 0] Epoch 35/80 evaluation time: 9.73 seconds
+Max accuracy so far: 67.3%
+Epoch 35 - Test Acc: 66.8%, Test Loss: 0.867656
+[Rank 0] Epoch 36/80 training time: 22.60 seconds
+[Rank 0] Epoch 36/80 evaluation time: 10.02 seconds
+Max accuracy so far: 67.3%
+Epoch 36 - Test Acc: 66.1%, Test Loss: 0.871183
+[Rank 0] Epoch 37/80 training time: 22.11 seconds
+[Rank 0] Epoch 37/80 evaluation time: 9.80 seconds
+Max accuracy so far: 67.3%
+Epoch 37 - Test Acc: 67.1%, Test Loss: 0.864630
+[Rank 0] Epoch 38/80 training time: 21.72 seconds
+[Rank 0] Epoch 38/80 evaluation time: 9.90 seconds
+Max accuracy so far: 67.3%
+Epoch 38 - Test Acc: 67.2%, Test Loss: 0.862340
+[Rank 0] Epoch 39/80 training time: 22.42 seconds
+[Rank 0] Epoch 39/80 evaluation time: 10.07 seconds
+Max accuracy so far: 67.3%
+Epoch 39 - Test Acc: 66.9%, Test Loss: 0.864024
+[Rank 0] Epoch 40/80 training time: 22.41 seconds
+[Rank 0] Epoch 40/80 evaluation time: 9.98 seconds
+Max accuracy so far: 67.3%
+Epoch 40 - Test Acc: 66.3%, Test Loss: 0.866865
+Saved checkpoint to checkpoints/model_epoch40.pth
+[Rank 0] Epoch 41/80 training time: 22.31 seconds
+[Rank 0] Epoch 41/80 evaluation time: 9.95 seconds
+Max accuracy so far: 67.3%
+Epoch 41 - Test Acc: 66.9%, Test Loss: 0.864183
+[Rank 0] Epoch 42/80 training time: 22.94 seconds
+[Rank 0] Epoch 42/80 evaluation time: 9.70 seconds
+Max accuracy so far: 67.3%
+Epoch 42 - Test Acc: 67.1%, Test Loss: 0.860902
+[Rank 0] Epoch 43/80 training time: 21.75 seconds
+[Rank 0] Epoch 43/80 evaluation time: 10.01 seconds
+Max accuracy so far: 67.3%
+Epoch 43 - Test Acc: 67.3%, Test Loss: 0.860454
+[Rank 0] Epoch 44/80 training time: 22.28 seconds
+[Rank 0] Epoch 44/80 evaluation time: 9.84 seconds
+Max accuracy so far: 67.8%
+Epoch 44 - Test Acc: 67.8%, Test Loss: 0.859830
+[Rank 0] Epoch 45/80 training time: 21.79 seconds
+[Rank 0] Epoch 45/80 evaluation time: 10.04 seconds
+Max accuracy so far: 67.8%
+Epoch 45 - Test Acc: 67.3%, Test Loss: 0.861025
+[Rank 0] Epoch 46/80 training time: 21.95 seconds
+[Rank 0] Epoch 46/80 evaluation time: 9.79 seconds
+Max accuracy so far: 68.3%
+Epoch 46 - Test Acc: 68.3%, Test Loss: 0.861842
+[Rank 0] Epoch 47/80 training time: 22.56 seconds
+[Rank 0] Epoch 47/80 evaluation time: 10.07 seconds
+Max accuracy so far: 68.3%
+Epoch 47 - Test Acc: 67.9%, Test Loss: 0.859256
+[Rank 0] Epoch 48/80 training time: 22.63 seconds
+[Rank 0] Epoch 48/80 evaluation time: 9.91 seconds
+Max accuracy so far: 68.3%
+Epoch 48 - Test Acc: 67.5%, Test Loss: 0.859505
+[Rank 0] Epoch 49/80 training time: 22.65 seconds
+[Rank 0] Epoch 49/80 evaluation time: 9.89 seconds
+Max accuracy so far: 68.3%
+Epoch 49 - Test Acc: 67.6%, Test Loss: 0.859662
+[Rank 0] Epoch 50/80 training time: 22.89 seconds
+[Rank 0] Epoch 50/80 evaluation time: 10.11 seconds
+Max accuracy so far: 68.3%
+Epoch 50 - Test Acc: 67.9%, Test Loss: 0.860032
+Saved checkpoint to checkpoints/model_epoch50.pth
+[Rank 0] Epoch 51/80 training time: 22.59 seconds
+[Rank 0] Epoch 51/80 evaluation time: 10.09 seconds
+Max accuracy so far: 68.3%
+Epoch 51 - Test Acc: 67.8%, Test Loss: 0.858934
+[Rank 0] Epoch 52/80 training time: 22.69 seconds
+[Rank 0] Epoch 52/80 evaluation time: 10.28 seconds
+Max accuracy so far: 68.3%
+Epoch 52 - Test Acc: 67.8%, Test Loss: 0.859170
+[Rank 0] Epoch 53/80 training time: 23.02 seconds
+[Rank 0] Epoch 53/80 evaluation time: 9.83 seconds
+Max accuracy so far: 68.3%
+Epoch 53 - Test Acc: 67.7%, Test Loss: 0.859396
+[Rank 0] Epoch 54/80 training time: 21.64 seconds
+[Rank 0] Epoch 54/80 evaluation time: 9.94 seconds
+Max accuracy so far: 68.3%
+Epoch 54 - Test Acc: 67.5%, Test Loss: 0.859091
+[Rank 0] Epoch 55/80 training time: 21.76 seconds
+[Rank 0] Epoch 55/80 evaluation time: 9.75 seconds
+Max accuracy so far: 68.3%
+Epoch 55 - Test Acc: 67.8%, Test Loss: 0.858772
+[Rank 0] Epoch 56/80 training time: 22.54 seconds
+[Rank 0] Epoch 56/80 evaluation time: 10.13 seconds
+Max accuracy so far: 68.3%
+Epoch 56 - Test Acc: 67.9%, Test Loss: 0.858630
+[Rank 0] Epoch 57/80 training time: 22.40 seconds
+[Rank 0] Epoch 57/80 evaluation time: 9.79 seconds
+Max accuracy so far: 68.3%
+Epoch 57 - Test Acc: 67.9%, Test Loss: 0.857886
+[Rank 0] Epoch 58/80 training time: 22.48 seconds
+[Rank 0] Epoch 58/80 evaluation time: 10.03 seconds
+Max accuracy so far: 68.3%
+Epoch 58 - Test Acc: 67.7%, Test Loss: 0.857509
+[Rank 0] Epoch 59/80 training time: 22.32 seconds
+[Rank 0] Epoch 59/80 evaluation time: 9.76 seconds
+Max accuracy so far: 68.3%
+Epoch 59 - Test Acc: 68.3%, Test Loss: 0.858295
+[Rank 0] Epoch 60/80 training time: 22.14 seconds
+[Rank 0] Epoch 60/80 evaluation time: 10.09 seconds
+Max accuracy so far: 68.3%
+Epoch 60 - Test Acc: 68.3%, Test Loss: 0.857560
+Saved checkpoint to checkpoints/model_epoch60.pth
+[Rank 0] Epoch 61/80 training time: 21.86 seconds
+[Rank 0] Epoch 61/80 evaluation time: 9.77 seconds
+Max accuracy so far: 68.3%
+Epoch 61 - Test Acc: 67.9%, Test Loss: 0.858096
+[Rank 0] Epoch 62/80 training time: 22.31 seconds
+[Rank 0] Epoch 62/80 evaluation time: 10.08 seconds
+Max accuracy so far: 68.3%
+Epoch 62 - Test Acc: 67.8%, Test Loss: 0.857275
+[Rank 0] Epoch 63/80 training time: 21.72 seconds
+[Rank 0] Epoch 63/80 evaluation time: 9.74 seconds
+Max accuracy so far: 68.3%
+Epoch 63 - Test Acc: 67.8%, Test Loss: 0.858037
+[Rank 0] Epoch 64/80 training time: 21.79 seconds
+[Rank 0] Epoch 64/80 evaluation time: 10.09 seconds
+Max accuracy so far: 68.3%
+Epoch 64 - Test Acc: 67.5%, Test Loss: 0.858250
+[Rank 0] Epoch 65/80 training time: 22.06 seconds
+[Rank 0] Epoch 65/80 evaluation time: 10.06 seconds
+Max accuracy so far: 68.3%
+Epoch 65 - Test Acc: 67.6%, Test Loss: 0.858732
+W0519 05:38:08.487188 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049423 closing signal SIGTERM
+W0519 05:38:08.488761 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049424 closing signal SIGTERM
+W0519 05:38:08.489367 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049425 closing signal SIGTERM
+W0519 05:38:08.489991 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049427 closing signal SIGTERM
+W0519 05:38:08.490503 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049428 closing signal SIGTERM
+W0519 05:38:08.490965 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049429 closing signal SIGTERM
+W0519 05:38:08.491417 3049418 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3049430 closing signal SIGTERM
+E0519 05:38:08.520779 3049418 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -9) local_rank: 7 (pid: 3049431) of binary: /opt/ohpc/pub/apps/anaconda3/bin/python
+Traceback (most recent call last):
+  File "/lab/haoq_lab/cse12212635/.local/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/lab/haoq_lab/cse12212635/.local/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/lab/haoq_lab/cse12212635/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 919, in main
+    run(args)
+  File "/lab/haoq_lab/cse12212635/.local/lib/python3.9/site-packages/torch/distributed/run.py", line 910, in run
+    elastic_launch(
+  File "/lab/haoq_lab/cse12212635/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/lab/haoq_lab/cse12212635/.local/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+train.py FAILED
+--------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-05-19_05:38:08
+  host      : gpu024
+  rank      : 7 (local_rank: 7)
+  exitcode  : -9 (pid: 3049431)
+  error_file: <N/A>
+  traceback : Signal 9 (SIGKILL) received by PID 3049431
+========================================================

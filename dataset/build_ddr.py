@@ -3,6 +3,8 @@ import pandas as pd
 from PIL import Image
 import torch
 from torch.utils.data import Dataset, DataLoader
+import numpy as np
+# import cv2
 from torchvision.transforms.v2 import (
     Compose,
     ToImage,
@@ -11,6 +13,7 @@ from torchvision.transforms.v2 import (
     RandomCrop,
     RandomHorizontalFlip,
     RandomRotation,
+    RandomAutocontrast,
     ColorJitter,
 )
 
@@ -127,19 +130,22 @@ def build_DDR_dataset(data_root_dir, is_train=True, transform=None):
     image_size = 224
     t = []
     t.append(Resize((image_size, image_size), interpolation=Image.BICUBIC))
-    t.append(RandomCrop(image_size))
+    # t.append(RandomCrop(image_size))
     t.append(RandomHorizontalFlip(p=0.5))
     t.append(RandomRotation(degrees=15))
-    t.append(ColorJitter(brightness=0.1, contrast=0.1, saturation=0.05, hue=0.0))
+    # t.append(ColorJitter(brightness=0.1, contrast=0.1, saturation=0.05, hue=0.0))
+    t.append(RandomAutocontrast(p=0.99))
+
     if transform:
         t.append(transform)
     t.append(ToImage())
     t.append(ToDtype(torch.float32, scale=True))
-
+    # Add contrast enhancement to transformation pipeline
     train_transform = Compose(t)
 
     t_test = []
     t_test.append(Resize((image_size, image_size), interpolation=Image.BICUBIC))
+    t_test.append(RandomAutocontrast(p=0.99))
     t_test.append(ToImage())
     t_test.append(ToDtype(torch.float32, scale=True))
 

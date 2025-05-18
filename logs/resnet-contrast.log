@@ -1,0 +1,26 @@
+W0519 05:50:18.596644 3101142 torch/distributed/run.py:793] 
+W0519 05:50:18.596644 3101142 torch/distributed/run.py:793] *****************************************
+W0519 05:50:18.596644 3101142 torch/distributed/run.py:793] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0519 05:50:18.596644 3101142 torch/distributed/run.py:793] *****************************************
+DDP: Rank 7/8 initialized. Using GPU: 7.
+Process Global Rank: 7, World Size: 8. Using device: cuda:7
+DDP: Rank 4/8 initialized. Using GPU: 4.
+Process Global Rank: 4, World Size: 8. Using device: cuda:4
+DDP: Rank 0/8 initialized. Using GPU: 0.
+Script arguments: Namespace(seed=42, epochs=45, dataset='DDR', ddr_root_dir='data/DDR', full_dataset=True, optimizer='adam', learning_rate=0.001, L1_parameter=1e-05, L2_parameter=1e-05, momentum=0.9, batch_size=128, num_workers=12, milestones=[10, 20, 30], model='CNNv4', flopanalysis=False, log_wrong_type=False, dist_eval=False, local_rank=0)
+DDP: Rank 6/8 initialized. Using GPU: 6.
+Process Global Rank: 0, World Size: 8. Using device: cuda:0
+Process Global Rank: 6, World Size: 8. Using device: cuda:6
+DDP: Rank 2/8 initialized. Using GPU: 2.
+Process Global Rank: 2, World Size: 8. Using device: cuda:2
+DDP: Rank 5/8 initialized. Using GPU: 5.
+Process Global Rank: 5, World Size: 8. Using device: cuda:5
+DDP: Rank 3/8 initialized. Using GPU: 3.
+Process Global Rank: 3, World Size: 8. Using device: cuda:3
+DDP: Rank 1/8 initialized. Using GPU: 1.
+Process Global Rank: 1, World Size: 8. Using device: cuda:1
+[Rank 0] Epoch 1/45 training time: 24.08 seconds
+[Rank 0] Epoch 1/45 evaluation time: 10.34 seconds
+Max accuracy so far: 36.6%
+Epoch 1 - Test Acc: 36.6%, Test Loss: 1.358529
+[Rank 0] Epoch 2/45 training time: 21.60 seconds
